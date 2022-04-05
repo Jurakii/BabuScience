@@ -13,8 +13,8 @@ h1 {
 .nav {
     margin: 0;
     list-style-type: none;
-    padding: 0;
-    text-align: center;
+    padding-right: 30px;
+    text-align: right;
 }
 
 .nav li {
