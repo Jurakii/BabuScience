@@ -35,11 +35,11 @@ body {
       position: relative;
       margin-left: auto;
       margin-right: auto;
-      width: 70%;
+      width: 100%;
   }
 
   .image__img {
-      display:block;
+      display:flex;
       width: 100%;
   }
   .image__overlay {
