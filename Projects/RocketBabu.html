@@ -176,9 +176,9 @@ a:active {
     function player() {
       drawing = new Image();
       if (velocity > 0) {
-        drawing.src = "babuFire.png";
+        drawing.src = "../Projects/babuFire.png";
       } else {
-        drawing.src = "babuFall.png";
+        drawing.src = "../Projects/babuFall.png";
       }
 
       ctx.drawImage(drawing, playerX, playerY - 20);
@@ -246,7 +246,7 @@ a:active {
       ctx.fillText("Press Space to play", canvas.width / 2, canvas.height / 2 + 50 - 100);
       ctx.fillText("Highscore: " + highScore(score), canvas.width / 2, canvas.height / 2 + 200);
       drawing = new Image();
-      drawing.src = "babuFire.png";
+      drawing.src = "../Projects/babuFire.png";
       ctx.drawImage(drawing, playerX, playerY - 20, );
     }
 
