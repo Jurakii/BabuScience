@@ -122,6 +122,8 @@ a:active {
 
     document.addEventListener("keydown", keyDown, false);
     document.addEventListener("keyup", keyUp, false);
+    document.addEventListener("touchstart", handleStart, false);
+    document.addEventListener("touchend", handleEnd, false);
 
     function keyDown(e) {
       if (e.keyCode == 32) {
@@ -132,7 +134,20 @@ a:active {
         }
       }
     }
+function handleStart(){
+        spacePressed = true;
+        if (dead) {
+          reset();
+        }
+      }
 
+function handleEnd(){
+        spacePressed = false;
+        if (dead) {
+          reset();
+        }
+      
+}
     function keyUp(e) {
       if (e.keyCode == 32) {
         spacePressed = false;
