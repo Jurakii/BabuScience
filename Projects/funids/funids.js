@@ -5,6 +5,7 @@ var playerY = 0;
 var playerX = 300;
 var velocity = 0;
 var objectX = canvas.width;
+var grounded = false;
 document.addEventListener("keydown", keyDown, false);
 document.addEventListener("keyup", keyUp, false);
 document.addEventListener("touchstart", handleStart, false);
@@ -52,9 +53,11 @@ function draw() {
     velocity += 0.25;
     if (playerY >= 700) {
         playerY = 700;
+        grounded = true;
     }
-    if (space) {
-        velocity = -6;
+    if (space && grounded) {
+        velocity = -8;
+        grounded = false;
     }
     if (objectX <= -50) {
         objectX = canvas.width;
