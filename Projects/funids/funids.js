@@ -8,6 +8,8 @@ var grounded = false;
 var hSpeed = 5;
 var objectX1 = canvas.width;
 var objectX2 = canvas.width + 800;
+var floor = canvas.height;
+var space = false;
 
 document.addEventListener("keydown", keyDown, false);
 document.addEventListener("keyup", keyUp, false);
@@ -41,21 +43,32 @@ function player() {
     ctx.fill();
     ctx.closePath();
 }
+function distance(e){
+    //objectX1 and objectX2
+    if(1){
+        if(objectX2 - objectX1 > -800){
+            objectX2 = objectX1 - 800;
+        }
+    } else {
 
+    }
+}
 function object(j) {
     ctx.beginPath();
 
     if (j == 1) {
         objectX1 -= 5;
-        ctx.rect(objectX1, 700, 50, 50);
+        ctx.rect(objectX1, floor, 50, 50);
         if(objectX1 < -50){
             objectX1 = canvas.width;
+            distance(1);
         }
     } else {
         objectX2 -= 5;
-        ctx.rect(objectX2, 700, 50, 50);
+        ctx.rect(objectX2, floor, 50, 50);
         if(objectX2 < -50){
             objectX2 = canvas.width;
+            distance(2);
         }
     }
     ctx.fillStyle = "#0000FF";
@@ -64,17 +77,19 @@ function object(j) {
 }
 
 function collision() {
-    if (playerX + 50 >= objectX1 && playerX + 50 <= objectX1 + 50 && playerY + 50 >= 700) {
+    if (playerX + 50 >= objectX1 && playerX + 50 <= objectX1 + 50 && playerY + 50 >= floor) {
         playerY = 0;
     }
-    if (playerX + 50 >= objectX2 && playerX + 50 <= objectX2 + 50 && playerY + 50 >= 700) {
+    if (playerX + 50 >= objectX2 && playerX + 50 <= objectX2 + 50 && playerY + 50 >= floor) {
         playerY = 0;
     }
 }
 
+
 function draw() {
     ctx.canvas.width  = window.innerWidth;
     ctx.canvas.height = window.innerHeight - 100;
+    floor = canvas.height - 50;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     player();
     object(1);
@@ -82,8 +97,8 @@ function draw() {
     playerY += velocity;
     velocity += 0.25;
     collision();
-    if (playerY >= 700) {
-        playerY = 700;
+    if (playerY >= floor) {
+        playerY = floor;
         grounded = true;
         velocity = 0;
     }
