@@ -4,8 +4,11 @@ var ctx = canvas.getContext("2d");
 var playerY = 0;
 var playerX = 300;
 var velocity = 0;
-var objectX = canvas.width;
 var grounded = false;
+var hSpeed = 5;
+var objectX1 = canvas.width;
+var objectX2 = canvas.width + 800;
+
 document.addEventListener("keydown", keyDown, false);
 document.addEventListener("keyup", keyUp, false);
 document.addEventListener("touchstart", handleStart, false);
@@ -32,7 +35,6 @@ function handleEnd() {
 }
 
 function player() {
-
     ctx.beginPath();
     ctx.rect(playerX, playerY, 50, 50);
     ctx.fillStyle = "#FF0000";
@@ -40,29 +42,54 @@ function player() {
     ctx.closePath();
 }
 
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    player();
+function object(j) {
     ctx.beginPath();
-    ctx.rect(objectX, 700, 50, 50);
+
+    if (j == 1) {
+        objectX1 -= 5;
+        ctx.rect(objectX1, 700, 50, 50);
+        if(objectX1 < -50){
+            objectX1 = canvas.width;
+        }
+    } else {
+        objectX2 -= 5;
+        ctx.rect(objectX2, 700, 50, 50);
+        if(objectX2 < -50){
+            objectX2 = canvas.width;
+        }
+    }
     ctx.fillStyle = "#0000FF";
     ctx.fill();
     ctx.closePath();
-    objectX -= 5;
+}
+
+function collision() {
+    if (playerX + 50 >= objectX1 && playerX + 50 <= objectX1 + 50 && playerY + 50 >= 700) {
+        playerY = 0;
+    }
+    if (playerX + 50 >= objectX2 && playerX + 50 <= objectX2 + 50 && playerY + 50 >= 700) {
+        playerY = 0;
+    }
+}
+
+function draw() {
+    ctx.canvas.width  = window.innerWidth;
+    ctx.canvas.height = window.innerHeight - 100;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    player();
+    object(1);
+    object(2);
     playerY += velocity;
     velocity += 0.25;
+    collision();
     if (playerY >= 700) {
         playerY = 700;
         grounded = true;
+        velocity = 0;
     }
     if (space && grounded) {
         velocity = -8;
         grounded = false;
     }
-    if (objectX <= -50) {
-        objectX = canvas.width;
-    }
 }
-
-
 setInterval(draw, 10);
