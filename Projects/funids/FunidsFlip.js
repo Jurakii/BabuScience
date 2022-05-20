@@ -9,8 +9,9 @@ var hSpeed = 5;
 var objectX1 = canvas.width;
 var objectX2 = canvas.width + 800;
 var floor = canvas.height;
+var roof = 0;
 var space = false;
-var shift = false;
+var gravity = 1;
 
 document.addEventListener("keydown", keyDown, false);
 document.addEventListener("keyup", keyUp, false);
@@ -20,6 +21,15 @@ document.addEventListener("touchend", handleEnd, false);
 function keyDown(e) {
     if (e.keyCode == 32) {
         space = true;
+    }
+    if (e.keyCode == 87) {
+        if (gravity == 1 && grounded) {
+            gravity = -1;
+            grounded = false;
+        } else if (gravity == -1 && grounded) {
+            gravity = 1;
+            grounded = false;
+        }
     }
 }
 
@@ -51,13 +61,13 @@ function object(j) {
     if (j == 1) {
         objectX1 -= 5;
         ctx.rect(objectX1, floor, 50, 50);
-        if(objectX1 < -50){
+        if (objectX1 < -50) {
             objectX1 = canvas.width;
         }
     } else {
         objectX2 -= 5;
         ctx.rect(objectX2, floor, 50, 50);
-        if(objectX2 < -50){
+        if (objectX2 < -50) {
             objectX2 = canvas.width;
         }
     }
@@ -77,22 +87,27 @@ function collision() {
 
 
 function draw() {
-    ctx.canvas.width  = window.innerWidth;
+    ctx.canvas.width = window.innerWidth;
     ctx.canvas.height = window.innerHeight - 100;
-    floor = canvas.height - 50;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    floor = canvas.height - 50;
     player();
-    object(1);
-    playerY += velocity;
-    velocity += 0.25;
+    //object(1);
+    playerY -= velocity * gravity;
+    velocity -= 0.25;
     collision();
-    if (playerY >= floor) {
+
+    if (playerY >= floor && gravity == 1) {
         playerY = floor;
+        grounded = true;
+        velocity = 0;
+    } else if (gravity == -1 && playerY <= roof) {
+        playerY = roof;
         grounded = true;
         velocity = 0;
     }
     if (space && grounded) {
-        velocity = -8;
+        velocity += 8;
         grounded = false;
     }
 }
