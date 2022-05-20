@@ -10,6 +10,7 @@ var objectX1 = canvas.width;
 var objectX2 = canvas.width + 800;
 var floor = canvas.height;
 var space = false;
+var shift = false;
 
 document.addEventListener("keydown", keyDown, false);
 document.addEventListener("keyup", keyUp, false);
@@ -43,16 +44,7 @@ function player() {
     ctx.fill();
     ctx.closePath();
 }
-function distance(e){
-    //objectX1 and objectX2
-    if(1){
-        if(objectX2 - objectX1 > -800){
-            objectX2 = objectX1 - 800;
-        }
-    } else {
 
-    }
-}
 function object(j) {
     ctx.beginPath();
 
@@ -61,14 +53,12 @@ function object(j) {
         ctx.rect(objectX1, floor, 50, 50);
         if(objectX1 < -50){
             objectX1 = canvas.width;
-            distance(1);
         }
     } else {
         objectX2 -= 5;
         ctx.rect(objectX2, floor, 50, 50);
         if(objectX2 < -50){
             objectX2 = canvas.width;
-            distance(2);
         }
     }
     ctx.fillStyle = "#0000FF";
@@ -93,7 +83,6 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     player();
     object(1);
-    object(2);
     playerY += velocity;
     velocity += 0.25;
     collision();
