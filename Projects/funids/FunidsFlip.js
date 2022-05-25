@@ -33,9 +33,13 @@ function keyDown(e) {
         if (gravity == 1 && grounded) {
             gravity = -1;
             grounded = false;
+            flipped = true;
+            frame = 0;
         } else if (gravity == -1 && grounded) {
             gravity = 1;
             grounded = false;
+            flipped = false;
+            frame = 0;
         }
     }
 }
@@ -56,7 +60,7 @@ function handleEnd() {
 
 function player() {
     ctx.beginPath();
-    ctx.rect(playerX, playerY - 150, 100, 160);
+    ctx.rect(playerX, playerY - 160, 100, 160);
     ctx.fillStyle = "#FF0000";
     ctx.fill();
     ctx.closePath();
@@ -67,14 +71,14 @@ function object(j) {
 
     if (j == 1) {
         objectX1 -= 5;
-        ctx.rect(objectX1, floor, 50, 50);
-        if (objectX1 < -50) {
+        ctx.rect(objectX1, floor -50, 100, 100);
+        if (objectX1 < -100) {
             objectX1 = canvas.width;
         }
-    } else {
+    } else if(j == 2) {
         objectX2 -= 5;
-        ctx.rect(objectX2, floor, 50, 50);
-        if (objectX2 < -50) {
+        ctx.rect(objectX2, 0, 100, 100);
+        if (objectX2 < -100) {
             objectX2 = canvas.width;
         }
     }
@@ -84,56 +88,49 @@ function object(j) {
 }
 
 function collision() {
-    if (playerX + 50 >= objectX1 && playerX + 50 <= objectX1 + 50 && playerY + 50 >= floor) {
-        playerY = 0;
-    }
-    if (playerX + 50 >= objectX2 && playerX + 50 <= objectX2 + 50 && playerY + 50 >= floor) {
-        playerY = 0;
-    }
+
 }
 function animation(){
     drawing = new Image();
     if(flipped){
         drawing.src = "../Projects/funids/Running/RunningFlipped.png";
-offset = 155;
+offset = 152;
     } else {
     drawing.src = "../Projects/funids/Running/Running.png";
-        offset = 175;
+        offset = 224;
     }
     frameWidth = drawing.width / column;
     frameHeight = drawing.height;
 
 
-ctx.drawImage(drawing, frame, 0, frameWidth, frameHeight, playerX, playerY-offset, frameWidth/10,frameHeight/10 );
+ctx.drawImage(drawing, frame, 0, frameWidth, frameHeight, playerX-10, playerY-offset, frameWidth,frameHeight );
 }
 function draw() {
     ctx.canvas.width = window.innerWidth * .75;
     ctx.canvas.height = window.innerHeight * .75;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     floor = canvas.height - 50;
-    //player();
-    //object(1);
+    player();
+    object(1);
+    object(2);
     playerY -= velocity * gravity;
-    velocity -= 0.25;
+    velocity -= 0.15;
     collision();
 
     animation();
-    if(ticks == 20 || ticks == 40 || ticks == 60 || ticks == 80 || ticks == 100 || ticks == 120 || ticks == 140 || ticks == 160){
+    if(ticks%20 == 0){
     frame += frameWidth;
     if(frame == drawing.width){
         frame = 0;
     }}
     ticks += 2;
-    if(ticks >= 81){
-        ticks = 0;
-    }
     if (playerY >= floor + 40 && gravity == 1) {
         playerY = floor + 40;
         grounded = true;
         velocity = 0;
         flipped = false;
     } else if (gravity == -1 && playerY <= roof + 150) {
-        playerY = roof + 150;
+        playerY = 150;
         grounded = true;
         velocity = 0;
         flipped = true;
