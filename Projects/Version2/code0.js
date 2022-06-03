@@ -476,6 +476,19 @@ gdjs.GameCode.GDRocketBabuObjects1.length = k;}if (gdjs.GameCode.condition0IsTru
 }
 
 
+{
+
+
+gdjs.GameCode.condition0IsTrue_0.val = false;
+{
+gdjs.GameCode.condition0IsTrue_0.val = gdjs.evtTools.runtimeScene.sceneJustBegins(runtimeScene);
+}if (gdjs.GameCode.condition0IsTrue_0.val) {
+{gdjs.evtTools.runtimeScene.setBackgroundColor(runtimeScene, "130;188;255");
+}}
+
+}
+
+
 };
 
 gdjs.GameCode.func = function(runtimeScene) {
