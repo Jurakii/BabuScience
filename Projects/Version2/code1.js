@@ -118,10 +118,10 @@ gdjs.GameCode.condition0IsTrue_0.val = false;
 {
 gdjs.GameCode.condition0IsTrue_0.val = gdjs.evtTools.runtimeScene.sceneJustBegins(runtimeScene);
 }if (gdjs.GameCode.condition0IsTrue_0.val) {
-{runtimeScene.getVariables().getFromIndex(1).setNumber(100);
-}{runtimeScene.getVariables().getFromIndex(2).setNumber(100);
-}{runtimeScene.getVariables().get("Offset3").setNumber(100);
-}{runtimeScene.getVariables().get("Offset4").setNumber(100);
+{runtimeScene.getVariables().getFromIndex(1).setNumber(80);
+}{runtimeScene.getVariables().getFromIndex(2).setNumber(80);
+}{runtimeScene.getVariables().get("Offset3").setNumber(80);
+}{runtimeScene.getVariables().get("Offset4").setNumber(80);
 }{runtimeScene.getVariables().get("PipeX").setNumber(gdjs.evtTools.window.getGameResolutionWidth(runtimeScene));
 }{runtimeScene.getVariables().get("Pipe2X").setNumber(gdjs.evtTools.window.getGameResolutionWidth(runtimeScene) + gdjs.evtTools.window.getGameResolutionWidth(runtimeScene) / 2 + 50);
 }{gdjs.evtTools.window.centerWindow(runtimeScene);
@@ -152,16 +152,16 @@ gdjs.copyArray(runtimeScene.getObjects("Text"), gdjs.GameCode.GDTextObjects1);
     gdjs.GameCode.GDRocketBabuObjects1[i].setY(gdjs.GameCode.GDRocketBabuObjects1[i].getY() + (gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(0))));
 }
 }{for(var i = 0, len = gdjs.GameCode.GDPipeObjects1.length ;i < len;++i) {
-    gdjs.GameCode.GDPipeObjects1[i].drawRectangle(gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("PipeX")), -(10), gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("PipeX")) + 100, gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(1)) - 100);
+    gdjs.GameCode.GDPipeObjects1[i].drawRectangle(gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("PipeX")), -(10), gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("PipeX")) + 100, gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(1)) - 125);
 }
 }{for(var i = 0, len = gdjs.GameCode.GDPipe2Objects1.length ;i < len;++i) {
-    gdjs.GameCode.GDPipe2Objects1[i].drawRectangle(gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("Pipe2X")), -(10), gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("Pipe2X")) + 100, gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(2)) - 100);
+    gdjs.GameCode.GDPipe2Objects1[i].drawRectangle(gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("Pipe2X")), -(10), gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("Pipe2X")) + 100, gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(2)) - 125);
 }
 }{for(var i = 0, len = gdjs.GameCode.GDPipeObjects1.length ;i < len;++i) {
-    gdjs.GameCode.GDPipeObjects1[i].drawRectangle(gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("PipeX")), gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(1)) + 100, gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("PipeX")) + 100, gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) + 10);
+    gdjs.GameCode.GDPipeObjects1[i].drawRectangle(gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("PipeX")), gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(1)) + 125, gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("PipeX")) + 100, gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) + 10);
 }
 }{for(var i = 0, len = gdjs.GameCode.GDPipe2Objects1.length ;i < len;++i) {
-    gdjs.GameCode.GDPipe2Objects1[i].drawRectangle(gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("Pipe2X")), gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(2)) + 100, gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("Pipe2X")) + 100, gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) + 10);
+    gdjs.GameCode.GDPipe2Objects1[i].drawRectangle(gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("Pipe2X")), gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(2)) + 125, gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("Pipe2X")) + 100, gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) + 10);
 }
 }{runtimeScene.getVariables().get("PipeX").sub(8);
 }{runtimeScene.getVariables().get("Pipe2X").sub(8);
@@ -256,7 +256,7 @@ gdjs.GameCode.condition0IsTrue_0.val = gdjs.evtTools.object.hitBoxesCollisionTes
 }if ( gdjs.GameCode.condition0IsTrue_0.val ) {
 {
 for(var i = 0, k = 0, l = gdjs.GameCode.GDRocketBabuObjects1.length;i<l;++i) {
-    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getY() < gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(1)) - 100 ) {
+    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getY() < gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(1)) - 130 ) {
         gdjs.GameCode.condition1IsTrue_0.val = true;
         gdjs.GameCode.GDRocketBabuObjects1[k] = gdjs.GameCode.GDRocketBabuObjects1[i];
         ++k;
@@ -282,7 +282,7 @@ gdjs.GameCode.condition0IsTrue_0.val = gdjs.evtTools.object.hitBoxesCollisionTes
 }if ( gdjs.GameCode.condition0IsTrue_0.val ) {
 {
 for(var i = 0, k = 0, l = gdjs.GameCode.GDRocketBabuObjects1.length;i<l;++i) {
-    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getY() < gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(2)) - 100 ) {
+    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getY() < gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(2)) - 130 ) {
         gdjs.GameCode.condition1IsTrue_0.val = true;
         gdjs.GameCode.GDRocketBabuObjects1[k] = gdjs.GameCode.GDRocketBabuObjects1[i];
         ++k;
@@ -308,7 +308,7 @@ gdjs.GameCode.condition0IsTrue_0.val = gdjs.evtTools.object.hitBoxesCollisionTes
 }if ( gdjs.GameCode.condition0IsTrue_0.val ) {
 {
 for(var i = 0, k = 0, l = gdjs.GameCode.GDRocketBabuObjects1.length;i<l;++i) {
-    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getY() > gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(1)) + 25 ) {
+    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getY() > gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(1)) + 65 ) {
         gdjs.GameCode.condition1IsTrue_0.val = true;
         gdjs.GameCode.GDRocketBabuObjects1[k] = gdjs.GameCode.GDRocketBabuObjects1[i];
         ++k;
@@ -334,7 +334,7 @@ gdjs.GameCode.condition0IsTrue_0.val = gdjs.evtTools.object.hitBoxesCollisionTes
 }if ( gdjs.GameCode.condition0IsTrue_0.val ) {
 {
 for(var i = 0, k = 0, l = gdjs.GameCode.GDRocketBabuObjects1.length;i<l;++i) {
-    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getY() > gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(2)) + 25 ) {
+    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getY() > gdjs.evtTools.window.getGameResolutionHeight(runtimeScene) / 2 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().getFromIndex(2)) + 65 ) {
         gdjs.GameCode.condition1IsTrue_0.val = true;
         gdjs.GameCode.GDRocketBabuObjects1[k] = gdjs.GameCode.GDRocketBabuObjects1[i];
         ++k;
@@ -369,7 +369,7 @@ gdjs.GameCode.condition1IsTrue_0.val = gdjs.evtTools.variable.getVariableBoolean
 }if ( gdjs.GameCode.condition1IsTrue_0.val ) {
 {
 for(var i = 0, k = 0, l = gdjs.GameCode.GDRocketBabuObjects1.length;i<l;++i) {
-    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getX() < gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("Pipe2X")) + 100 ) {
+    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getX() < gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("Pipe2X")) + 110 ) {
         gdjs.GameCode.condition2IsTrue_0.val = true;
         gdjs.GameCode.GDRocketBabuObjects1[k] = gdjs.GameCode.GDRocketBabuObjects1[i];
         ++k;
@@ -379,10 +379,14 @@ gdjs.GameCode.GDRocketBabuObjects1.length = k;}}
 }
 if (gdjs.GameCode.condition2IsTrue_0.val) {
 gdjs.copyArray(runtimeScene.getObjects("Text"), gdjs.GameCode.GDTextObjects1);
+gdjs.copyArray(runtimeScene.getObjects("test1"), gdjs.GameCode.GDtest1Objects1);
 {gdjs.evtTools.variable.setVariableBoolean(runtimeScene.getVariables().getFromIndex(4), true);
 }{runtimeScene.getVariables().getFromIndex(3).add(1);
 }{for(var i = 0, len = gdjs.GameCode.GDTextObjects1.length ;i < len;++i) {
     gdjs.GameCode.GDTextObjects1[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getVariables().getFromIndex(3)));
+}
+}{for(var i = 0, len = gdjs.GameCode.GDtest1Objects1.length ;i < len;++i) {
+    gdjs.GameCode.GDtest1Objects1[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getVariables().getFromIndex(4)));
 }
 }}
 
@@ -410,7 +414,7 @@ gdjs.GameCode.condition1IsTrue_0.val = gdjs.evtTools.variable.getVariableBoolean
 }if ( gdjs.GameCode.condition1IsTrue_0.val ) {
 {
 for(var i = 0, k = 0, l = gdjs.GameCode.GDRocketBabuObjects1.length;i<l;++i) {
-    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getX() < gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("PipeX")) + 100 ) {
+    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getX() < gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("PipeX")) + 110 ) {
         gdjs.GameCode.condition2IsTrue_0.val = true;
         gdjs.GameCode.GDRocketBabuObjects1[k] = gdjs.GameCode.GDRocketBabuObjects1[i];
         ++k;
@@ -420,11 +424,15 @@ gdjs.GameCode.GDRocketBabuObjects1.length = k;}}
 }
 if (gdjs.GameCode.condition2IsTrue_0.val) {
 gdjs.copyArray(runtimeScene.getObjects("Text"), gdjs.GameCode.GDTextObjects1);
+gdjs.copyArray(runtimeScene.getObjects("test1"), gdjs.GameCode.GDtest1Objects1);
 {gdjs.evtTools.variable.setVariableBoolean(runtimeScene.getVariables().getFromIndex(4), true);
 }{runtimeScene.getVariables().getFromIndex(3).add(1);
 }{for(var i = 0, len = gdjs.GameCode.GDTextObjects1.length ;i < len;++i) {
     gdjs.GameCode.GDTextObjects1[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getVariables().getFromIndex(3)));
 }
+}{for(var i = 0, len = gdjs.GameCode.GDtest1Objects1.length ;i < len;++i) {
+    gdjs.GameCode.GDtest1Objects1[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getVariables().getFromIndex(4)));
+}
 }}
 
 }
@@ -436,9 +444,10 @@ gdjs.copyArray(runtimeScene.getObjects("RocketBabu"), gdjs.GameCode.GDRocketBabu
 
 gdjs.GameCode.condition0IsTrue_0.val = false;
 gdjs.GameCode.condition1IsTrue_0.val = false;
+gdjs.GameCode.condition2IsTrue_0.val = false;
 {
 for(var i = 0, k = 0, l = gdjs.GameCode.GDRocketBabuObjects1.length;i<l;++i) {
-    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getX() > gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("PipeX")) + 100 ) {
+    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getX() > gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("PipeX")) + 110 ) {
         gdjs.GameCode.condition0IsTrue_0.val = true;
         gdjs.GameCode.GDRocketBabuObjects1[k] = gdjs.GameCode.GDRocketBabuObjects1[i];
         ++k;
@@ -447,9 +456,23 @@ for(var i = 0, k = 0, l = gdjs.GameCode.GDRocketBabuObjects1.length;i<l;++i) {
 gdjs.GameCode.GDRocketBabuObjects1.length = k;}if ( gdjs.GameCode.condition0IsTrue_0.val ) {
 {
 gdjs.GameCode.condition1IsTrue_0.val = gdjs.evtTools.variable.getVariableBoolean(runtimeScene.getVariables().getFromIndex(4), true);
-}}
-if (gdjs.GameCode.condition1IsTrue_0.val) {
+}if ( gdjs.GameCode.condition1IsTrue_0.val ) {
+{
+for(var i = 0, k = 0, l = gdjs.GameCode.GDRocketBabuObjects1.length;i<l;++i) {
+    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getX() < gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("Pipe2X")) ) {
+        gdjs.GameCode.condition2IsTrue_0.val = true;
+        gdjs.GameCode.GDRocketBabuObjects1[k] = gdjs.GameCode.GDRocketBabuObjects1[i];
+        ++k;
+    }
+}
+gdjs.GameCode.GDRocketBabuObjects1.length = k;}}
+}
+if (gdjs.GameCode.condition2IsTrue_0.val) {
+gdjs.copyArray(runtimeScene.getObjects("test1"), gdjs.GameCode.GDtest1Objects1);
 {gdjs.evtTools.variable.setVariableBoolean(runtimeScene.getVariables().getFromIndex(4), false);
+}{for(var i = 0, len = gdjs.GameCode.GDtest1Objects1.length ;i < len;++i) {
+    gdjs.GameCode.GDtest1Objects1[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getVariables().getFromIndex(4)));
+}
 }}
 
 }
@@ -461,9 +484,10 @@ gdjs.copyArray(runtimeScene.getObjects("RocketBabu"), gdjs.GameCode.GDRocketBabu
 
 gdjs.GameCode.condition0IsTrue_0.val = false;
 gdjs.GameCode.condition1IsTrue_0.val = false;
+gdjs.GameCode.condition2IsTrue_0.val = false;
 {
 for(var i = 0, k = 0, l = gdjs.GameCode.GDRocketBabuObjects1.length;i<l;++i) {
-    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getX() > gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("Pipe2X")) + 100 ) {
+    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getX() > gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("Pipe2X")) + 110 ) {
         gdjs.GameCode.condition0IsTrue_0.val = true;
         gdjs.GameCode.GDRocketBabuObjects1[k] = gdjs.GameCode.GDRocketBabuObjects1[i];
         ++k;
@@ -472,9 +496,23 @@ for(var i = 0, k = 0, l = gdjs.GameCode.GDRocketBabuObjects1.length;i<l;++i) {
 gdjs.GameCode.GDRocketBabuObjects1.length = k;}if ( gdjs.GameCode.condition0IsTrue_0.val ) {
 {
 gdjs.GameCode.condition1IsTrue_0.val = gdjs.evtTools.variable.getVariableBoolean(runtimeScene.getVariables().getFromIndex(4), true);
-}}
-if (gdjs.GameCode.condition1IsTrue_0.val) {
+}if ( gdjs.GameCode.condition1IsTrue_0.val ) {
+{
+for(var i = 0, k = 0, l = gdjs.GameCode.GDRocketBabuObjects1.length;i<l;++i) {
+    if ( gdjs.GameCode.GDRocketBabuObjects1[i].getX() < gdjs.evtTools.variable.getVariableNumber(runtimeScene.getVariables().get("PipeX")) ) {
+        gdjs.GameCode.condition2IsTrue_0.val = true;
+        gdjs.GameCode.GDRocketBabuObjects1[k] = gdjs.GameCode.GDRocketBabuObjects1[i];
+        ++k;
+    }
+}
+gdjs.GameCode.GDRocketBabuObjects1.length = k;}}
+}
+if (gdjs.GameCode.condition2IsTrue_0.val) {
+gdjs.copyArray(runtimeScene.getObjects("test1"), gdjs.GameCode.GDtest1Objects1);
 {gdjs.evtTools.variable.setVariableBoolean(runtimeScene.getVariables().getFromIndex(4), false);
+}{for(var i = 0, len = gdjs.GameCode.GDtest1Objects1.length ;i < len;++i) {
+    gdjs.GameCode.GDtest1Objects1[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getVariables().getFromIndex(4)));
+}
 }}
 
 }
