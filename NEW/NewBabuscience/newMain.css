@@ -1,0 +1,15 @@
+h1 {
+    font-size: 80px;
+}
+
+body {
+    margin: 0px;
+    background-color: black;
+    height: 50vh;
+    display: grid;
+    place-items: center;
+}
+
+img {
+    padding-top: 5%;
+}
