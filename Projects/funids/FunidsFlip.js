@@ -60,7 +60,7 @@ function handleEnd() {
 
 function player() {
     ctx.beginPath();
-    ctx.rect(playerX, playerY - 160, 100, 160);
+    //ctx.rect(playerX, playerY - 160, 100, 160);
     ctx.fillStyle = "#FF0000";
     ctx.fill();
     ctx.closePath();
