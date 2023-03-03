@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Display Images from a Folder using JavaScript</title>
+</head>
+<body>
+  <div id="image-list"></div>
+
+  <script>
+    // Set the path to the folder containing the images
+    var imagePath = "/stuff/";
+
+    // Create an array to hold the image filenames
+    var imageFiles = [];
+
+    // Use an AJAX request to get the filenames in the folder
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (this.readyState === 4 && this.status === 200) {
+        // Parse the response as a string of filenames
+        var filenames = this.responseText.split("\n");
+        // Loop through the filenames and add them to the imageFiles array
+        for (var i = 0; i < filenames.length; i++) {
+          if (filenames[i] !== "") {
+            imageFiles.push(filenames[i]);
+          }
+        }
+        // Loop through the imageFiles array and display the images
+        for (var j = 0; j < imageFiles.length; j++) {
+          var img = document.createElement("img");
+          img.src = imagePath + imageFiles[j];
+          document.getElementById("image-list").appendChild(img);
+        }
+      }
+    };
+    xhr.open("GET", "getfilenames.php?path=" + imagePath, true);
+    xhr.send();
+  </script>
+</body>
+</html>
