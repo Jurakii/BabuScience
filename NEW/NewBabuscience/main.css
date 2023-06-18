@@ -1,16 +1,41 @@
 h1 {
-    font-size: 80px;
-    color: white;
+  font-size: 80px;
+  color: white;
+  margin-bottom: 20px; /* decrease margin between h1 and nav */
+  margin-top: 20px;
 }
 
 body {
-    margin: 0px;
-    background-color: black;
-    height: 50vh;
-    display: grid;
-    place-items: center;
+  margin: 0px;
+  background-color: black;
+  height: 50vh;
+  display: grid;
+  place-items: center;
 }
 
 img {
-    padding-top: 5%;
+  padding-top: 5%;
+}
+
+.nav {
+  margin: 0;
+  list-style-type: none;
+  text-align: center;
+  margin-top: 0; /* remove default margin from top of nav */
+}
+
+.nav li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.nav a {
+  font-size: 24px;
+  text-decoration: none;
+  color: white;
+}
+
+.nav a:hover,
+.nav a:active {
+  text-decoration: underline;
 }
