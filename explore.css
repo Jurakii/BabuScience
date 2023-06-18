@@ -83,6 +83,12 @@
 .explore-text1:active {
   color: #000000;
 }
+.explore-text2 {
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 900;
+  text-transform: uppercase;
+}
 @media(max-width: 479px) {
   .explore-container1 {
     height: var(--dl-size-size-small);
