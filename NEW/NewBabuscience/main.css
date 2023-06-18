@@ -1,7 +1,7 @@
 h1 {
   font-size: 80px;
   color: white;
-  margin-bottom: 20px; /* decrease margin between h1 and nav */
+  margin-bottom: 0px; /* Decreased margin between h1 and nav */
   margin-top: 20px;
 }
 
@@ -11,6 +11,7 @@ body {
   height: 50vh;
   display: grid;
   place-items: center;
+  align-content: center;
 }
 
 img {
