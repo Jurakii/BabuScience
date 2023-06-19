@@ -67,23 +67,6 @@
 .home-navlink1:active {
   color: #000000;
 }
-.home-text1 {
-  color: rgb(255, 255, 255);
-  font-size: 32px;
-  font-style: normal;
-  text-align: center;
-  transition: 0.3s;
-  font-family: Roboto Mono;
-  font-weight: 100;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-.home-text1:hover {
-  text-decoration: underline;
-}
-.home-text1:active {
-  color: #000000;
-}
 .home-link {
   display: contents;
 }
@@ -102,9 +85,6 @@
     font-size: 24px;
   }
   .home-navlink1 {
-    font-size: 24px;
-  }
-  .home-text1 {
     font-size: 24px;
   }
 }
