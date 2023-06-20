@@ -32,24 +32,7 @@
   flex-direction: row;
   justify-content: center;
 }
-.home-navlink {
-  color: rgb(255, 255, 255);
-  font-size: 32px;
-  font-style: normal;
-  text-align: center;
-  transition: 0.3s;
-  font-family: Roboto Mono;
-  font-weight: 100;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-.home-navlink:hover {
-  text-decoration: underline;
-}
-.home-navlink:active {
-  color: #000000;
-}
-.home-navlink1 {
+.home-link {
   color: rgb(255, 255, 255);
   font-size: 32px;
   font-style: normal;
@@ -61,13 +44,31 @@
   padding-right: 10px;
   text-decoration: none;
 }
-.home-navlink1:hover {
+.home-link:hover {
   text-decoration: underline;
 }
-.home-navlink1:active {
+.home-link:active {
   color: #000000;
 }
-.home-link {
+.home-link1 {
+  color: rgb(255, 255, 255);
+  font-size: 32px;
+  font-style: normal;
+  text-align: center;
+  transition: 0.3s;
+  font-family: Roboto Mono;
+  font-weight: 100;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-decoration: none;
+}
+.home-link1:hover {
+  text-decoration: underline;
+}
+.home-link1:active {
+  color: #000000;
+}
+.home-link2 {
   display: contents;
 }
 .home-image {
@@ -81,10 +82,10 @@
   .home-container1 {
     height: var(--dl-size-size-small);
   }
-  .home-navlink {
+  .home-link {
     font-size: 24px;
   }
-  .home-navlink1 {
+  .home-link1 {
     font-size: 24px;
   }
 }
