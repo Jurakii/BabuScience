@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Babu Science</title>
-    <meta property="og:title" content="Babu Science" />
+    <title>Arcade - Babu Science</title>
+    <meta property="og:title" content="Arcade - Babu Science" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
     <meta property="twitter:card" content="summary_large_image" />
@@ -48,22 +48,49 @@
   </head>
   <body>
     <div>
-      <link href="./home.css" rel="stylesheet" />
+      <link href="./arcade.css" rel="stylesheet" />
 
-      <div class="home-container">
-        <h1 class="home-text">Someone Beckons You</h1>
-        <div class="home-container1">
-          <a href="index.html" class="home-navlink">Home</a>
-          <a href="explore.html" class="home-navlink1">Explore</a>
+      <div class="arcade-container">
+        <h1 class="arcade-text">Babu Arcade</h1>
+        <div class="arcade-container1">
+          <a href="index.html" class="arcade-navlink">Home</a>
+          <a href="explore.html" class="arcade-navlink1">Explore</a>
         </div>
-        <video
-          src="https://www.babuscience.xyz/babuSpin.webm"
-          loop=""
-          muted=""
-          poster="https://www.babuscience.xyz/babuSpin.gif"
-          autoplay=""
-          class="home-video"
-        ></video>
+        <div class="slider-container slider-root-class-name">
+          <div class="slider-slide">
+            <div class="slider-left">
+              <svg viewBox="0 0 1024 1024" class="slider-icon">
+                <path d="M658 708l-60 60-256-256 256-256 60 60-196 196z"></path>
+              </svg>
+            </div>
+            <div class="slider-right">
+              <svg viewBox="0 0 1024 1024" class="slider-icon2">
+                <path
+                  d="M366 708l196-196-196-196 60-60 256 256-256 256z"
+                ></path>
+              </svg>
+            </div>
+            <a
+              href="https://www.babuscience.xyz/Arcade/BabuBlast"
+              target="_blank"
+              rel="noreferrer noopener"
+              class="slider-link"
+            >
+              <img
+                alt="BabuBlast"
+                src="https://babuscience.xyz/Icons/BabuBlast.png"
+                class="slider-image"
+              />
+            </a>
+            <a href="rocket.html" class="slider-navlink">
+              <img
+                alt="RocketBabu1"
+                src="https://babuscience.xyz/Icons/RocketBabu1.png"
+                class="slider-image1"
+              />
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </body>
