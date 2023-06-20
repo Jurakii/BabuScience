@@ -62,22 +62,8 @@
 .home-navlink1:active {
   color: var(--dl-color-gray-black);
 }
-.home-video {
+.home-image {
   width: 450px;
   height: auto;
-}
-@media(max-width: 991px) {
-  .home-video {
-    width: 450px;
-  }
-}
-@media(max-width: 767px) {
-  .home-video {
-    width: 450px;
-  }
-}
-@media(max-width: 479px) {
-  .home-video {
-    width: 450px;
-  }
+  object-fit: cover;
 }
