@@ -80,6 +80,17 @@
   padding-right: 5px;
   text-decoration: none;
 }
+.slider-link1 {
+  display: contents;
+}
+.slider-image2 {
+  width: var(--dl-size-size-xxlarge);
+  object-fit: cover;
+  padding-left: 5px;
+  border-radius: 10%;
+  padding-right: 5px;
+  text-decoration: none;
+}
 
 
 .arcade-container {

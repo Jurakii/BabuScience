@@ -8,8 +8,7 @@
   justify-content: center;
 }
 .rocket-babu1-div {
-  padding: var(--dl-space-space-halfunit);
-  align-self: center;
+  display: contents;
 }
 
 

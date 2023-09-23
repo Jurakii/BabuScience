@@ -44,371 +44,361 @@
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&amp;display=swap"
       data-tag="font"
     />
-    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <link rel="stylesheet" href="./style.css" />
     <div>
-      <script
-        type="text/javascript"
-        src="https://unpkg.com/dangerous-html/dist/default/lib.umd.js"
-      ></script>
       <link href="./rocket.css" rel="stylesheet" />
 
       <div class="rocket-container">
         <div class="rocket-babu1-container rocket-babu1-root-class-name">
           <div class="rocket-babu1-div">
-            <dangerous-html
-              html="<html>
-<body style='background-color:black'>
+            <canvas id="myCanvas" width="900" height="900"></canvas>
 
-  <canvas id='myCanvas' width='900' height='900'></canvas>
+            <script>
+              var canvas = document.getElementById('myCanvas');
+                  var ctx = canvas.getContext('2d');
+                  var playerX = canvas.width / 2 - 100;
+                  var playerY = canvas.height / 2;
+                  var spacePressed = false;
+                  var velocity = 0;
+                  var pipeX1 = canvas.width + 350;
+                  var pipeTopOffset1 = 450;
+                  var pipeTopOffset2 = 450;
+                  var pipeBottomOffset1 = 300;
+                  var pipeBottomOffset2 = 300;
+                  var pipeX2 = canvas.width * 2;
+                  var drawing = null;
+                  var pipeTY = 0;
+                  var pipeBY = canvas.height;
+                  var h = 70;
+                  var v = 20;
+                  var dead = false;
+                  var score = 0;
+                  var scored = false;
+                  var cloudX1 = canvas.width + 200;
+                  var cloudX2 = canvas.width + 700;
+                  var start = true;
+                  var scoreSound;
+                  var explosion;
+                  var fly;
+                  var select;
+                  var touched = false;
 
-  <script>var canvas = document.getElementById('myCanvas');
-    var ctx = canvas.getContext('2d');
-    var playerX = canvas.width / 2 - 100;
-    var playerY = canvas.height / 2;
-    var spacePressed = false;
-    var velocity = 0;
-    var pipeX1 = canvas.width + 350;
-    var pipeTopOffset1 = 450;
-    var pipeTopOffset2 = 450;
-    var pipeBottomOffset1 = 300;
-    var pipeBottomOffset2 = 300;
-    var pipeX2 = canvas.width * 2;
-    var drawing = null;
-    var pipeTY = 0;
-    var pipeBY = canvas.height;
-    var h = 70;
-    var v = 20;
-    var dead = false;
-    var score = 0;
-    var scored = false;
-    var cloudX1 = canvas.width + 200;
-    var cloudX2 = canvas.width + 700;
-    var start = true;
-    var scoreSound;
-    var explosion;
-    var fly;
-    var select;
-    var touched = false;
-    
-    function highScore(score) {
-      var saved = 0;
-      try {
-        saved = parseFloat(localStorage.highScore);
-      } catch (e) {
-        saved = 0;
-      }
-      if (!(typeof score === 'undefined')) {
-        try {
-          score = parseFloat(score);
-        } catch (e) {
-          score = 0;
-        }
-        if (score > saved) {
-          saved = score;
-          localStorage.highScore = '' + score;
-        }
-      }
-      if (isNaN(saved)) {
-        saved = 0;
-        localStorage.highScore = '0';
-      }
-      return saved;
-    }
+                  function highScore(score) {
+                    var saved = 0;
+                    try {
+                      saved = parseFloat(localStorage.highScore);
+                    } catch (e) {
+                      saved = 0;
+                    }
+                    if (!(typeof score === 'undefined')) {
+                      try {
+                        score = parseFloat(score);
+                      } catch (e) {
+                        score = 0;
+                      }
+                      if (score > saved) {
+                        saved = score;
+                        localStorage.highScore = '' + score;
+                      }
+                    }
+                    if (isNaN(saved)) {
+                      saved = 0;
+                      localStorage.highScore = '0';
+                    }
+                    return saved;
+                  }
 
-    function canvasPressHandler() {
-      touched = true;
-      spacePressed = true;
-      if (dead) {
-        reset();
-      }
-    }
+                  function canvasPressHandler() {
+                    touched = true;
+                    spacePressed = true;
+                    if (dead) {
+                      reset();
+                    }
+                  }
 
-    canvas.addEventListener('mousedown', canvasPressHandler);
-    canvas.addEventListener('touchstart', canvasPressHandler);
+                  canvas.addEventListener('mousedown', canvasPressHandler);
+                  canvas.addEventListener('touchstart', canvasPressHandler);
 
-    document.addEventListener('keydown', keyDown, false);
-    document.addEventListener('keyup', keyUp, false);
-    
-    function keyDown(e) {
-      if (e.keyCode == 32) {
-        spacePressed = true;
-        touched = false;
-      } else if (e.keyCode == 82) {
-        if (dead) {
-          reset();
-        }
-      }
-    }
-    
-    function handleStart() {
-      spacePressed = true;
-      if (dead) {
-        reset();
-      }
-    }
-    
-    function handleEnd() {
-      spacePressed = false;
-      if (dead) {
-        reset();
-      }
-    
-    }
-    
-    function keyUp(e) {
-      if (e.keyCode == 32) {
-        spacePressed = false;
-        touched = false;
-      } else if (e.keyCode == 82) {
-        if (dead) {
-          reset();
-        }
-      }
-    }
-    
-    function cloud(e, a) {
-      const radius = 70;
-      ctx.beginPath();
-      ctx.arc(e, a, radius, 0, 2 * Math.PI, false);
-      ctx.arc(e + 75, a + 10, radius - 10, 0, 2 * Math.PI, false);
-      ctx.arc(e - 75, a + 10, radius - 10, 0, 2 * Math.PI, false);
-      ctx.fillStyle = 'white';
-      ctx.fill();
-      ctx.closePath();
-    }
-    
-    function reset() {
-    
-      select = new sound('https://www.babuscience.xyz/Projects/RocketBabu/blipSelect.wav');
-      select.play();
-      dead = false;
-      playerX = canvas.width / 2 - 100;
-      playerY = canvas.height / 2
-      velocity = 0;
-      pipeTopOffset1 = 450;
-      pipeTopOffset2 = 450;
-      pipeBottomOffset1 = 300;
-      pipeBottomOffset2 = 300;
-      dead = false;
-      pipeX1 = canvas.width + 350;
-      pipeX2 = canvas.width * 2;
-      score = 0;
-      scored = false;
-    }
-    
-    function player() {
-      drawing = new Image();
-      if (velocity > 0) {
-        drawing.src = 'https://www.babuscience.xyz/Projects/RocketBabu/BabuFire.png';
-      } else {
-        drawing.src = 'https://www.babuscience.xyz/Projects/RocketBabu/BabuFall.png';
-      }
-    
-      ctx.drawImage(drawing, playerX, playerY - 20);
-    }
-    
-    function pipe(x, y) {
-      ctx.beginPath();
-      ctx.rect(x, y, 150, 750);
-      ctx.lineWidth = 20;
-      ctx.stroke();
-      ctx.fillStyle = '#007a00';
-      ctx.fill();
-      ctx.closePath();
-    }
-    
-    function background() {
-      ctx.beginPath();
-      ctx.rect(0, 0, canvas.width, canvas.height);
-      ctx.stroke();
-      ctx.fillStyle = '#87CEEB';
-      ctx.fill();
-      ctx.closePath();
-    
-    }
-    
-    function randomizePipes(n, j) {
-      if (n == 1) {
-        if (j == 1) {
-          pipeTopOffset1 = 450;
-          pipeBottomOffset1 = 300;
-        } else if (j == 2) {
-          pipeTopOffset1 = 600;
-          pipeBottomOffset1 = 450;
-        } else if (j == 3) {
-          pipeTopOffset1 = 300;
-          pipeBottomOffset1 = 150;
-        }
-    
-      } else {
-        if (j == 1) {
-          pipeTopOffset2 = 450;
-          pipeBottomOffset2 = 300;
-        } else if (j == 2) {
-          pipeTopOffset2 = 600;
-          pipeBottomOffset2 = 450;
-        } else if (j == 3) {
-          pipeTopOffset2 = 300;
-          pipeBottomOffset2 = 150;
-        }
-    
-      }
-    
-    
-    }
-    
-    function menu() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      background();
-      ctx.font = '80px Impact';
-      ctx.fillStyle = 'orange';
-      ctx.textAlign = 'center';
-      ctx.fillText('Rocket Babu', canvas.width / 2, canvas.height / 2 - 100);
-      ctx.font = '50px Calibri';
-      ctx.fillStyle = 'black';
-      if(!touched){
-        ctx.fillText('Press Space to play', canvas.width / 2, canvas.height / 2 + 50 - 100);
-      }
-      ctx.fillText('Highscore: ' + highScore(score), canvas.width / 2, canvas.height / 2 + 200);
-      drawing = new Image();
-      drawing.src = 'https://www.babuscience.xyz/Projects/RocketBabu/BabuFire.png';
-      ctx.drawImage(drawing, playerX, playerY - 20, );
-    }
-    
-    function sound(src) {
-      this.sound = document.createElement('audio');
-      this.sound.src = src;
-      this.sound.setAttribute('preload', 'auto');
-      this.sound.setAttribute('controls', 'none');
-      this.sound.style.display = 'none';
-      document.body.appendChild(this.sound);
-      this.play = function () {
-        this.sound.play();
-      }
-      this.stop = function () {
-        this.sound.pause();
-      }
-    }
-    
-    function died() {
-      dead = true;
-      explosion = new sound('https://www.babuscience.xyz/Projects/RocketBabu/explosion.wav');
-      explosion.play();
-      highScore(score);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      background();
-      cloud(cloudX1, 100);
-      cloud(cloudX2, 150);
-      pipe(pipeX1, pipeTY - pipeTopOffset1);
-      pipe(pipeX1, pipeBY - pipeBottomOffset1);
-      pipe(pipeX2, pipeTY - pipeTopOffset2);
-      pipe(pipeX2, pipeBY - pipeBottomOffset2);
-      player();
-      ctx.font = '80px Impact';
-      ctx.fillStyle = 'red';
-      ctx.textAlign = 'center';
-      ctx.fillText('You Crashed!', canvas.width / 2, canvas.height / 2);
-      ctx.font = '50px Calibri';
-      ctx.fillStyle = 'black';
-      if(!touched){
-        ctx.fillText('Press R to play again', canvas.width / 2, canvas.height / 2 + 50);
-      }
-      ctx.font = '100px Calibri';
-      ctx.fillStyle = 'white';
-      ctx.fillText('You scored: ' + score, canvas.width / 2, 300);
-      ctx.font = '50px Calibri';
-      ctx.fillText('Highscore: ' + highScore(score), canvas.width / 2, 360);
-    }
-    
-    function draw() {
-      if (start == false) {
-        if (!dead) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          background();
-          cloud(cloudX1, 100);
-          cloud(cloudX2, 150);
-          pipe(pipeX1, pipeTY - pipeTopOffset1);
-          pipe(pipeX1, pipeBY - pipeBottomOffset1);
-          pipe(pipeX2, pipeTY - pipeTopOffset2);
-          pipe(pipeX2, pipeBY - pipeBottomOffset2);
-          player();
-          ctx.font = '80px Calibri';
-          ctx.fillStyle = 'black';
-          ctx.fillText(score, canvas.width / 2, 90);
-          pipeX2 -= 5;
-          pipeX1 -= 5;
-          cloudX1 -= 2;
-          cloudX2 -= 2;
-          velocity -= 0.25;
-          playerY -= velocity;
-          if (scored == false &amp;&amp; (((playerX + h > pipeX1) &amp;&amp; (playerX + h < pipeX1 + 150)) || ((playerX + h > pipeX2) &amp;&amp;
-              (
-                playerX + h < pipeX2 + 150)))) {
-            scored = true;
-            score += 1;
-            scoreSound = new sound('https://www.babuscience.xyz/Projects/RocketBabu/pickupCoin.wav');
-            scoreSound.play();
-          } else if ((playerX + h > pipeX1 + 150) &amp;&amp; (playerX + h < pipeX2) || (playerX + h > pipeX2 + 150) &amp;&amp; (
-              playerX +
-              h < pipeX1)) {
-            scored = false;
-          }
-          if (pipeX1 <= -150) {
-            randomizePipes(1, Math.floor(Math.random() * 3) + 1);
-            pipeX1 = canvas.width;
-    
-          } else if (pipeX2 <= -150) {
-            pipeX2 = canvas.width;
-            randomizePipes(2, Math.floor(Math.random() * 3) + 1);
-    
-          }
-          if ((playerX + 75 + h > pipeX1) &amp;&amp; (playerY - v > -100) &amp;&amp; (playerX + 75 + h < pipeX1 + 150) &amp;&amp; playerY - v <
-            pipeTY + 750 - pipeTopOffset1) {
-            died();
-          } else if ((playerX + 75 + h > pipeX2) &amp;&amp; (playerY - v > -100) &amp;&amp; (playerX + 75 + h < pipeX2 + 150) &amp;&amp;
-            playerY - v < pipeTY + 750 - pipeTopOffset2) {
-            died();
-          } else if ((playerX + 75 + h > pipeX2) &amp;&amp; (playerY - v < (pipeBY)) &amp;&amp; (playerX + 75 + h < pipeX2 + 200) &amp;&amp;
-            playerY - v >
-            pipeBY - 90 - pipeBottomOffset2) {
-            died();
-          } else if ((playerX + 75 + h > pipeX1) &amp;&amp; (playerY - v < (pipeBY)) &amp;&amp; (playerX + 75 + h < pipeX1 + 200) &amp;&amp;
-            playerY - v >
-            pipeBY - 90 - pipeBottomOffset1) {
-            died();
-          }
-          if (spacePressed) {
-            velocity = 8;
-            spacePressed = false;
-            fly = new sound('https://www.babuscience.xyz/Projects/RocketBabu/jump.wav');
-            fly.play();
-          }
-          if (playerY >= canvas.height) {
-            velocity = 1;
-          } else if (playerY < 0) {
-            velocity = 0;
-          }
-          if (cloudX1 < -200) {
-            cloudX1 = canvas.width + 200;
-          } else if (cloudX2 < -200) {
-            cloudX2 = canvas.width + 200;
-          }
-        }
-      } else {
-        menu();
-        if (spacePressed) {
-          start = false;
-        }
-      }
-    }
-    
-    setInterval(draw, 10);</script>
-</body>
+                  document.addEventListener('keydown', keyDown, false);
+                  document.addEventListener('keyup', keyUp, false);
 
-</html>"
-            ></dangerous-html>
+                  function keyDown(e) {
+                    if (e.keyCode == 32) {
+                      spacePressed = true;
+                      touched = false;
+                    } else if (e.keyCode == 82) {
+                      if (dead) {
+                        reset();
+                      }
+                    }
+                  }
+
+                  function handleStart() {
+                    spacePressed = true;
+                    if (dead) {
+                      reset();
+                    }
+                  }
+
+                  function handleEnd() {
+                    spacePressed = false;
+                    if (dead) {
+                      reset();
+                    }
+
+                  }
+
+                  function keyUp(e) {
+                    if (e.keyCode == 32) {
+                      spacePressed = false;
+                      touched = false;
+                    } else if (e.keyCode == 82) {
+                      if (dead) {
+                        reset();
+                      }
+                    }
+                  }
+
+                  function cloud(e, a) {
+                    const radius = 70;
+                    ctx.beginPath();
+                    ctx.arc(e, a, radius, 0, 2 * Math.PI, false);
+                    ctx.arc(e + 75, a + 10, radius - 10, 0, 2 * Math.PI, false);
+                    ctx.arc(e - 75, a + 10, radius - 10, 0, 2 * Math.PI, false);
+                    ctx.fillStyle = 'white';
+                    ctx.fill();
+                    ctx.closePath();
+                  }
+
+                  function reset() {
+
+                    select = new sound('https://www.babuscience.xyz/Projects/RocketBabu/blipSelect.wav');
+                    select.play();
+                    dead = false;
+                    playerX = canvas.width / 2 - 100;
+                    playerY = canvas.height / 2
+                    velocity = 0;
+                    pipeTopOffset1 = 450;
+                    pipeTopOffset2 = 450;
+                    pipeBottomOffset1 = 300;
+                    pipeBottomOffset2 = 300;
+                    dead = false;
+                    pipeX1 = canvas.width + 350;
+                    pipeX2 = canvas.width * 2;
+                    score = 0;
+                    scored = false;
+                  }
+
+                  function player() {
+                    drawing = new Image();
+                    if (velocity > 0) {
+                      drawing.src = 'https://www.babuscience.xyz/Projects/RocketBabu/BabuFire.png';
+                    } else {
+                      drawing.src = 'https://www.babuscience.xyz/Projects/RocketBabu/BabuFall.png';
+                    }
+
+                    ctx.drawImage(drawing, playerX, playerY - 20);
+                  }
+
+                  function pipe(x, y) {
+                    ctx.beginPath();
+                    ctx.rect(x, y, 150, 750);
+                    ctx.lineWidth = 20;
+                    ctx.stroke();
+                    ctx.fillStyle = '#007a00';
+                    ctx.fill();
+                    ctx.closePath();
+                  }
+
+                  function background() {
+                    ctx.beginPath();
+                    ctx.rect(0, 0, canvas.width, canvas.height);
+                    ctx.stroke();
+                    ctx.fillStyle = '#87CEEB';
+                    ctx.fill();
+                    ctx.closePath();
+
+                  }
+
+                  function randomizePipes(n, j) {
+                    if (n == 1) {
+                      if (j == 1) {
+                        pipeTopOffset1 = 450;
+                        pipeBottomOffset1 = 300;
+                      } else if (j == 2) {
+                        pipeTopOffset1 = 600;
+                        pipeBottomOffset1 = 450;
+                      } else if (j == 3) {
+                        pipeTopOffset1 = 300;
+                        pipeBottomOffset1 = 150;
+                      }
+
+                    } else {
+                      if (j == 1) {
+                        pipeTopOffset2 = 450;
+                        pipeBottomOffset2 = 300;
+                      } else if (j == 2) {
+                        pipeTopOffset2 = 600;
+                        pipeBottomOffset2 = 450;
+                      } else if (j == 3) {
+                        pipeTopOffset2 = 300;
+                        pipeBottomOffset2 = 150;
+                      }
+
+                    }
+
+
+                  }
+
+                  function menu() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    background();
+                    ctx.font = '80px Impact';
+                    ctx.fillStyle = 'orange';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Rocket Babu', canvas.width / 2, canvas.height / 2 - 100);
+                    ctx.font = '50px Calibri';
+                    ctx.fillStyle = 'black';
+                    if(!touched){
+                      ctx.fillText('Press Space to play', canvas.width / 2, canvas.height / 2 + 50 - 100);
+                    }
+                    ctx.fillText('Highscore: ' + highScore(score), canvas.width / 2, canvas.height / 2 + 200);
+                    drawing = new Image();
+                    drawing.src = 'https://www.babuscience.xyz/Projects/RocketBabu/BabuFire.png';
+                    ctx.drawImage(drawing, playerX, playerY - 20, );
+                  }
+
+                  function sound(src) {
+                    this.sound = document.createElement('audio');
+                    this.sound.src = src;
+                    this.sound.setAttribute('preload', 'auto');
+                    this.sound.setAttribute('controls', 'none');
+                    this.sound.style.display = 'none';
+                    document.body.appendChild(this.sound);
+                    this.play = function () {
+                      this.sound.play();
+                    }
+                    this.stop = function () {
+                      this.sound.pause();
+                    }
+                  }
+
+                  function died() {
+                    dead = true;
+                    explosion = new sound('https://www.babuscience.xyz/Projects/RocketBabu/explosion.wav');
+                    explosion.play();
+                    highScore(score);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    background();
+                    cloud(cloudX1, 100);
+                    cloud(cloudX2, 150);
+                    pipe(pipeX1, pipeTY - pipeTopOffset1);
+                    pipe(pipeX1, pipeBY - pipeBottomOffset1);
+                    pipe(pipeX2, pipeTY - pipeTopOffset2);
+                    pipe(pipeX2, pipeBY - pipeBottomOffset2);
+                    player();
+                    ctx.font = '80px Impact';
+                    ctx.fillStyle = 'red';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('You Crashed!', canvas.width / 2, canvas.height / 2);
+                    ctx.font = '50px Calibri';
+                    ctx.fillStyle = 'black';
+                    if(!touched){
+                      ctx.fillText('Press R to play again', canvas.width / 2, canvas.height / 2 + 50);
+                    }
+                    ctx.font = '100px Calibri';
+                    ctx.fillStyle = 'white';
+                    ctx.fillText('You scored: ' + score, canvas.width / 2, 300);
+                    ctx.font = '50px Calibri';
+                    ctx.fillText('Highscore: ' + highScore(score), canvas.width / 2, 360);
+                  }
+
+                  function draw() {
+                    if (start == false) {
+                      if (!dead) {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        background();
+                        cloud(cloudX1, 100);
+                        cloud(cloudX2, 150);
+                        pipe(pipeX1, pipeTY - pipeTopOffset1);
+                        pipe(pipeX1, pipeBY - pipeBottomOffset1);
+                        pipe(pipeX2, pipeTY - pipeTopOffset2);
+                        pipe(pipeX2, pipeBY - pipeBottomOffset2);
+                        player();
+                        ctx.font = '80px Calibri';
+                        ctx.fillStyle = 'black';
+                        ctx.fillText(score, canvas.width / 2, 90);
+                        pipeX2 -= 5;
+                        pipeX1 -= 5;
+                        cloudX1 -= 2;
+                        cloudX2 -= 2;
+                        velocity -= 0.25;
+                        playerY -= velocity;
+                        if (scored == false && (((playerX + h > pipeX1) && (playerX + h < pipeX1 + 150)) || ((playerX + h > pipeX2) &&
+                            (
+                              playerX + h < pipeX2 + 150)))) {
+                          scored = true;
+                          score += 1;
+                          scoreSound = new sound('https://www.babuscience.xyz/Projects/RocketBabu/pickupCoin.wav');
+                          scoreSound.play();
+                        } else if ((playerX + h > pipeX1 + 150) && (playerX + h < pipeX2) || (playerX + h > pipeX2 + 150) && (
+                            playerX +
+                            h < pipeX1)) {
+                          scored = false;
+                        }
+                        if (pipeX1 <= -150) {
+                          randomizePipes(1, Math.floor(Math.random() * 3) + 1);
+                          pipeX1 = canvas.width;
+
+                        } else if (pipeX2 <= -150) {
+                          pipeX2 = canvas.width;
+                          randomizePipes(2, Math.floor(Math.random() * 3) + 1);
+
+                        }
+                        if ((playerX + 75 + h > pipeX1) && (playerY - v > -100) && (playerX + 75 + h < pipeX1 + 150) && playerY - v <
+                          pipeTY + 750 - pipeTopOffset1) {
+                          died();
+                        } else if ((playerX + 75 + h > pipeX2) && (playerY - v > -100) && (playerX + 75 + h < pipeX2 + 150) &&
+                          playerY - v < pipeTY + 750 - pipeTopOffset2) {
+                          died();
+                        } else if ((playerX + 75 + h > pipeX2) && (playerY - v < (pipeBY)) && (playerX + 75 + h < pipeX2 + 200) &&
+                          playerY - v >
+                          pipeBY - 90 - pipeBottomOffset2) {
+                          died();
+                        } else if ((playerX + 75 + h > pipeX1) && (playerY - v < (pipeBY)) && (playerX + 75 + h < pipeX1 + 200) &&
+                          playerY - v >
+                          pipeBY - 90 - pipeBottomOffset1) {
+                          died();
+                        }
+                        if (spacePressed) {
+                          velocity = 8;
+                          spacePressed = false;
+                          fly = new sound('https://www.babuscience.xyz/Projects/RocketBabu/jump.wav');
+                          fly.play();
+                        }
+                        if (playerY >= canvas.height) {
+                          velocity = 1;
+                        } else if (playerY < 0) {
+                          velocity = 0;
+                        }
+                        if (cloudX1 < -200) {
+                          cloudX1 = canvas.width + 200;
+                        } else if (cloudX2 < -200) {
+                          cloudX2 = canvas.width + 200;
+                        }
+                      }
+                    } else {
+                      menu();
+                      if (spacePressed) {
+                        start = false;
+                      }
+                    }
+                  }
+
+                  setInterval(draw, 10);
+            </script>
           </div>
         </div>
       </div>
