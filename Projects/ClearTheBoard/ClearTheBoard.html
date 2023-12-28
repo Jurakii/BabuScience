@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Clear the Board</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #005f8c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        canvas {
+            image-rendering: pixelated;
+            display: block;
+            width: auto;
+            height: 100%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="84" height="102"></canvas>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        let tile = new Image(); // Create an image object
+        tile.src = 'tile.png'; // Set the image source
+        let coin = new Image(); // Create an image object
+        coin.src = 'coin.png'; // Set the image source
+        let cursorX = 1;
+        let cursorY = 1;
+        let board = [];
+        let load = true;
+        let moves = 0;
+
+        tile.onload = function () {
+            redraw();
+        };
+        coin.onload = function () {
+            redraw();
+        };
+
+        function drawGrid() {
+            let win = true; // Flag to track if the board has all zeros
+            for (let k = 0; k < 5; k++) {
+                if (load) {
+                    board[k] = [];
+                }
+                for (let i = 0; i < 5; i++) {
+                    if (load) {
+                        board[k][i] = Math.floor(Math.random() * 2);
+                    }
+                    ctx.drawImage(tile, i * 17, k * 17);
+                    if (board[k][i] == 1) {
+                        ctx.drawImage(coin, 4 + i * 17, 4 + k * 17);
+                        win = false; // If any cell is not zero, set the flag to false
+                    }
+                }
+            }
+            load = false;
+            if (win) {
+                displayWin();
+            }
+        }
+
+        function displayWin() {
+            ctx.fillStyle = '#00b9be';
+            ctx.font = 'Bold 16px Courier New, monospace';
+            ctx.fillText('You Win!', 4, 45);
+        }
+
+        function displayUi() {
+            ctx.fillStyle = '#005f8c';
+            ctx.fillRect(0, 84, 84, 34);
+            ctx.fillStyle = '#9ff4e5';
+            ctx.font = '13px Courier New, monospace';
+            ctx.fillText('Moves:' + moves, 3, 96);
+
+        }
+
+        function cursorSquare(x, y) {
+            ctx.beginPath();
+            ctx.strokeStyle = '#9ff4e5';
+            ctx.lineWidth = '2';
+            ctx.rect(x, y, 16, 16);
+            ctx.stroke();
+        }
+
+        function drawCursor() {
+            for (let i = 0; i < 3; i++) {
+                for (let k = 0; k < 3; k++) {
+                    if (!((i === 0 && k === 0) || (i === 0 && k === 2) || (i === 2 && k === 0) || (i === 2 && k === 2))) {
+                        cursorSquare(17 * (i + cursorX), 17 * (k + cursorY));
+                    }
+                }
+            }
+        }
+
+        function leftArrowPress() {
+            if (cursorX > -1) {
+                cursorX--;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                redraw();
+            }
+        }
+
+        function rightArrowPress() {
+            if (cursorX < 3) {
+                cursorX++;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                redraw();
+            }
+        }
+
+        function upArrowPress() {
+            if (cursorY > -1) {
+                cursorY--;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                redraw();
+            }
+        }
+
+        function downArrowPress() {
+            if (cursorY < 3) {
+                cursorY++;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                redraw();
+            }
+        }
+
+    function spacePress() {
+        moves++;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < 3; i++) {
+            for (let k = 0; k < 3; k++) {
+                let newCursorX = cursorX + i;
+                let newCursorY = cursorY + k;
+                if (newCursorX >= 0 && newCursorX < 5 && newCursorY >= 0 && newCursorY < 5) {
+                    if (!((i === 0 && k === 0) || (i === 0 && k === 2) || (i === 2 && k === 0) || (i === 2 && k === 2))) {
+                        if (board[newCursorY][newCursorX] === 1) {
+                            board[newCursorY][newCursorX] = 0;
+                        } else {
+                            board[newCursorY][newCursorX] = 1;
+                        }
+                    }
+                }
+            }
+        }
+        redraw();
+    }
+
+
+        function redraw() {
+            ctx.fillStyle = '#005f8c';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            drawGrid();
+            drawCursor();
+            displayUi();
+            //console.log(board);
+        }
+
+        document.addEventListener('keydown', function (event) {
+            if (event.keyCode === 37) {
+                leftArrowPress();
+            }
+        });
+        document.addEventListener('keydown', function (event) {
+            if (event.keyCode === 38) {
+                upArrowPress();
+            }
+        });
+        document.addEventListener('keydown', function (event) {
+            if (event.keyCode === 39) {
+                rightArrowPress();
+            }
+        });
+        document.addEventListener('keydown', function (event) {
+            if (event.keyCode === 40) {
+                downArrowPress();
+            }
+        });
+        document.addEventListener('keydown', function (event) {
+            if (event.keyCode === 32) {
+                spacePress();
+            }
+        });
+                document.addEventListener('keydown', function (event) {
+                        if (event.keyCode === 82) {
+                            load = true;
+                            moves = 0;
+                            redraw();
+                        }
+                    });
+        window.addEventListener('resize', redraw);
+    </script>
+</body>
+
+</html>
