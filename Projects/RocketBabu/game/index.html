@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<!-- Created with https://packager.turbowarp.org/ -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- We only include this to explicitly loosen the CSP of various packager environments. It does not provide any security. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: blob:">
+  <title>RocketBabu</title>
+  <style>
+    body {
+      color: #ffffff;
+      font-family: sans-serif;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+    :root, body.is-fullscreen {
+      background-color: #000000;
+    }
+    [hidden] {
+      display: none !important;
+    }
+    h1 {
+      font-weight: normal;
+    }
+    a {
+      color: inherit;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    #app, #loading, #error, #launch {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: default;
+      user-select: none;
+      -webkit-user-select: none;
+      background-color: #000000;
+    }
+    #launch {
+      background-color: rgba(0, 0, 0, 0.7);
+      cursor: pointer;
+    }
+    .green-flag {
+      width: 80px;
+      height: 80px;
+      padding: 16px;
+      border-radius: 100%;
+      background: rgba(255, 255, 255, 0.75);
+      border: 3px solid hsla(0, 100%, 100%, 1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+    }
+    #loading {
+      
+    }
+    .progress-bar-outer {
+      border: 1px solid currentColor;
+      height: 10px;
+      width: 200px;
+      max-width: 200px;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      width: 0;
+      background-color: currentColor;
+    }
+    .loading-text, noscript {
+      font-weight: normal;
+      font-size: 36px;
+      margin: 0 0 16px;
+    }
+    .loading-image {
+      margin: 0 0 16px;
+    }
+    #error-message, #error-stack {
+      font-family: monospace;
+      max-width: 600px;
+      white-space: pre-wrap;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+    #error-stack {
+      text-align: left;
+      max-height: 200px;
+      overflow: auto;
+    }
+    .control-button {
+      width: 2rem;
+      height: 2rem;
+      padding: 0.375rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: pointer;
+      border: 0;
+      border-radius: 4px;
+    }
+    .control-button:hover {
+      background: #ff4c4c26;
+    }
+    .control-button.active {
+      background: #ff4c4c59;
+    }
+    .fullscreen-button {
+      background: white !important;
+    }
+    .standalone-fullscreen-button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 0 0 0 4px;
+      padding: 4px;
+      cursor: pointer;
+    }
+    .sc-canvas {
+      cursor: auto;
+    }
+    .sc-monitor-root[data-opcode^="data_"] .sc-monitor-value-color {
+      background-color: #ff8c1a;
+    }
+    .sc-monitor-row-value-outer {
+      background-color: #fc662c;
+    }
+    .sc-monitor-row-value-editing .sc-monitor-row-value-outer {
+      background-color: #e25b27;
+    }
+    
+  </style>
+  <meta name="theme-color" content="#000000">
+  
+</head>
+<body>
+  <div id="app"></div>
+
+  <div id="launch" class="screen" hidden title="Click to start">
+    <div class="green-flag">
+      <svg viewBox="0 0 16.63 17.5" width="42" height="44">
+        <defs><style>.cls-1,.cls-2{fill:#4cbf56;stroke:#45993d;stroke-linecap:round;stroke-linejoin:round;}.cls-2{stroke-width:1.5px;}</style></defs>
+        <path class="cls-1" d="M.75,2A6.44,6.44,0,0,1,8.44,2h0a6.44,6.44,0,0,0,7.69,0V12.4a6.44,6.44,0,0,1-7.69,0h0a6.44,6.44,0,0,0-7.69,0"/>
+        <line class="cls-2" x1="0.75" y1="16.75" x2="0.75" y2="0.75"/>
+      </svg>
+    </div>
+  </div>
+
+  <div id="loading" class="screen">
+    <noscript>Enable JavaScript</noscript>
+    
+    
+    
+  </div>
+
+  <div id="error" class="screen" hidden>
+    <h1>Error</h1>
+    <details>
+      <summary id="error-message"></summary>
+      <p id="error-stack"></p>
+    </details>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    const appElement = document.getElementById('app');
+    const launchScreen = document.getElementById('launch');
+    const loadingScreen = document.getElementById('loading');
+    const loadingInner = document.getElementById('loading-inner');
+    const errorScreen = document.getElementById('error');
+    const errorScreenMessage = document.getElementById('error-message');
+    const errorScreenStack = document.getElementById('error-stack');
+
+    const handleError = (error) => {
+      console.error(error);
+      if (!errorScreen.hidden) return;
+      errorScreen.hidden = false;
+      errorScreenMessage.textContent = '' + error;
+      let debug = error && error.stack || 'no stack';
+      debug += '\nUser agent: ' + navigator.userAgent;
+      errorScreenStack.textContent = debug;
+    };
+    const setProgress = (progress) => {
+      if (loadingInner) loadingInner.style.width = progress * 100 + '%';
+    };
+    const interpolate = (a, b, t) => a + t * (b - a);
+
+    try {
+      setProgress(0.1);
+
+      const scaffolding = new Scaffolding.Scaffolding();
+      scaffolding.width = 640;
+      scaffolding.height = 360;
+      scaffolding.resizeMode = "preserve-ratio";
+      scaffolding.editableLists = false;
+      scaffolding.usePackagedRuntime = true;
+      scaffolding.setup();
+      scaffolding.appendTo(appElement);
+
+      const vm = scaffolding.vm;
+      window.scaffolding = scaffolding;
+      window.vm = scaffolding.vm;
+      window.Scratch = {
+        vm,
+        renderer: vm.renderer,
+        audioEngine: vm.runtime.audioEngine,
+        bitmapAdapter: vm.runtime.v2BitmapAdapter,
+        videoProvider: vm.runtime.ioDevices.video.provider
+      };
+
+      scaffolding.setUsername("player####".replace(/#/g, () => Math.floor(Math.random() * 10)));
+      scaffolding.setAccentColor("#ff4c4c");
+
+      try {
+        scaffolding.addCloudProvider(new Scaffolding.Cloud.WebSocketProvider(["wss://clouddata.turbowarp.org","wss://clouddata.turbowarp.xyz"], "p4-@Project.sb3"));
+      } catch (error) {
+        console.error(error);
+      }
+
+      vm.setTurboMode(false);
+      if (vm.setInterpolation) vm.setInterpolation(true);
+      if (vm.setFramerate) vm.setFramerate(30);
+      if (vm.renderer.setUseHighQualityRender) vm.renderer.setUseHighQualityRender(false);
+      if (vm.setRuntimeOptions) vm.setRuntimeOptions({
+        fencing: false,
+        miscLimits: true,
+        maxClones: 300,
+      });
+      if (vm.setCompilerOptions) vm.setCompilerOptions({
+        enabled: true,
+        warpTimer: false
+      });
+      if (vm.renderer.setMaxTextureDimension) vm.renderer.setMaxTextureDimension(2048);
+
+      if (typeof ScaffoldingAddons !== 'undefined') {
+        ScaffoldingAddons.run(scaffolding, {"gamepad":false,"pointerlock":false,"specialCloudBehaviors":false,"unsafeCloudBehaviors":false,"pause":false});
+      }
+
+      scaffolding.setExtensionSecurityManager({
+        getSandboxMode: () => 'unsandboxed',
+        canLoadExtensionFromProject: () => true
+      });
+      for (const extension of ["data:text/javascript;,(function(Scratch)%20%7B%20%2F%2F%20Name%3A%20Canvas%20Effects%0A%2F%2F%20ID%3A%20theshovelcanvaseffects%0A%2F%2F%20Description%3A%20Apply%20visual%20effects%20to%20the%20entire%20stage.%0A%2F%2F%20By%3A%20TheShovel%0A%2F%2F%20By%3A%20SharkPool%20%3Chttps%3A%2F%2Fscratch.mit.edu%2Fusers%2FDemonX5%2F%3E%0A%2F%2F%20License%3A%20MIT%0A%0A(function%20(Scratch)%20%7B%0A%20%20%22use%20strict%22%3B%0A%20%20if%20(!Scratch.extensions.unsandboxed)%20%7B%0A%20%20%20%20throw%20new%20Error(%22This%20extension%20must%20run%20unsandboxed%22)%3B%0A%20%20%7D%0A%0A%20%20const%20canvas%20%3D%20Scratch.renderer.canvas%3B%0A%0A%20%20const%20updateStyle%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20%2F%2F%20Gotta%20keep%20the%20translation%20to%20%25%20because%20of%20the%20stage%20size%2C%20window%20size%20and%20so%20on%0A%20%20%20%20const%20transform%20%3D%20%60rotate(%24%7Brotation%7Ddeg)%20scale(%24%7BscaleX%7D%25%2C%20%24%7BscaleY%7D%25)%20skew(%24%7BskewX%7Ddeg%2C%20%24%7BskewY%7Ddeg)%20translate(%24%7BoffsetX%7D%25%2C%20%24%7B%0A%20%20%20%20%20%200%20-%20offsetY%0A%20%20%20%20%7D%25)%60%3B%0A%20%20%20%20if%20(canvas.style.transform%20!%3D%3D%20transform)%20%7B%0A%20%20%20%20%20%20canvas.style.transform%20%3D%20transform%3B%0A%20%20%20%20%7D%0A%20%20%20%20const%20filter%20%3D%20%60blur(%24%7Bblur%7Dpx)%20contrast(%24%7B%0A%20%20%20%20%20%20contrast%20%2F%20100%0A%20%20%20%20%7D)%20saturate(%24%7Bsaturation%7D%25)%20hue-rotate(%24%7Bcolor%7Ddeg)%20brightness(%24%7Bbrightness%7D%25)%20invert(%24%7Binvert%7D%25)%20sepia(%24%7Bsepia%7D%25)%20opacity(%24%7B%0A%20%20%20%20%20%20100%20-%20transparency%0A%20%20%20%20%7D%25)%60%3B%0A%20%20%20%20if%20(canvas.style.filter%20!%3D%3D%20filter)%20%7B%0A%20%20%20%20%20%20canvas.style.filter%20%3D%20filter%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20const%20cssBorderRadius%20%3D%20borderRadius%20%3D%3D%3D%200%20%3F%20%22%22%20%3A%20%60%24%7BborderRadius%7D%25%60%3B%0A%20%20%20%20if%20(canvas.style.borderRadius%20!%3D%3D%20cssBorderRadius)%20%7B%0A%20%20%20%20%20%20canvas.style.borderRadius%20%3D%20cssBorderRadius%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20const%20imageRendering%20%3D%20resizeMode%20%3D%3D%3D%20%22pixelated%22%20%3F%20%22pixelated%22%20%3A%20%22%22%3B%0A%20%20%20%20if%20(canvas.style.imageRendering%20!%3D%3D%20imageRendering)%20%7B%0A%20%20%20%20%20%20canvas.style.imageRendering%20%3D%20imageRendering%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20const%20border%20%3D%20%60%24%7BborderWidth%7Dpx%20%24%7BborderStyle%7D%20%24%7BborderColor%7D%60%3B%0A%20%20%20%20if%20(canvas.style.border%20!%3D%3D%20border)%20%7B%0A%20%20%20%20%20%20canvas.style.border%20%3D%20border%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20if%20(canvas.style.backgroundColor%20!%3D%3D%20backgroundColor)%20%7B%0A%20%20%20%20%20%20canvas.style.backgroundColor%20%3D%20backgroundColor%3B%0A%20%20%20%20%7D%0A%20%20%7D%3B%0A%0A%20%20%2F%2F%20scratch-gui%20may%20reset%20canvas%20styles%20when%20resizing%20the%20window%20or%20going%20in%2Fout%20of%20fullscreen%0A%20%20new%20MutationObserver(updateStyle).observe(canvas%2C%20%7B%0A%20%20%20%20attributeFilter%3A%20%5B%22style%22%5D%2C%0A%20%20%20%20attributes%3A%20true%2C%0A%20%20%7D)%3B%0A%0A%20%20let%20borderRadius%20%3D%200%3B%0A%20%20let%20rotation%20%3D%200%3B%0A%20%20let%20offsetY%20%3D%200%3B%0A%20%20let%20offsetX%20%3D%200%3B%0A%20%20let%20skewY%20%3D%200%3B%0A%20%20let%20skewX%20%3D%200%3B%0A%20%20let%20scaleX%20%3D%20100%3B%0A%20%20let%20scaleY%20%3D%20100%3B%0A%20%20%2F%2F%20Thanks%20SharkPool%20for%20telling%20me%20about%20these%0A%20%20let%20transparency%20%3D%200%3B%0A%20%20let%20sepia%20%3D%200%3B%0A%20%20let%20blur%20%3D%200%3B%0A%20%20let%20contrast%20%3D%20100%3B%0A%20%20let%20saturation%20%3D%20100%3B%0A%20%20let%20color%20%3D%200%3B%0A%20%20let%20brightness%20%3D%20100%3B%0A%20%20let%20invert%20%3D%200%3B%0A%20%20let%20resizeMode%20%3D%20%22default%22%3B%0A%20%20let%20borderStyle%20%3D%20%22solid%22%3B%0A%20%20let%20borderWidth%20%3D%200%3B%0A%20%20let%20borderColor%20%3D%20%22%23000000%22%3B%0A%20%20let%20backgroundColor%20%3D%20%22transparent%22%3B%0A%0A%20%20const%20resetStyles%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20borderRadius%20%3D%200%3B%0A%20%20%20%20rotation%20%3D%200%3B%0A%20%20%20%20offsetY%20%3D%200%3B%0A%20%20%20%20offsetX%20%3D%200%3B%0A%20%20%20%20skewY%20%3D%200%3B%0A%20%20%20%20skewX%20%3D%200%3B%0A%20%20%20%20scaleX%20%3D%20100%3B%0A%20%20%20%20scaleY%20%3D%20100%3B%0A%20%20%20%20transparency%20%3D%200%3B%0A%20%20%20%20sepia%20%3D%200%3B%0A%20%20%20%20blur%20%3D%200%3B%0A%20%20%20%20contrast%20%3D%20100%3B%0A%20%20%20%20saturation%20%3D%20100%3B%0A%20%20%20%20color%20%3D%200%3B%0A%20%20%20%20brightness%20%3D%20100%3B%0A%20%20%20%20invert%20%3D%200%3B%0A%20%20%20%20resizeMode%20%3D%20%22default%22%3B%0A%20%20%20%20borderStyle%20%3D%20%22solid%22%3B%0A%20%20%20%20borderWidth%20%3D%200%3B%0A%20%20%20%20borderColor%20%3D%20%22%23000000%22%3B%0A%20%20%20%20backgroundColor%20%3D%20%22transparent%22%3B%0A%20%20%20%20updateStyle()%3B%0A%20%20%7D%3B%0A%0A%20%20Scratch.vm.runtime.on(%22RUNTIME_DISPOSED%22%2C%20resetStyles)%3B%0A%0A%20%20class%20CanvasEffects%20%7B%0A%20%20%20%20getInfo()%20%7B%0A%20%20%20%20%20%20return%20%7B%0A%20%20%20%20%20%20%20%20id%3A%20%22theshovelcanvaseffects%22%2C%0A%20%20%20%20%20%20%20%20name%3A%20%22Canvas%20Effects%22%2C%0A%20%20%20%20%20%20%20%20blocks%3A%20%5B%0A%20%20%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20opcode%3A%20%22seteffect%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20blockType%3A%20Scratch.BlockType.COMMAND%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20text%3A%20%22set%20canvas%20%5BEFFECT%5D%20to%20%5BNUMBER%5D%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20arguments%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20EFFECT%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20type%3A%20Scratch.ArgumentType.STRING%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20menu%3A%20%22EFFECTMENU%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20NUMBER%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20type%3A%20Scratch.ArgumentType.NUMBER%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20opcode%3A%20%22changeEffect%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20blockType%3A%20Scratch.BlockType.COMMAND%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20text%3A%20%22change%20canvas%20%5BEFFECT%5D%20by%20%5BNUMBER%5D%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20arguments%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20EFFECT%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20type%3A%20Scratch.ArgumentType.STRING%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20menu%3A%20%22EFFECTMENU%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20NUMBER%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20type%3A%20Scratch.ArgumentType.NUMBER%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20defaultValue%3A%205%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20opcode%3A%20%22geteffect%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20blockType%3A%20Scratch.BlockType.REPORTER%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20text%3A%20%22get%20canvas%20%5BEFFECT%5D%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20arguments%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20EFFECT%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20type%3A%20Scratch.ArgumentType.STRING%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20menu%3A%20%22EFFECTGETMENU%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20opcode%3A%20%22cleareffects%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20blockType%3A%20Scratch.BlockType.COMMAND%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20text%3A%20%22clear%20canvas%20effects%22%2C%0A%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%22---%22%2C%0A%20%20%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20opcode%3A%20%22setBorder%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20blockType%3A%20Scratch.BlockType.COMMAND%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20text%3A%20%22set%20canvas%20border%20to%20%5BWIDTH%5D%20pixels%20%5BSTYLE%5D%20with%20color%20%5BCOLOR1%5D%20and%20background%20%5BCOLOR2%5D%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20arguments%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20STYLE%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20type%3A%20Scratch.ArgumentType.STRING%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20menu%3A%20%22borderTypes%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20WIDTH%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20type%3A%20Scratch.ArgumentType.NUMBER%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20defaultValue%3A%205%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20COLOR1%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20type%3A%20Scratch.ArgumentType.COLOR%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20defaultValue%3A%20%22%23ff0000%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20COLOR2%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20type%3A%20Scratch.ArgumentType.COLOR%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20defaultValue%3A%20%22%230000ff%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20opcode%3A%20%22renderscale%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20blockType%3A%20Scratch.BlockType.COMMAND%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20text%3A%20%22set%20canvas%20render%20size%20to%20width%3A%20%5BX%5D%20height%3A%20%5BY%5D%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20arguments%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20X%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20type%3A%20Scratch.ArgumentType.NUMBER%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20defaultValue%3A%20100%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20Y%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20type%3A%20Scratch.ArgumentType.NUMBER%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20defaultValue%3A%20100%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20opcode%3A%20%22setrendermode%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20blockType%3A%20Scratch.BlockType.COMMAND%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20text%3A%20%22set%20canvas%20resize%20rendering%20mode%20%5BEFFECT%5D%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20arguments%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20EFFECT%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20type%3A%20Scratch.ArgumentType.STRING%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20menu%3A%20%22RENDERMODE%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%5D%2C%0A%20%20%20%20%20%20%20%20menus%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20EFFECTMENU%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20acceptReporters%3A%20true%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20items%3A%20this._getMenuItems(false)%2C%0A%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20RENDERMODE%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20acceptReporters%3A%20true%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20items%3A%20%5B%22pixelated%22%2C%20%22default%22%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20EFFECTGETMENU%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20acceptReporters%3A%20true%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20items%3A%20this._getMenuItems(true)%2C%0A%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20borderTypes%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20acceptReporters%3A%20true%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20items%3A%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22dotted%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22dashed%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22solid%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22double%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22groove%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22ridge%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22inset%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22outset%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22none%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%7D%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20_getMenuItems(isGetter)%20%7B%0A%20%20%20%20%20%20return%20%5B%0A%20%20%20%20%20%20%20%20%22blur%22%2C%0A%20%20%20%20%20%20%20%20%22contrast%22%2C%0A%20%20%20%20%20%20%20%20%22saturation%22%2C%0A%20%20%20%20%20%20%20%20%22color%20shift%22%2C%0A%20%20%20%20%20%20%20%20%22brightness%22%2C%0A%20%20%20%20%20%20%20%20%22invert%22%2C%0A%20%20%20%20%20%20%20%20...(isGetter%20%3F%20%5B%22resize%20rendering%20mode%22%5D%20%3A%20%5B%5D)%2C%0A%20%20%20%20%20%20%20%20%22sepia%22%2C%0A%20%20%20%20%20%20%20%20%22transparency%22%2C%0A%20%20%20%20%20%20%20%20...(isGetter%20%3F%20%5B%5D%20%3A%20%5B%22scale%22%5D)%2C%0A%20%20%20%20%20%20%20%20%22scale%20X%22%2C%0A%20%20%20%20%20%20%20%20%22scale%20Y%22%2C%0A%20%20%20%20%20%20%20%20%22skew%20X%22%2C%0A%20%20%20%20%20%20%20%20%22skew%20Y%22%2C%0A%20%20%20%20%20%20%20%20%22offset%20X%22%2C%0A%20%20%20%20%20%20%20%20%22offset%20Y%22%2C%0A%20%20%20%20%20%20%20%20%22rotation%22%2C%0A%20%20%20%20%20%20%20%20%22border%20radius%22%2C%0A%20%20%20%20%20%20%20%20...(isGetter%0A%20%20%20%20%20%20%20%20%20%20%3F%20%5B%22border%20width%22%2C%20%22border%20style%22%2C%20%22border%20color%22%2C%20%22background%22%5D%0A%20%20%20%20%20%20%20%20%20%20%3A%20%5B%5D)%2C%0A%20%20%20%20%20%20%5D%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20geteffect(%7B%20EFFECT%20%7D)%20%7B%0A%20%20%20%20%20%20if%20(EFFECT%20%3D%3D%3D%20%22blur%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20blur%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22contrast%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20contrast%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22saturation%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20saturation%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22color%20shift%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20color%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22brightness%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20brightness%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22invert%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20invert%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22resize%20rendering%20mode%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20resizeMode%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22sepia%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20sepia%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22transparency%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20transparency%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22scale%22)%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20old%20extension%20compatibility%0A%20%20%20%20%20%20%20%20return%20scaleX%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22scale%20X%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20scaleX%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22scale%20Y%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20scaleY%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22skew%20X%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20skewX%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22skew%20Y%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20skewY%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22offset%20X%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20offsetX%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22offset%20Y%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20offsetY%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22rotation%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20rotation%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22border%20radius%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20borderRadius%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22border%20width%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20borderWidth%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22border%20style%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20borderStyle%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22border%20color%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20borderColor%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22background%22)%20%7B%0A%20%20%20%20%20%20%20%20return%20backgroundColor%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20return%20%22%22%3B%0A%20%20%20%20%7D%0A%20%20%20%20seteffect(%7B%20EFFECT%2C%20NUMBER%20%7D)%20%7B%0A%20%20%20%20%20%20NUMBER%20%3D%20Scratch.Cast.toNumber(NUMBER)%3B%0A%20%20%20%20%20%20if%20(EFFECT%20%3D%3D%3D%20%22blur%22)%20%7B%0A%20%20%20%20%20%20%20%20blur%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22contrast%22)%20%7B%0A%20%20%20%20%20%20%20%20contrast%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22saturation%22)%20%7B%0A%20%20%20%20%20%20%20%20saturation%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22color%20shift%22)%20%7B%0A%20%20%20%20%20%20%20%20color%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22brightness%22)%20%7B%0A%20%20%20%20%20%20%20%20brightness%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22invert%22)%20%7B%0A%20%20%20%20%20%20%20%20invert%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22sepia%22)%20%7B%0A%20%20%20%20%20%20%20%20sepia%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22transparency%22)%20%7B%0A%20%20%20%20%20%20%20%20transparency%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22scale%22)%20%7B%0A%20%20%20%20%20%20%20%20scaleX%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%20%20scaleY%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22scale%20X%22)%20%7B%0A%20%20%20%20%20%20%20%20scaleX%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22scale%20Y%22)%20%7B%0A%20%20%20%20%20%20%20%20scaleY%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22skew%20X%22)%20%7B%0A%20%20%20%20%20%20%20%20skewX%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22skew%20Y%22)%20%7B%0A%20%20%20%20%20%20%20%20skewY%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22offset%20X%22)%20%7B%0A%20%20%20%20%20%20%20%20offsetX%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22offset%20Y%22)%20%7B%0A%20%20%20%20%20%20%20%20offsetY%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22rotation%22)%20%7B%0A%20%20%20%20%20%20%20%20rotation%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(EFFECT%20%3D%3D%3D%20%22border%20radius%22)%20%7B%0A%20%20%20%20%20%20%20%20borderRadius%20%3D%20NUMBER%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20updateStyle()%3B%0A%20%20%20%20%7D%0A%20%20%20%20changeEffect(args)%20%7B%0A%20%20%20%20%20%20%2F%2F%20Scale%20needs%20some%20special%20treatment%20to%20change%20x%20%26%20y%20separately%0A%20%20%20%20%20%20if%20(args.EFFECT%20%3D%3D%3D%20%22scale%22)%20%7B%0A%20%20%20%20%20%20%20%20scaleX%20%3D%20scaleX%20%2B%20Scratch.Cast.toNumber(args.NUMBER)%3B%0A%20%20%20%20%20%20%20%20scaleY%20%3D%20scaleY%20%2B%20Scratch.Cast.toNumber(args.NUMBER)%3B%0A%20%20%20%20%20%20%20%20updateStyle()%3B%0A%20%20%20%20%20%20%20%20return%3B%0A%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%2F%2F%20Everything%20else%20is%20really%20generic%0A%20%20%20%20%20%20const%20currentEffect%20%3D%20Scratch.Cast.toNumber(this.geteffect(args))%3B%0A%20%20%20%20%20%20const%20newValue%20%3D%20Scratch.Cast.toNumber(args.NUMBER)%20%2B%20currentEffect%3B%0A%20%20%20%20%20%20this.seteffect(%7B%0A%20%20%20%20%20%20%20%20EFFECT%3A%20args.EFFECT%2C%0A%20%20%20%20%20%20%20%20NUMBER%3A%20newValue%2C%0A%20%20%20%20%20%20%7D)%3B%0A%20%20%20%20%7D%0A%20%20%20%20cleareffects()%20%7B%0A%20%20%20%20%20%20resetStyles()%3B%0A%20%20%20%20%7D%0A%20%20%20%20setrendermode(%7B%20EFFECT%20%7D)%20%7B%0A%20%20%20%20%20%20resizeMode%20%3D%20EFFECT%3B%0A%20%20%20%20%20%20updateStyle()%3B%0A%20%20%20%20%7D%0A%20%20%20%20renderscale(%7B%20X%2C%20Y%20%7D)%20%7B%0A%20%20%20%20%20%20Scratch.vm.renderer.resize(X%2C%20Y)%3B%0A%20%20%20%20%7D%0A%20%20%20%20setBorder(args)%20%7B%0A%20%20%20%20%20%20borderWidth%20%3D%20Scratch.Cast.toNumber(args.WIDTH)%3B%0A%20%20%20%20%20%20borderStyle%20%3D%20Scratch.Cast.toString(args.STYLE).replace(%2F%5B%5Ea-z%5D%2Fgi%2C%20%22%22)%3B%0A%20%20%20%20%20%20borderColor%20%3D%20Scratch.Cast.toString(args.COLOR1).replace(%0A%20%20%20%20%20%20%20%20%2F%5B%5E%230-9a-z%5D%2Fgi%2C%0A%20%20%20%20%20%20%20%20%22%22%0A%20%20%20%20%20%20)%3B%0A%20%20%20%20%20%20backgroundColor%20%3D%20Scratch.Cast.toString(args.COLOR2).replace(%0A%20%20%20%20%20%20%20%20%2F%5B%5E%230-9a-z%5D%2Fgi%2C%0A%20%20%20%20%20%20%20%20%22%22%0A%20%20%20%20%20%20)%3B%0A%20%20%20%20%20%20updateStyle()%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20Scratch.extensions.register(new%20CanvasEffects())%3B%0A%7D)(Scratch)%3B%0A%20%7D)(Scratch)%3B"]) {
+        vm.extensionManager.loadExtensionURL(extension);
+      }
+
+    } catch (e) {
+      handleError(e);
+    }
+  </script>
+  
+  
+    <script>
+      const getProjectData = (function() {
+        const storage = scaffolding.storage;
+        storage.onprogress = (total, loaded) => {
+          setProgress(interpolate(0.2, 0.98, loaded / total));
+        };
+        
+        storage.addWebStore(
+          [
+            storage.AssetType.ImageVector,
+            storage.AssetType.ImageBitmap,
+            storage.AssetType.Sound,
+            storage.AssetType.Font
+          ].filter(i => i),
+          (asset) => new URL('./assets/' + asset.assetId + '.' + asset.dataFormat, location).href
+        );
+        return () => new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = () => {
+          resolve(xhr.response);
+        };
+        xhr.onerror = () => {
+          if (location.protocol === 'file:') {
+            reject(new Error('Zip environment must be used from a website, not from a file URL.'));
+          } else {
+            reject(new Error('Request to load project data failed.'));
+          }
+        };
+        xhr.onprogress = (e) => {
+          if (e.lengthComputable) {
+            setProgress(interpolate(0.1, 0.2, e.loaded / e.total));
+          }
+        };
+        xhr.responseType = 'arraybuffer';
+        xhr.open('GET', "./assets/project.json");
+        xhr.send();
+      });
+      })();
+    </script>
+  <script>
+    const run = async () => {
+      const projectData = await getProjectData();
+      await scaffolding.loadProject(projectData);
+      setProgress(1);
+      loadingScreen.hidden = true;
+      if (true) {
+        scaffolding.start();
+      } else {
+        launchScreen.hidden = false;
+        launchScreen.addEventListener('click', () => {
+          launchScreen.hidden = true;
+          scaffolding.start();
+        });
+        launchScreen.focus();
+      }
+    };
+    run().catch(handleError);
+  </script>
+</body>
+</html>
