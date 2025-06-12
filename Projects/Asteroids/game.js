@@ -138,7 +138,7 @@ const shopCheatCode = [4, 3, 2, 1, 4, 3, 2, 1]; // Rainbow, Life, Bullet, Thrust
 
 
 // --- Initialize High Score from LocalStorage ---
-const savedHighScore = localStorage.getItem(LOCAL_LOCAL_STORAGE_HIGH_SCORE_KEY);
+const savedHighScore = localStorage.getItem(LOCAL_STORAGE_HIGH_SCORE_KEY);
 if (savedHighScore !== null) { // If a high score exists in LocalStorage
     highScore = parseInt(savedHighScore, 10); // Parse it as an integer
 }
@@ -641,6 +641,7 @@ function createAsteroid(x, y, radius, level) {
 
     return asteroid;
 }
+
 // --- Asteroid Splitting/Destruction Function ---
 function splitAsteroid(asteroid, asteroidIndex) {
     asteroids.splice(asteroidIndex, 1); // Remove the original asteroid
@@ -1280,7 +1281,7 @@ function draw() {
 
         ctx.font = '18px Arial';
         if (isMobile) {
-            ctx.fillText('Tap to buy. Press a button to close.', canvas.width / 4 + 20, canvas.height * 3 / 4 - 30); // Or specific close button instruction
+            ctx.fillText('Tap to buy. Tap the SHOP button to close.', canvas.width / 4 + 20, canvas.height * 3 / 4 - 30);
         } else {
             ctx.fillText('Press 1, 2, 3 or 4 to buy. Press E to close.', canvas.width / 4 + 20, canvas.height * 3 / 4 - 30);
         }
@@ -1327,7 +1328,8 @@ function drawMobileControls() {
     ctx.save(); // Save the current drawing state
 
     // Draw Joystick
-    if (!showAdminWindow && !showShop) { // Only draw joystick if game is active
+    // Only draw joystick if game is active (not in shop or admin)
+    if (!showAdminWindow && !showShop) {
         // Joystick Base
         ctx.beginPath();
         ctx.arc(joystick.startX, joystick.startY, joystick.baseRadius, 0, Math.PI * 2);
