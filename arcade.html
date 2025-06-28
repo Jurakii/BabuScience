@@ -7,118 +7,6 @@
     <meta charset="utf-8" />
     <meta property="twitter:card" content="summary_large_image" />
 
-    <style data-tag="reset-style-sheet">
-      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
-    </style>
-    <style>
-    /* Define your base site colors (ensure these are defined in your main site CSS or add them here) */
-    :root {
-        --dl-color-gray-black: #000000;
-        --dl-color-gray-white: #ffffff;
-
-        /* Existing variables for carousel styling */
-        --thumbnail-width: 200px;
-        --thumbnail-height: 150px;
-        --thumbnail-spacing: 20px;
-        --carousel-background: #000000; /* Light grey background for the canvas drawing area */
-        --button-color: #333;
-        --button-hover-color: #007bff;
-    }
-
-    /* Base styles for the component - adjust if your global styles already cover these */
-    .canvas-wrapper {
-        position: relative;
-        width: 800px; /* Adjust to your desired default width */
-        max-width: 100%; /* Ensures responsiveness */
-        height: 250px; /* Adjust to your desired default height */
-        border-radius: 8px;
-        /*box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);*/
-        background-color: #000000; /* Keep wrapper background white for contrast */
-        overflow: hidden;
-        margin: 1px auto; /* Centers the carousel horizontally on the page */
-        display: block; /* Ensures it takes up full width if needed */
-    }
-
-    canvas {  
-        background-color: #000000; /* Keep canvas drawing background white */
-        display: block;
-        border-radius: 8px;
-    }
-
-    .carousel-navigation {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        pointer-events: none;
-        padding: 0 10px;
-        box-sizing: border-box;
-        z-index: 10;
-    }
-
-    .carousel-button {
-        background-color: rgba(0, 0, 0, 0.6);
-        color: #ffffff;
-        border: none;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 2em;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        pointer-events: auto;
-        transform-origin: center;
-    }
-
-    .carousel-button:hover {
-        background-color: rgba(0, 0, 0, 0.8);
-        transform: translateY(-10%) scale(1.025);
-    }
-
-    /* Styles for disabled buttons to jump out of view */
-    #prevButton:disabled {
-        background-color: rgba(0, 0, 0, 0.1); /* Lighter disabled state */
-        cursor: not-allowed;
-        box-shadow: none;
-        transform: translateX(-100%) scale(1); /* Move left and keep centered */
-        /*opacity: 0; /* Make it invisible */
-        pointer-events: none; /* Disable interaction completely */
-    }
-
-    #nextButton:disabled {
-        background-color: rgba(0, 0, 0, 0.1); /* Lighter disabled state */
-        cursor: not-allowed;
-        box-shadow: none;
-        transform: translateX(100%) scale(1); /* Move right and keep centered */
-        /*opacity: 0; /* Make it invisible */
-        pointer-events: none; /* Disable interaction completely */
-    }
-</style>
-
-    <style data-tag="default-style-sheet">
-      html {
-        font-family: Inter;
-        font-size: 16px;
-      }
-
-      body {
-        font-weight: 400;
-        font-style:normal;
-        text-decoration: none;
-        text-transform: none;
-        letter-spacing: normal;
-        line-height: 1.15;
-        color: var(--dl-color-gray-black);
-        background-color: var(--dl-color-gray-white);
-
-      }
-    </style>
     <link
       rel="shortcut icon"
       href="public/favicon.ico"
@@ -169,16 +57,9 @@
         // Define your project items data with thumbnails and links
         // Replace placeholder images and links with your actual project data!
         const projects = [
-            { name: "Project 1", thumbnail: "https://www.babuscience.xyz/Icons/BabuBlast.png", link: "https://www.google.com" },
-            { name: "Project 2", thumbnail: "https://www.babuscience.xyz/Icons/RocketBabu1.png", link: "https://www.youtube.com" },
-            { name: "Project 3", thumbnail: "https://placehold.co/200x150/3357FF/FFFFFF?text=Project+3", link: "https://www.github.com" },
-            { name: "Project 4", thumbnail: "https://placehold.co/200x150/FF33A1/FFFFFF?text=Project+4", link: "https://www.wikipedia.org" },
-            { name: "Project 5", thumbnail: "https://placehold.co/200x150/A133FF/FFFFFF?text=Project+5", link: "https://www.openai.com" },
-            { name: "Project 6", thumbnail: "https://placehold.co/200x150/FFC733/FFFFFF?text=Project+6", link: "https://www.mozilla.org" },
-            { name: "Project 7", thumbnail: "https://placehold.co/200x150/33FFC7/FFFFFF?text=Project+7", link: "https://www.apple.com" },
-            { name: "Project 8", thumbnail: "https://placehold.co/200x150/C733FF/FFFFFF?text=Project+8", link: "https://www.microsoft.com" },
-            { name: "Project 9", thumbnail: "https://placehold.co/200x150/5733FF/FFFFFF?text=Project+9", link: "https://www.amazon.com" },
-            { name: "Project 10", thumbnail: "https://placehold.co/200x150/33A1FF/FFFFFF?text=Project+10", link: "https://www.netflix.com" }
+            { name: "Babu Blast", thumbnail: "https://www.babuscience.xyz/Icons/BabuBlast.png", link: "https://www.babuscience.xyz/Arcade/BabuBlast" },
+            { name: "Rocket Babu 1", thumbnail: "https://www.babuscience.xyz/Icons/RocketBabu1.png", link: "https://www.babuscience.xyz/rocket.html" },
+            { name: "Wongo", thumbnail: "https://www.babuscience.xyz/Icons/WongoTitle.png", link: "https://babuscience.itch.io/wongo" }
         ];
 
         // Store loaded images to avoid reloading them
@@ -259,8 +140,11 @@
                     // Check if thumbnail is provided
                     if (project.thumbnail) {
                         if (loadedImages[project.thumbnail]) {
-                            // Image is already loaded, draw it
-                            ctx.drawImage(loadedImages[project.thumbnail], x, y, cardWidth, cardHeight);
+    ctx.save();
+    drawRoundedRect(ctx, x, y, cardWidth, cardHeight, 8); // Clip to rounded corners
+    ctx.clip();
+    ctx.drawImage(loadedImages[project.thumbnail], x, y, cardWidth, cardHeight);
+    ctx.restore();
                         } else {
                             // Image not loaded, create and load it
                             const img = new Image();
