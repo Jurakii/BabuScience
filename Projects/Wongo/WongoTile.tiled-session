@@ -1,0 +1,49 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "WongoTileset.tsx",
+    "expandedProjectPaths": [
+        ".",
+        "Gungo",
+        "Wongo",
+        "Wongo/assets"
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "WongoTileset.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 8
+        },
+        "untitled.tmx": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 163.75,
+                "y": 89
+            }
+        }
+    },
+    "last.exportedFilePath": "C:/Users/ncrou/Downloads/Wongo/Wongo/assets/backgrounds",
+    "last.imagePath": "C:/Users/ncrou/Downloads/Wongo",
+    "map.height": 18,
+    "map.lastUsedExportFilter": "All Files (*)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 8,
+    "map.tileWidth": 8,
+    "map.width": 40,
+    "openFiles": [
+        "WongoTileset.tsx"
+    ],
+    "project": "WongoTile.tiled-project",
+    "recentFiles": [
+        "WongoTileset.tsx",
+        "untitled.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 8,
+        "width": 8
+    }
+}

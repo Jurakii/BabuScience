@@ -1,0 +1,4 @@
+Fix treasure room
+add SFX to spikes and pit
+add more to opening + save
+add more to bridge scene
