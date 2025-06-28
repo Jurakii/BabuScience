@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Scrollable Prototype</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000000; /* Light grey background */
+            box-sizing: border-box;
+            color: #333;
+        }
+
+        h1 {
+            color: #34495e; /* Darker blue-grey for heading */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .canvas-wrapper {
+            position: relative; /* Essential for absolute positioning of buttons */
+            width: 800px; /* Match canvas width, adjust as needed */
+            max-width: 100%;
+            height: 400px; /* Match canvas height, adjust as needed */
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for the wrapper */
+            background-color: #ffffff; /* Background for the wrapper */
+            overflow: hidden; /* Important to contain anything that goes slightly outside */
+        }
+
+        canvas {
+            border: 2px solid #3498db; /* Blue border for the canvas */
+            background-color: #ffffff; /* White background for the canvas */
+            display: block; /* Remove extra space below canvas */
+            border-radius: 8px; /* Rounded corners for the canvas */
+        }
+
+        .carousel-navigation {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none; /* Allows clicks to pass through to canvas */
+            padding: 0 10px; /* Padding from wrapper edges for buttons */
+            box-sizing: border-box;
+            z-index: 10; /* Ensure buttons are above the canvas content */
+        }
+
+        .carousel-button {
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+            color: #ffffff;
+            border: none;
+            border-radius: 50%; /* Makes buttons circular */
+            width: 50px; /* Size of the circular button */
+            height: 50px; /* Size of the circular button */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em; /* Larger arrow characters */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            pointer-events: auto; /* Re-enable clicks for the buttons themselves */
+            transform-origin: center;
+        }
+
+        .carousel-button:hover {
+            background-color: rgba(0, 0, 0, 0.8); /* Darker on hover */
+            transform: translateY(-10%) scale(1.025); /* Reverted scale for a slightly more noticeable "bounce" */
+        }
+
+        .carousel-button:disabled {
+            background-color: rgba(0, 0, 0, 0.3); /* Lighter disabled state */
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: translateY(-50%) scale(1);
+        }
+
+    </style>
+    <!-- Google Fonts for Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h1>Babu Aracde</h1>
+    <div class="canvas-wrapper">
+        <canvas id="myCanvas" width="800" height="400"></canvas>
+        <div class="carousel-navigation">
+            <button id="prevButton" class="carousel-button">&lt;</button>
+            <button id="nextButton" class="carousel-button">&gt;</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const canvasWrapper = document.querySelector('.canvas-wrapper');
+
+        // Define our project items data
+        const projects = [];
+        for (let i = 1; i <= 10; i++) {
+            projects.push({
+                name: `Project ${i}`,
+                color: `#${Math.floor(Math.random()*16777215).toString(16)}`, // Random color for each project
+            });
+        }
+
+        // Configuration for the carousel display
+        const cardWidth = 200;
+        const cardHeight = 150;
+        const cardSpacing = 20; // Space between cards
+        const cardStep = cardWidth + cardSpacing; // Pixel distance to scroll for one card
+
+        let currentOffsetPx = 0; // The actual pixel offset being drawn (animates to targetOffsetPx)
+        let targetOffsetPx = 0;  // The target pixel offset for animation
+        let animationFrameId = null; // To store the requestAnimationFrame ID
+
+        let cardCenterAlignOffset = 0; // Pixel offset needed to center a card
+        let minScrollOffset = 0;     // Minimum allowed scroll offset (first card centered)
+        let maxScrollOffset = 0;     // Maximum allowed scroll offset (last card centered)
+
+        // Function to animate the scroll
+        function animateScroll() {
+            const easingFactor = 0.1; // Controls the speed and smoothness of the animation
+            currentOffsetPx += (targetOffsetPx - currentOffsetPx) * easingFactor;
+
+            // Stop animation if currentOffsetPx is very close to targetOffsetPx
+            if (Math.abs(targetOffsetPx - currentOffsetPx) < 0.5) {
+                currentOffsetPx = targetOffsetPx; // Snap to target
+                drawCanvasContent(); // Final draw
+                cancelAnimationFrame(animationFrameId); // Stop animation
+                animationFrameId = null;
+                return;
+            }
+
+            drawCanvasContent(); // Redraw with the new interpolated offset
+            animationFrameId = requestAnimationFrame(animateScroll);
+        }
+
+        // Function to calculate scroll bounds and initial positions
+        function calculateScrollBounds() {
+            cardCenterAlignOffset = (canvas.width / 2) - (cardWidth / 2);
+            minScrollOffset = -cardCenterAlignOffset;
+
+            const lastCardVirtualX = (projects.length - 1) * cardStep;
+
+            if (projects.length <= 1) {
+                maxScrollOffset = minScrollOffset;
+            } else {
+                maxScrollOffset = lastCardVirtualX - cardCenterAlignOffset;
+            }
+
+            targetOffsetPx = Math.min(targetOffsetPx, maxScrollOffset);
+            targetOffsetPx = Math.max(targetOffsetPx, minScrollOffset);
+
+            if (currentOffsetPx === 0 && targetOffsetPx === 0) {
+                targetOffsetPx = minScrollOffset;
+                currentOffsetPx = minScrollOffset;
+            }
+        }
+
+        // Function to draw content on the canvas
+        function drawCanvasContent() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#ecf0f1'; // Light grey
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < projects.length; i++) {
+                const project = projects[i];
+                const cardVirtualX = i * cardStep;
+                const x = cardVirtualX - currentOffsetPx;
+                const y = (canvas.height - cardHeight) / 2; // Center cards vertically
+
+                if (x + cardWidth > 0 && x < canvas.width) {
+                    ctx.fillStyle = project.color;
+                    drawRoundedRect(ctx, x, y, cardWidth, cardHeight, 8); // 8px border-radius
+
+                    ctx.fillStyle = '#ffffff'; // White text
+                    ctx.font = '24px Inter';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(project.name, x + cardWidth / 2, y + cardHeight / 2);
+
+                    // Add a subtle border
+                    ctx.strokeStyle = '#ccc';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(x, y, cardWidth, cardHeight);
+                }
+            }
+
+            prevButton.disabled = currentOffsetPx <= minScrollOffset + 0.5;
+            nextButton.disabled = currentOffsetPx >= maxScrollOffset - 0.5;
+        }
+
+        // Helper function to draw a rectangle with rounded corners on canvas
+        function drawRoundedRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke(); // Now stroking, was removed for button but needed for card borders
+        }
+
+        // --- Event Listeners ---
+        prevButton.addEventListener('click', () => {
+            targetOffsetPx -= cardStep; // Move one card step back
+            targetOffsetPx = Math.max(minScrollOffset, targetOffsetPx); // Clamp to min
+            if (animationFrameId) cancelAnimationFrame(animationFrameId); // Stop any existing animation
+            animateScroll();
+        });
+
+        nextButton.addEventListener('click', () => {
+            targetOffsetPx += cardStep; // Move one card step forward
+            targetOffsetPx = Math.min(maxScrollOffset, targetOffsetPx); // Clamp to max
+            if (animationFrameId) cancelAnimationFrame(animationFrameId); // Stop any existing animation
+            animateScroll();
+        });
+
+        // Responsiveness for Canvas
+        function resizeCanvas() {
+            canvas.width = canvasWrapper.offsetWidth;
+            canvas.height = canvasWrapper.offsetHeight;
+
+            calculateScrollBounds();
+
+            currentOffsetPx = targetOffsetPx;
+            cancelAnimationFrame(animationFrameId);
+
+            drawCanvasContent();
+        }
+
+        // Initial setup on window load
+        window.onload = function() {
+            canvasWrapper.style.width = 'min(90vw, 800px)';
+            canvasWrapper.style.height = '400px';
+
+            resizeCanvas();
+        };
+
+        window.addEventListener('resize', resizeCanvas);
+
+    </script>
+
+</body>
+</html>
