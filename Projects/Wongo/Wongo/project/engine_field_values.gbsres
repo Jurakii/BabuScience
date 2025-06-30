@@ -1,0 +1,41 @@
+{
+  "_resourceType": "engineFieldValues",
+  "engineFieldValues": [
+    {
+      "id": "fade_style",
+      "value": 0
+    },
+    {
+      "id": "plat_solid_group",
+      "value": 0
+    },
+    {
+      "id": "plat_drop_through",
+      "value": 1
+    },
+    {
+      "id": "plat_walk_vel",
+      "value": 4500
+    },
+    {
+      "id": "plat_run_vel",
+      "value": 4500
+    },
+    {
+      "id": "plat_jump_vel",
+      "value": 12000
+    },
+    {
+      "id": "plat_grav",
+      "value": 1024
+    },
+    {
+      "id": "INPUT_PLATFORM_INTERACT",
+      "value": "INPUT_B"
+    },
+    {
+      "id": "plat_coyote_max",
+      "value": 2
+    }
+  ]
+}

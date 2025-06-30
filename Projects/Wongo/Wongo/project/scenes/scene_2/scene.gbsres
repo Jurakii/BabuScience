@@ -1,0 +1,70 @@
+{
+  "_resourceType": "scene",
+  "id": "f852c964-a3cb-462c-aa26-bed3c3ebd20c",
+  "_index": 1,
+  "type": "PLATFORM",
+  "name": "Scene 2",
+  "symbol": "scene_2",
+  "x": 834.7111111111119,
+  "y": 836.3333333333325,
+  "width": 20,
+  "height": 18,
+  "backgroundId": "4de5f116-1143-4124-88e2-ace68d8e73a6",
+  "tilesetId": "",
+  "paletteIds": [],
+  "spritePaletteIds": [],
+  "autoFadeSpeed": 2,
+  "playerSpriteSheetId": "d2c4ff1d-9462-49a6-829f-25e653c06b7e",
+  "script": [
+    {
+      "command": "EVENT_TEXT",
+      "args": {
+        "text": [
+          "Come find me\nI dare you"
+        ],
+        "avatarId": "26fe7504-0225-44e4-b1df-568244198167"
+      },
+      "id": "09b37d76-9d08-4e33-afa2-832a92ae40ad"
+    },
+    {
+      "command": "PM_EVENT_PLATPLUS_STATE_SCRIPT",
+      "args": {
+        "state": "6",
+        "__scriptTabs": "scriptinput",
+        "__collapse": true
+      },
+      "children": {
+        "script": [
+          {
+            "command": "EVENT_SOUND_PLAY_EFFECT",
+            "args": {
+              "type": "d9cdeafd-82f5-4bf7-97e2-6104fcbb9f5f",
+              "priority": "high",
+              "pitch": 4,
+              "frequency": 200,
+              "duration": 0.5,
+              "wait": true,
+              "effect": 0
+            },
+            "id": "72e98d8c-8abe-459e-bf7e-c88cfa53dc26"
+          }
+        ]
+      },
+      "id": "990341a1-8745-4dcc-9c2b-e9b2b63eb9a1"
+    },
+    {
+      "command": "EVENT_SET_VALUE",
+      "args": {
+        "variable": "0",
+        "value": {
+          "type": "false"
+        }
+      },
+      "id": "b8a9824a-9739-4121-ba8f-4bee92c16e17"
+    }
+  ],
+  "playerHit1Script": [],
+  "playerHit2Script": [],
+  "playerHit3Script": [],
+  "collisions": "00da+0f4+00f+0f5+00d+0f9+00a+0fb+009+0fb+009+0fc+006+0f1c+"
+}

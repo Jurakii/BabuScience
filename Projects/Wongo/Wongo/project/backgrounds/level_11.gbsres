@@ -1,0 +1,13 @@
+{
+  "_resourceType": "background",
+  "id": "c2cdc20a-d242-4147-b1ad-eb8169eeae45",
+  "name": "Level_11",
+  "symbol": "bg_level_11",
+  "width": 20,
+  "height": 20,
+  "imageWidth": 160,
+  "imageHeight": 160,
+  "filename": "Level_11.png",
+  "tileColors": "",
+  "autoColor": false
+}

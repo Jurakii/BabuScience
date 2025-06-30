@@ -1,8 +1,8 @@
 {
     "name": "Wongo",
     "author": "Jurkai",
-    "_version": "3.1.0",
-    "_release": "3",
+    "_version": "3.2.0",
+    "_release": "1",
     "scenes": [
         {
             "name": "Scene 1",
@@ -25070,7 +25070,7 @@
             "symbol": "sound_bottle_break_vgm",
             "filename": "Bottle_Break.vgm",
             "type": "vgm",
-            "inode": "28710447624752905",
+            "inode": "1688849860643404",
             "_v": 1693449731650
         },
         {
@@ -25079,7 +25079,7 @@
             "symbol": "sound_bump_vgm",
             "filename": "Bump.vgm",
             "type": "vgm",
-            "inode": "8725724278296330",
+            "inode": "1688849860643407",
             "_v": 1693449731650
         },
         {
@@ -25088,7 +25088,7 @@
             "symbol": "sound_cancel_vgm",
             "filename": "Cancel.vgm",
             "type": "vgm",
-            "inode": "17451448556326667",
+            "inode": "1688849860643408",
             "_v": 1693449731650
         },
         {
@@ -25097,7 +25097,7 @@
             "symbol": "sound_cat_meow_vgm",
             "filename": "Cat_Meow.vgm",
             "type": "vgm",
-            "inode": "26177172834357004",
+            "inode": "1688849860643410",
             "_v": 1693449731650
         },
         {
@@ -25106,7 +25106,7 @@
             "symbol": "sound_click_vgm",
             "filename": "Click.vgm",
             "type": "vgm",
-            "inode": "36873221949361933",
+            "inode": "1688849860643411",
             "_v": 1693449731759
         },
         {
@@ -25115,7 +25115,7 @@
             "symbol": "sound_confirm_vgm",
             "filename": "Confirm.vgm",
             "type": "vgm",
-            "inode": "11540474045402894",
+            "inode": "1407374883932757",
             "_v": 1693449731759
         },
         {
@@ -25124,7 +25124,7 @@
             "symbol": "sound_crunch_vgm",
             "filename": "Crunch.vgm",
             "type": "vgm",
-            "inode": "64739244643716879",
+            "inode": "1688849860643414",
             "_v": 1693449731759
         },
         {
@@ -25133,7 +25133,7 @@
             "symbol": "sound_digital_alarm_vgm",
             "filename": "Digital_Alarm.vgm",
             "type": "vgm",
-            "inode": "24488322974093072",
+            "inode": "1688849860643415",
             "_v": 1693449731759
         },
         {
@@ -25142,7 +25142,7 @@
             "symbol": "sound_dog_bark_vgm",
             "filename": "Dog_Bark.vgm",
             "type": "vgm",
-            "inode": "30117822508306193",
+            "inode": "1970324837354072",
             "_v": 1693449731759
         },
         {
@@ -25151,7 +25151,7 @@
             "symbol": "sound_door_slow_open_vgm",
             "filename": "Door_Slow_Open.vgm",
             "type": "vgm",
-            "inode": "17451448556326674",
+            "inode": "1688849860643417",
             "_v": 1693449731759
         },
         {
@@ -25160,7 +25160,7 @@
             "symbol": "sound_drink_vgm",
             "filename": "Drink.vgm",
             "type": "vgm",
-            "inode": "11821949022113555",
+            "inode": "1688849860643418",
             "_v": 1693449731759
         },
         {
@@ -25169,7 +25169,7 @@
             "symbol": "sound_evil_laugh_vgm",
             "filename": "Evil_Laugh.vgm",
             "type": "vgm",
-            "inode": "22236523160407828",
+            "inode": "1688849860643420",
             "_v": 1693449731759
         },
         {
@@ -25178,7 +25178,7 @@
             "symbol": "sound_explosion_vgm",
             "filename": "Explosion.vgm",
             "type": "vgm",
-            "inode": "9288674231717653",
+            "inode": "1688849860643421",
             "_v": 1693449731759
         },
         {
@@ -25187,7 +25187,7 @@
             "symbol": "sound_gun_vgm",
             "filename": "Gun.vgm",
             "type": "vgm",
-            "inode": "15762598696062742",
+            "inode": "1688849860643422",
             "_v": 1693449731759
         },
         {
@@ -25196,7 +25196,7 @@
             "symbol": "sound_hurt_vgm",
             "filename": "Hurt.vgm",
             "type": "vgm",
-            "inode": "22517998137118487",
+            "inode": "1688849860643424",
             "_v": 1693449731862
         },
         {
@@ -25205,7 +25205,7 @@
             "symbol": "sound_jump_vgm",
             "filename": "Jump.vgm",
             "type": "vgm",
-            "inode": "27866022694620952",
+            "inode": "1688849860643425",
             "_v": 1693449731862
         },
         {
@@ -25214,7 +25214,7 @@
             "symbol": "sound_laser_gun_vgm",
             "filename": "Laser_Gun.vgm",
             "type": "vgm",
-            "inode": "24206847997382426",
+            "inode": "1688849860643428",
             "_v": 1693449731862
         },
         {
@@ -25223,7 +25223,7 @@
             "symbol": "sound_low_health_vgm",
             "filename": "Low_Health.vgm",
             "type": "vgm",
-            "inode": "22517998137118491",
+            "inode": "1688849860643429",
             "_v": 1693449731862
         },
         {
@@ -25232,7 +25232,7 @@
             "symbol": "sound_menu_in_vgm",
             "filename": "Menu_In.vgm",
             "type": "vgm",
-            "inode": "10133099161849628",
+            "inode": "1688849860643430",
             "_v": 1693449731862
         },
         {
@@ -25241,7 +25241,7 @@
             "symbol": "sound_menu_out_vgm",
             "filename": "Menu_Out.vgm",
             "type": "vgm",
-            "inode": "27021597764488989",
+            "inode": "1407374883932775",
             "_v": 1693449731885
         },
         {
@@ -25250,7 +25250,7 @@
             "symbol": "sound_monster_scream_vgm",
             "filename": "Monster_Scream.vgm",
             "type": "vgm",
-            "inode": "14355223812509470",
+            "inode": "1688849860643432",
             "_v": 1693449731617
         },
         {
@@ -25259,7 +25259,7 @@
             "symbol": "sound_notso_confirm_vgm",
             "filename": "Notso_Confirm.vgm",
             "type": "vgm",
-            "inode": "18014398509747999",
+            "inode": "1688849860643434",
             "_v": 1693449731617
         },
         {
@@ -25268,7 +25268,7 @@
             "symbol": "sound_pause_vgm",
             "filename": "Pause.vgm",
             "type": "vgm",
-            "inode": "21392098230275872",
+            "inode": "1688849860643435",
             "_v": 1693449731617
         },
         {
@@ -25277,7 +25277,7 @@
             "symbol": "sound_phone_ring_vgm",
             "filename": "Phone_Ring.vgm",
             "type": "vgm",
-            "inode": "22799473113829153",
+            "inode": "1688849860643436",
             "_v": 1693449731617
         },
         {
@@ -25286,7 +25286,7 @@
             "symbol": "sound_powerdown_vgm",
             "filename": "Powerdown.vgm",
             "type": "vgm",
-            "inode": "21673573206986530",
+            "inode": "1688849860643437",
             "_v": 1693449731617
         },
         {
@@ -25295,7 +25295,7 @@
             "symbol": "sound_powerup_vgm",
             "filename": "Powerup.vgm",
             "type": "vgm",
-            "inode": "47287796087656227",
+            "inode": "1970324837354094",
             "_v": 1693449731650
         },
         {
@@ -25304,7 +25304,7 @@
             "symbol": "sound_siren_vgm",
             "filename": "Siren.vgm",
             "type": "vgm",
-            "inode": "31243722415148836",
+            "inode": "1688849860643440",
             "_v": 1693449731650
         },
         {
@@ -25313,7 +25313,7 @@
             "symbol": "sound_steps_vgm",
             "filename": "Steps.vgm",
             "type": "vgm",
-            "inode": "95420017105178405",
+            "inode": "1688849860643441",
             "_v": 1693449731650
         },
         {
@@ -25322,7 +25322,7 @@
             "symbol": "sound_sword_slash_vgm",
             "filename": "Sword_Slash.vgm",
             "type": "vgm",
-            "inode": "17451448556326694",
+            "inode": "1407374883932787",
             "_v": 1693449731650
         },
         {
@@ -25331,7 +25331,7 @@
             "symbol": "sound_thunder_vgm",
             "filename": "Thunder.vgm",
             "type": "vgm",
-            "inode": "39969446693179175",
+            "inode": "1688849860643444",
             "_v": 1693449731650
         },
         {
@@ -25340,7 +25340,7 @@
             "symbol": "sound_trampoline_vgm",
             "filename": "Trampoline.vgm",
             "type": "vgm",
-            "inode": "14636698789220136",
+            "inode": "1688849860643445",
             "_v": 1693449731650
         },
         {
@@ -25349,7 +25349,7 @@
             "symbol": "sound_water_splash_vgm",
             "filename": "Water_Splash.vgm",
             "type": "vgm",
-            "inode": "21110623253565225",
+            "inode": "1688849860643446",
             "_v": 1693449731650
         },
         {
@@ -25358,7 +25358,7 @@
             "symbol": "sound_jump_wav",
             "filename": "jump.wav",
             "type": "wav",
-            "inode": "11821949022113561",
+            "inode": "1688849860643426",
             "_v": 1693255188528
         }
     ],
@@ -25528,7 +25528,7 @@
         }
     ],
     "settings": {
-        "startSceneId": "995ab54e-d9a8-48d2-9c6c-a5332570f557",
+        "startSceneId": "c796f604-3733-45dc-b550-ee8a29bf224f",
         "startX": 9,
         "startY": 16,
         "startMoveSpeed": 0.01,
@@ -25536,8 +25536,10 @@
         "startDirection": "right",
         "showCollisions": true,
         "showConnections": true,
-        "worldScrollX": 5408,
-        "worldScrollY": 2001,
+        "showCollisionSlopeTiles": false,
+        "showCollisionExtraTiles": false,
+        "worldScrollX": 738,
+        "worldScrollY": 659,
         "zoom": 200,
         "customColorsEnabled": false,
         "sgbEnabled": false,
@@ -25566,9 +25568,9 @@
         "defaultUIPaletteId": "default-ui",
         "playerPaletteId": "",
         "navigatorSplitSizes": [
-            622,
-            187,
-            187
+            824,
+            246,
+            246
         ],
         "showNavigator": true,
         "defaultFontId": "6e3533f4-46d5-4d64-8ad3-8bfdf9ea18a8",

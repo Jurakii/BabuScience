@@ -1,0 +1,75 @@
+{
+  "_resourceType": "scene",
+  "id": "64aa4c88-996b-4f93-a344-98d7b9d25f1a",
+  "_index": 6,
+  "type": "TOPDOWN",
+  "name": "Scene 7",
+  "symbol": "scene_7",
+  "x": 821.51111111111,
+  "y": 500.5333333333345,
+  "width": 20,
+  "height": 18,
+  "backgroundId": "8599137a-535a-4420-aaba-a97d4a68a7aa",
+  "tilesetId": "",
+  "paletteIds": [],
+  "spritePaletteIds": [],
+  "autoFadeSpeed": 1,
+  "script": [
+    {
+      "command": "EVENT_ACTOR_DEACTIVATE",
+      "args": {
+        "actorId": "$self$"
+      },
+      "id": "47886ea3-1b9f-49da-b245-9413d496619e"
+    },
+    {
+      "command": "EVENT_WAIT",
+      "args": {
+        "time": 0.5,
+        "frames": 30
+      },
+      "id": "cc792ca1-cbc0-42e0-bbf4-e76ec6aece1c"
+    },
+    {
+      "command": "EVENT_TEXT",
+      "args": {
+        "text": [
+          "Bro...",
+          "Those Jordans...",
+          "They're Fake!"
+        ],
+        "avatarId": "e57ca667-cd6e-4bd3-919f-fa25f3063d67"
+      },
+      "id": "54d6392a-3199-4617-a848-dba036e2423d"
+    },
+    {
+      "command": "EVENT_WAIT",
+      "args": {
+        "time": 1,
+        "frames": 30
+      },
+      "id": "c5c4f01b-b341-4ef6-b0c2-955a10e2ed10"
+    },
+    {
+      "command": "EVENT_SWITCH_SCENE",
+      "args": {
+        "sceneId": "44f03d5f-5dbd-4025-b799-4626ed2e637e",
+        "x": {
+          "type": "number",
+          "value": 8
+        },
+        "y": {
+          "type": "number",
+          "value": 15
+        },
+        "direction": "",
+        "fadeSpeed": 3
+      },
+      "id": "9a64cda0-3124-4a0c-8737-c0ab90133a04"
+    }
+  ],
+  "playerHit1Script": [],
+  "playerHit2Script": [],
+  "playerHit3Script": [],
+  "collisions": ""
+}

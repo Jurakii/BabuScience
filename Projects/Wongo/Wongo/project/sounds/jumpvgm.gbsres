@@ -1,0 +1,8 @@
+{
+  "_resourceType": "sound",
+  "id": "09633209-f5c3-491b-8f4c-83afe6fc72f6",
+  "name": "Jump.vgm",
+  "symbol": "sound_jump_vgm",
+  "filename": "Jump.vgm",
+  "type": "vgm"
+}

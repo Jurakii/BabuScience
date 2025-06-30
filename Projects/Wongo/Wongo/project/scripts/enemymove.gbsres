@@ -1,0 +1,74 @@
+{
+  "_resourceType": "script",
+  "id": "fa22c49c-5494-466d-97af-654e56500e69",
+  "name": "EnemyMove",
+  "symbol": "script_1",
+  "description": "",
+  "variables": {},
+  "actors": {
+    "0": {
+      "id": "0",
+      "name": "Enemy"
+    }
+  },
+  "script": [
+    {
+      "command": "EVENT_IF_ACTOR_RELATIVE_TO_ACTOR",
+      "args": {
+        "actorId": "player",
+        "operation": "left",
+        "otherActorId": "0",
+        "__collapseElse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_MOVE_RELATIVE",
+            "args": {
+              "actorId": "0",
+              "x": {
+                "type": "number",
+                "value": -2
+              },
+              "y": {
+                "type": "number",
+                "value": 0
+              },
+              "moveType": "horizontal",
+              "useCollisions": true
+            },
+            "id": "9543c72b-b419-4538-b39e-873c20c9964d"
+          }
+        ],
+        "false": [
+          {
+            "command": "EVENT_ACTOR_MOVE_RELATIVE",
+            "args": {
+              "actorId": "0",
+              "x": {
+                "type": "number",
+                "value": 2
+              },
+              "y": {
+                "type": "number",
+                "value": 0
+              },
+              "moveType": "horizontal",
+              "useCollisions": true
+            },
+            "id": "31f87843-c7ad-4fcc-9a38-46cf84f34b8a"
+          }
+        ]
+      },
+      "id": "c3dce770-8f87-4c8c-a7a2-4135a4641fbd"
+    },
+    {
+      "command": "EVENT_WAIT",
+      "args": {
+        "time": 1,
+        "frames": 30
+      },
+      "id": "ac4a2bbf-404c-49c8-9dfc-950a8b81a769"
+    }
+  ]
+}

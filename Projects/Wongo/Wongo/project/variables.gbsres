@@ -1,0 +1,15 @@
+{
+  "_resourceType": "variables",
+  "variables": [
+    {
+      "id": "0",
+      "name": "Dead",
+      "symbol": "var_dead"
+    },
+    {
+      "id": "1",
+      "name": "Pos",
+      "symbol": "var_pos"
+    }
+  ]
+}

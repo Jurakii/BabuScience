@@ -1,0 +1,13 @@
+{
+  "_resourceType": "background",
+  "id": "ed272ee7-5492-4a9a-9919-638fb8f321bf",
+  "name": "Level_8",
+  "symbol": "bg_level_8",
+  "width": 20,
+  "height": 18,
+  "imageWidth": 160,
+  "imageHeight": 144,
+  "filename": "Level_8.png",
+  "tileColors": "",
+  "autoColor": false
+}

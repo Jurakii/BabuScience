@@ -1,0 +1,13 @@
+{
+  "_resourceType": "background",
+  "id": "c8903592-4143-4dba-8b05-5a77bf928b6b",
+  "name": "Cutscene2",
+  "symbol": "bg_cutscene2",
+  "width": 20,
+  "height": 18,
+  "imageWidth": 160,
+  "imageHeight": 144,
+  "filename": "Cutscene2.png",
+  "tileColors": "",
+  "autoColor": false
+}

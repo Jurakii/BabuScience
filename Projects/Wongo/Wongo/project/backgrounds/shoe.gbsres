@@ -1,0 +1,13 @@
+{
+  "_resourceType": "background",
+  "id": "85e9a9dc-48a0-4451-9cd9-c300a8a26e89",
+  "name": "Shoe",
+  "symbol": "bg_shoe",
+  "width": 20,
+  "height": 18,
+  "imageWidth": 160,
+  "imageHeight": 144,
+  "filename": "Shoe.png",
+  "tileColors": "",
+  "autoColor": false
+}

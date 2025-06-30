@@ -1,0 +1,78 @@
+{
+  "_resourceType": "scene",
+  "id": "9df3e140-cb54-4ebd-bc67-55025c3370b6",
+  "_index": 9,
+  "type": "TOPDOWN",
+  "name": "Scene 10",
+  "symbol": "scene_10",
+  "x": 1360.5333333333326,
+  "y": 498.3111111111116,
+  "width": 20,
+  "height": 18,
+  "backgroundId": "7acda01b-e918-416c-a4f0-ec600adf3417",
+  "tilesetId": "",
+  "paletteIds": [],
+  "spritePaletteIds": [],
+  "autoFadeSpeed": 1,
+  "script": [
+    {
+      "command": "EVENT_ACTOR_DEACTIVATE",
+      "args": {
+        "actorId": "$self$"
+      },
+      "id": "2ad794f5-aacf-4233-9df2-041d74fdc39a"
+    },
+    {
+      "command": "EVENT_TEXT",
+      "args": {
+        "text": [
+          "You mock my \nshoes"
+        ],
+        "avatarId": "26fe7504-0225-44e4-b1df-568244198167"
+      },
+      "id": "6fd2e3e4-ed51-4327-a267-4d601d933ef1"
+    },
+    {
+      "command": "EVENT_WAIT",
+      "args": {
+        "time": 0.5,
+        "frames": 30
+      },
+      "id": "2e566fc8-430c-4372-8e42-fcef2438dfa7"
+    },
+    {
+      "command": "EVENT_SOUND_PLAY_EFFECT",
+      "args": {
+        "type": "dd9df81c-be64-47fb-b646-ee74607cba10",
+        "priority": "high",
+        "pitch": 4,
+        "frequency": 200,
+        "duration": 0.5,
+        "wait": true,
+        "effect": 0
+      },
+      "id": "f4e3178a-5042-4520-a6ee-c4a2c799d31e"
+    },
+    {
+      "command": "EVENT_SWITCH_SCENE",
+      "args": {
+        "sceneId": "dd37bc63-69f9-4989-929e-9d92b2667385",
+        "x": {
+          "type": "number",
+          "value": 0
+        },
+        "y": {
+          "type": "number",
+          "value": 0
+        },
+        "direction": "",
+        "fadeSpeed": 1
+      },
+      "id": "66be8937-d1c4-4686-af6b-7f1c27ace8fd"
+    }
+  ],
+  "playerHit1Script": [],
+  "playerHit2Script": [],
+  "playerHit3Script": [],
+  "collisions": ""
+}

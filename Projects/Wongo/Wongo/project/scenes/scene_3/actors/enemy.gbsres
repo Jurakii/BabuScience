@@ -1,0 +1,101 @@
+{
+  "_resourceType": "actor",
+  "id": "53a14cd3-9b03-4da9-b1bb-1e0b0702afd1",
+  "_index": 0,
+  "symbol": "actor_0",
+  "prefabId": "",
+  "name": "Enemy",
+  "x": 84,
+  "y": 8,
+  "frame": 0,
+  "animate": false,
+  "spriteSheetId": "7b990f99-22a6-4a95-b63e-d257e80f3d64",
+  "paletteId": "",
+  "direction": "down",
+  "moveSpeed": 0.5,
+  "animSpeed": 15,
+  "isPinned": false,
+  "persistent": false,
+  "collisionGroup": "1",
+  "prefabScriptOverrides": {},
+  "script": [
+    {
+      "command": "EVENT_CALL_CUSTOM_EVENT",
+      "args": {
+        "customEventId": "ffb4f8fe-a704-48d4-8532-3d6960d02f6e"
+      },
+      "id": "0dc21f53-b4d5-4280-b601-671222d84749"
+    },
+    {
+      "command": "EVENT_IF",
+      "args": {
+        "variable": "0",
+        "__collapseElse": false,
+        "__collapse": true,
+        "condition": {
+          "type": "variable",
+          "value": "0"
+        }
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_SET_VALUE",
+            "args": {
+              "variable": "0",
+              "value": {
+                "type": "false"
+              }
+            },
+            "id": "ef2d8e47-cc1a-4357-9695-a94346213fca"
+          },
+          {
+            "command": "EVENT_SOUND_PLAY_EFFECT",
+            "args": {
+              "type": "3d289db3-dcb7-4621-8e9e-87206d739411",
+              "priority": "high",
+              "pitch": 4,
+              "frequency": 200,
+              "duration": 0.5,
+              "wait": true,
+              "effect": 0
+            },
+            "id": "d0b39489-9b46-4152-b998-a36e2a5b254d"
+          },
+          {
+            "command": "EVENT_SWITCH_SCENE",
+            "args": {
+              "sceneId": "c83f1b6b-0a10-4d79-a4e3-908f86e296b8",
+              "x": {
+                "type": "number",
+                "value": 69
+              },
+              "y": {
+                "type": "number",
+                "value": 9
+              },
+              "direction": "right",
+              "fadeSpeed": "2"
+            },
+            "id": "d0056758-ee57-4918-8247-5e38d19099c6"
+          }
+        ],
+        "false": []
+      },
+      "id": "70c63953-abaf-44b8-bcf2-4558c936c1d7"
+    }
+  ],
+  "startScript": [],
+  "updateScript": [
+    {
+      "command": "EVENT_CALL_CUSTOM_EVENT",
+      "args": {
+        "customEventId": "fa22c49c-5494-466d-97af-654e56500e69"
+      },
+      "id": "4afda21a-010d-457c-9068-1511e9d1742a"
+    }
+  ],
+  "hit1Script": [],
+  "hit2Script": [],
+  "hit3Script": []
+}

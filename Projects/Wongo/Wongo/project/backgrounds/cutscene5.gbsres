@@ -1,0 +1,13 @@
+{
+  "_resourceType": "background",
+  "id": "17d0d197-9ffc-45d4-9682-2d2243b7a17f",
+  "name": "Cutscene5",
+  "symbol": "bg_woan",
+  "width": 20,
+  "height": 18,
+  "imageWidth": 160,
+  "imageHeight": 144,
+  "filename": "Cutscene5.png",
+  "tileColors": "",
+  "autoColor": false
+}

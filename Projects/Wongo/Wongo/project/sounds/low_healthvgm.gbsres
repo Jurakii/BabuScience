@@ -1,0 +1,8 @@
+{
+  "_resourceType": "sound",
+  "id": "3c537818-d62c-472c-ab19-07f1a26db734",
+  "name": "Low_Health.vgm",
+  "symbol": "sound_low_health_vgm",
+  "filename": "Low_Health.vgm",
+  "type": "vgm"
+}

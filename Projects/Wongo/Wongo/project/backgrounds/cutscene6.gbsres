@@ -1,0 +1,13 @@
+{
+  "_resourceType": "background",
+  "id": "61e799fa-b83f-4e2d-95b4-b63f13c92a1d",
+  "name": "Cutscene6",
+  "symbol": "bg_wafraw",
+  "width": 20,
+  "height": 18,
+  "imageWidth": 160,
+  "imageHeight": 144,
+  "filename": "Cutscene6.png",
+  "tileColors": "",
+  "autoColor": false
+}

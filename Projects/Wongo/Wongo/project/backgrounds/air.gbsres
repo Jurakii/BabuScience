@@ -1,0 +1,13 @@
+{
+  "_resourceType": "background",
+  "id": "8599137a-535a-4420-aaba-a97d4a68a7aa",
+  "name": "Air",
+  "symbol": "bg_shoe_tyest",
+  "width": 20,
+  "height": 18,
+  "imageWidth": 160,
+  "imageHeight": 144,
+  "filename": "Air.png",
+  "tileColors": "",
+  "autoColor": false
+}

@@ -1,0 +1,13 @@
+{
+  "_resourceType": "background",
+  "id": "dd2e4cd3-da25-4495-a3cc-42a54bdff6e0",
+  "name": "Level_4",
+  "symbol": "bg_level_4",
+  "width": 20,
+  "height": 44,
+  "imageWidth": 160,
+  "imageHeight": 352,
+  "filename": "Level_4.png",
+  "tileColors": "",
+  "autoColor": false
+}

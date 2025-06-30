@@ -1,0 +1,87 @@
+{
+  "_resourceType": "script",
+  "id": "d0ee7c95-2bb0-4ceb-8e20-a43ff5010281",
+  "name": "Chomper",
+  "symbol": "script_6",
+  "description": "",
+  "variables": {},
+  "actors": {
+    "0": {
+      "id": "0",
+      "name": "Actor A"
+    }
+  },
+  "script": [
+    {
+      "command": "EVENT_IF_ACTOR_RELATIVE_TO_ACTOR",
+      "args": {
+        "actorId": "player",
+        "operation": "up",
+        "otherActorId": "0",
+        "__collapseElse": true
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_PLAYER_BOUNCE",
+            "args": {
+              "height": "low",
+              "__collapse": false
+            },
+            "id": "7bf44e74-79aa-4655-ad43-9c159a814d20"
+          },
+          {
+            "command": "EVENT_SOUND_PLAY_EFFECT",
+            "args": {
+              "type": "e7f80653-59e1-4e15-975d-a503329f92e0",
+              "priority": "medium",
+              "pitch": 4,
+              "frequency": 200,
+              "duration": 0.5,
+              "wait": true,
+              "effect": 0,
+              "__collapse": false
+            },
+            "id": "135f2453-b299-42bf-8ade-c71a9656f8d9"
+          },
+          {
+            "command": "EVENT_CAMERA_SHAKE",
+            "args": {
+              "time": 0.2,
+              "frames": 30,
+              "shakeDirection": "horizontal",
+              "__collapse": true,
+              "magnitude": {
+                "type": "number",
+                "value": 5
+              }
+            },
+            "id": "9d0d88b5-edb1-42a2-96f7-c5247e8c5b33"
+          },
+          {
+            "command": "EVENT_WAIT",
+            "args": {
+              "time": 0.1,
+              "frames": 30,
+              "__collapse": true
+            },
+            "id": "3f2a408b-0ca5-4ef7-8358-d18f066b02c8"
+          },
+          {
+            "command": "EVENT_SET_VALUE",
+            "args": {
+              "variable": "0",
+              "__collapse": true,
+              "value": {
+                "type": "true"
+              }
+            },
+            "id": "468d1826-d8aa-4838-a38e-be960cc0df88"
+          }
+        ],
+        "false": []
+      },
+      "id": "a621e25f-7e1d-46e2-a1f0-594e68f6e8e8"
+    }
+  ]
+}

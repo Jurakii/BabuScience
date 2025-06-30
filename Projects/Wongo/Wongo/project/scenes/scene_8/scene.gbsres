@@ -1,0 +1,79 @@
+{
+  "_resourceType": "scene",
+  "id": "44f03d5f-5dbd-4025-b799-4626ed2e637e",
+  "_index": 7,
+  "type": "TOPDOWN",
+  "name": "Scene 8",
+  "symbol": "scene_8",
+  "x": 1000,
+  "y": 500.44444444444446,
+  "width": 20,
+  "height": 18,
+  "backgroundId": "3646676c-00ce-4d56-8056-55310b11a709",
+  "tilesetId": "",
+  "paletteIds": [],
+  "spritePaletteIds": [],
+  "autoFadeSpeed": 1,
+  "script": [
+    {
+      "command": "EVENT_ACTOR_DEACTIVATE",
+      "args": {
+        "actorId": "$self$"
+      },
+      "id": "a0f1799a-868b-473d-bf43-a2b65bf07644"
+    },
+    {
+      "command": "EVENT_TEXT",
+      "args": {
+        "text": [
+          "Ah...",
+          "the insolence\nof mortals"
+        ],
+        "avatarId": "26fe7504-0225-44e4-b1df-568244198167"
+      },
+      "id": "11286aa9-49a6-4024-9ffd-acdbd9e65400"
+    },
+    {
+      "command": "EVENT_WAIT",
+      "args": {
+        "time": 0.5,
+        "frames": 30
+      },
+      "id": "cd2d3ae1-8c0b-4f8d-90a1-2939eb32a7a5"
+    },
+    {
+      "command": "EVENT_SOUND_PLAY_EFFECT",
+      "args": {
+        "type": "dd9df81c-be64-47fb-b646-ee74607cba10",
+        "priority": "high",
+        "pitch": 4,
+        "frequency": 200,
+        "duration": 0.5,
+        "wait": true,
+        "effect": 0
+      },
+      "id": "9ec8d884-258c-45f1-bed4-6ce92c130109"
+    },
+    {
+      "command": "EVENT_SWITCH_SCENE",
+      "args": {
+        "sceneId": "981b636a-6f02-4af8-b4f4-e3b1d3b69ec0",
+        "x": {
+          "type": "number",
+          "value": 0
+        },
+        "y": {
+          "type": "number",
+          "value": 0
+        },
+        "direction": "",
+        "fadeSpeed": 1
+      },
+      "id": "e486ad26-c844-4b57-94b4-d7a15e87c375"
+    }
+  ],
+  "playerHit1Script": [],
+  "playerHit2Script": [],
+  "playerHit3Script": [],
+  "collisions": ""
+}

@@ -1,0 +1,85 @@
+{
+  "_resourceType": "scene",
+  "id": "c796f604-3733-45dc-b550-ee8a29bf224f",
+  "_index": 0,
+  "type": "TOPDOWN",
+  "name": "Scene 1",
+  "symbol": "scene_1",
+  "x": 577.6666666666667,
+  "y": 663.3333333333333,
+  "width": 20,
+  "height": 18,
+  "backgroundId": "317f05a0-a845-4513-a8f3-7356c02f565e",
+  "tilesetId": "",
+  "paletteIds": [],
+  "spritePaletteIds": [],
+  "autoFadeSpeed": 3,
+  "playerSpriteSheetId": "d2c4ff1d-9462-49a6-829f-25e653c06b7e",
+  "script": [
+    {
+      "command": "EVENT_ACTOR_DEACTIVATE",
+      "args": {
+        "actorId": "$self$"
+      },
+      "id": "dd4f17a1-73f2-4055-97b5-9de7b846c8b1"
+    },
+    {
+      "command": "EVENT_SET_INPUT_SCRIPT",
+      "args": {
+        "input": [
+          "start"
+        ],
+        "override": true,
+        "__scriptTabs": "press",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_SOUND_PLAY_EFFECT",
+            "args": {
+              "type": "66fc0e49-675e-4bf1-b7a8-223b13f81b88",
+              "priority": "high",
+              "pitch": 4,
+              "frequency": 200,
+              "duration": 0.5,
+              "wait": true,
+              "effect": 0
+            },
+            "id": "2ff33a4b-d25e-4c45-99e2-8d2e02f6e7f7"
+          },
+          {
+            "command": "EVENT_WAIT",
+            "args": {
+              "time": 0.2,
+              "frames": 30
+            },
+            "id": "4fa628f5-1fbb-4986-9823-0b5c86ebdcb9"
+          },
+          {
+            "command": "EVENT_SWITCH_SCENE",
+            "args": {
+              "sceneId": "64aa4c88-996b-4f93-a344-98d7b9d25f1a",
+              "x": {
+                "type": "number",
+                "value": 1
+              },
+              "y": {
+                "type": "number",
+                "value": 12
+              },
+              "direction": "right",
+              "fadeSpeed": 4
+            },
+            "id": "6aa2bea9-b6ed-480a-981a-36396900865c"
+          }
+        ]
+      },
+      "id": "d303c05d-1525-4e0f-851c-995627d3d3e8"
+    }
+  ],
+  "playerHit1Script": [],
+  "playerHit2Script": [],
+  "playerHit3Script": [],
+  "collisions": "00be+0f2+00a8+"
+}

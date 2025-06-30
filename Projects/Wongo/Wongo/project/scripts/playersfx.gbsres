@@ -1,0 +1,24 @@
+{
+  "_resourceType": "script",
+  "id": "1de697fd-cc10-4b71-b850-72cf5fae4a10",
+  "name": "PlayerSFX",
+  "symbol": "script_3",
+  "description": "",
+  "variables": {},
+  "actors": {},
+  "script": [
+    {
+      "command": "EVENT_SOUND_PLAY_EFFECT",
+      "args": {
+        "type": "d9cdeafd-82f5-4bf7-97e2-6104fcbb9f5f",
+        "priority": "high",
+        "pitch": 4,
+        "frequency": 200,
+        "duration": 0.5,
+        "wait": true,
+        "effect": 0
+      },
+      "id": "8276d3ca-f929-4161-a427-c55aa2ba1909"
+    }
+  ]
+}

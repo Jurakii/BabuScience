@@ -1,0 +1,90 @@
+{
+  "_resourceType": "scene",
+  "id": "dd37bc63-69f9-4989-929e-9d92b2667385",
+  "_index": 10,
+  "type": "TOPDOWN",
+  "name": "Scene 11",
+  "symbol": "scene_11",
+  "x": 1539.2888888888883,
+  "y": 496.9777777777771,
+  "width": 20,
+  "height": 18,
+  "backgroundId": "71e78607-518b-4f63-8688-b38d1f99a40b",
+  "tilesetId": "",
+  "paletteIds": [],
+  "spritePaletteIds": [],
+  "autoFadeSpeed": 1,
+  "script": [
+    {
+      "command": "EVENT_ACTOR_DEACTIVATE",
+      "args": {
+        "actorId": "$self$"
+      },
+      "id": "4c31411e-bbf4-46be-919d-5c8c2ec72945"
+    },
+    {
+      "command": "EVENT_TEXT",
+      "args": {
+        "text": [
+          "yet fail to \ncomprehend that ",
+          "the very ground\nyou stand upon",
+          "trembles in fear\nof my power."
+        ],
+        "avatarId": "26fe7504-0225-44e4-b1df-568244198167"
+      },
+      "id": "02f4fe96-be31-40ab-98e2-3baecdc5112e"
+    },
+    {
+      "command": "EVENT_WAIT",
+      "args": {
+        "time": 0.5,
+        "frames": 30
+      },
+      "id": "7f0aefa2-61c8-4cc8-a9b2-8e9bcc8d24c6"
+    },
+    {
+      "command": "EVENT_TEXT",
+      "args": {
+        "text": [
+          "I shall bestow \nupon you a \nfitting visage"
+        ],
+        "avatarId": "26fe7504-0225-44e4-b1df-568244198167"
+      },
+      "id": "a9a16e77-732e-4ab3-a2c1-506901a4876e"
+    },
+    {
+      "command": "EVENT_SOUND_PLAY_EFFECT",
+      "args": {
+        "type": "dd9df81c-be64-47fb-b646-ee74607cba10",
+        "priority": "high",
+        "pitch": 4,
+        "frequency": 200,
+        "duration": 0.5,
+        "wait": true,
+        "effect": 0
+      },
+      "id": "b8c9aee7-2819-4f13-bc77-67ea4a1c8e9f"
+    },
+    {
+      "command": "EVENT_SWITCH_SCENE",
+      "args": {
+        "sceneId": "64bbc426-a82b-4246-834b-934288da7553",
+        "x": {
+          "type": "number",
+          "value": 0
+        },
+        "y": {
+          "type": "number",
+          "value": 0
+        },
+        "direction": "",
+        "fadeSpeed": 1
+      },
+      "id": "d088a82d-0c4b-495f-913f-758a7100f243"
+    }
+  ],
+  "playerHit1Script": [],
+  "playerHit2Script": [],
+  "playerHit3Script": [],
+  "collisions": ""
+}
