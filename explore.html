@@ -1,86 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Explore - Babu Science</title>
-    <meta property="og:title" content="Explore - Babu Science" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="utf-8" />
-    <meta property="twitter:card" content="summary_large_image" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore</title>
+  
+  <link rel="stylesheet" href="explore.css">
 
-    <style data-tag="reset-style-sheet">
-      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
-    </style>
-    <style data-tag="default-style-sheet">
-      html {
-        font-family: Inter;
-        font-size: 16px;
-      }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;300;400&display=swap" rel="stylesheet">
+  
+  <link rel="icon" href="public/favicon.ico" type="image/x-icon" />
+</head>
 
-      body {
-        font-weight: 400;
-        font-style:normal;
-        text-decoration: none;
-        text-transform: none;
-        letter-spacing: normal;
-        line-height: 1.15;
-        color: var(--dl-color-gray-black);
-        background-color: var(--dl-color-gray-white);
+<body>
 
-      }
-    </style>
-    <link
-      rel="shortcut icon"
-      href="public/favicon.ico"
-      type="icon/png"
-      sizes="32x32"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&amp;display=swap"
-      data-tag="font"
-    />
-  </head>
-  <body>
-    <link rel="stylesheet" href="./style.css" />
-    <div>
-      <link href="./explore.css" rel="stylesheet" />
+  <h1 class="explore-title">Babu Science</h1>
 
-      <div class="explore-container">
-        <h1 class="explore-text">Babu Science</h1>
-        <div class="explore-container1">
-          <a href="index.html" class="explore-navlink">Home</a>
-          <a href="explore.html" class="explore-navlink1">Explore</a>
-        </div>
-        <div class="explore-container2">
-          <div class="explore-left">
-            <a href="art.html" class="explore-navlink2">
-              <img
-                alt="image"
-                src="https://www.babuscience.xyz/Images/Nav/BHL.png"
-                loading="eager"
-                class="explore-left1"
-              />
-            </a>
-            <span class="explore-text1">Art</span>
-          </div>
-          <div class="explore-right">
-            <a href="arcade.html" class="explore-navlink3">
-              <img
-                alt="image"
-                src="https://www.babuscience.xyz/Images/Nav/BHR.png"
-                loading="eager"
-                class="explore-right1"
-              />
-            </a>
-            <span class="explore-text2">Projects</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
+  <div class="explore-nav">
+    <a href="index.html" class="explore-navlink">Home</a>
+  </div>
+
+  <div class="explore-split">
+    
+    <a href="art.html" class="explore-half left">
+      <img src="https://www.babuscience.xyz/Images/Nav/BHL.png" class="explore-img">
+      <span class="explore-label">Art</span>
+    </a>
+
+    <a href="arcade.html" class="explore-half right">
+      <img src="https://www.babuscience.xyz/Images/Nav/BHR.png" class="explore-img">
+      <span class="explore-label">Projects</span>
+    </a>
+
+  </div>
+
+</body>
 </html>
