@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>New Game — Babu Arcade</title>
+
+<!--
+  ============================================================
+  BABU ARCADE — GAME TEMPLATE
+  ============================================================
+  How to start a new game from this file:
+
+    1. Copy this whole folder (arcade/_template/) to
+       arcade/<YourGameName>/  — this index.html is the only
+       file you need; everything is inline on purpose so a copy
+       of the folder is a complete, working game.
+    2. Drop a ~16:9 thumbnail.png next to it (1280x720 matches
+       the existing cart art exactly).
+    3. Add one entry for it in arcade/games.json:
+         {
+           "id": "your-game",
+           "folder": "YourGameName",
+           "name": "Your Game",
+           "thumbnail": "YourGameName/thumbnail.png",
+           "type": "internal",
+           "description": "...",
+           "tags": ["arcade"]
+         }
+       Nothing else needs to change — arcade.html and play.html
+       both read games.json automatically.
+    4. Replace the demo entity/physics in update() and render()
+       below with your actual game. The loop, canvas sizing,
+       and input plumbing are all done for you and don't need
+       to change.
+
+  This file is loaded inside an <iframe> by arcade/play.js, sized
+  to a 4:3 "screen" bezel. The canvas below always fills that
+  iframe exactly (see resize()), so just design for "however big
+  the screen is" rather than a fixed pixel size.
+  ============================================================
+-->
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+    touch-action: none; /* stop mobile scroll/zoom from eating touch input */
+  }
+
+  canvas {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="game" tabindex="0"></canvas>
+
+<script>
+(function () {
+  "use strict";
+
+  // ----------------------------------------------------------
+  // CONFIG
+  // ----------------------------------------------------------
+  var UPS = 60;                 // fixed simulation rate (updates per second)
+  var STEP = 1 / UPS;           // seconds per update
+  var MAX_FRAME_TIME = 0.25;    // clamp huge gaps (tab backgrounded, breakpoint, etc.)
+  var SHOW_STATS = true;        // dev FPS/UPS readout in the corner — flip off any time
+
+  // ----------------------------------------------------------
+  // CANVAS + DPR-AWARE SIZING
+  // ----------------------------------------------------------
+  var canvas = document.getElementById("game");
+  var ctx = canvas.getContext("2d");
+
+  var width = 0;   // logical (CSS) size, in pixels
+  var height = 0;
+
+  function resize() {
+    var dpr = window.devicePixelRatio || 1;
+    width = window.innerWidth;
+    height = window.innerHeight;
+
+    // Backing store is scaled by devicePixelRatio for crisp rendering
+    // on retina/high-DPI screens; all drawing still happens in logical
+    // (CSS) pixels because of the ctx.scale below.
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    onResize(width, height);
+  }
+
+  window.addEventListener("resize", resize);
+
+  // ----------------------------------------------------------
+  // INPUT
+  // ----------------------------------------------------------
+  var keys = Object.create(null);
+
+  var KEY_ALIASES = {
+    ArrowUp: "up", w: "up", W: "up",
+    ArrowDown: "down", s: "down", S: "down",
+    ArrowLeft: "left", a: "left", A: "left",
+    ArrowRight: "right", d: "right", D: "right",
+    " ": "action"
+  };
+
+  window.addEventListener("keydown", function (e) {
+    var action = KEY_ALIASES[e.key];
+    if (action) {
+      keys[action] = true;
+      e.preventDefault(); // stop arrow keys / space from scrolling the page
+    }
+  });
+
+  window.addEventListener("keyup", function (e) {
+    var action = KEY_ALIASES[e.key];
+    if (action) keys[action] = false;
+  });
+
+  // The iframe needs focus for key events to fire — grab it on load
+  // and again on click/tap, since some browsers only hand focus over
+  // on a user gesture.
+  canvas.addEventListener("pointerdown", function () { canvas.focus(); });
+  window.addEventListener("load", function () { canvas.focus(); });
+
+  // Basic pointer/touch input too, so this plays on mobile out of the
+  // box: holding down steers the demo entity toward the pointer.
+  // Swap this out for whatever input scheme your game actually needs.
+  var pointer = { active: false, x: 0, y: 0 };
+
+  function setPointerFromEvent(e) {
+    var rect = canvas.getBoundingClientRect();
+    pointer.x = e.clientX - rect.left;
+    pointer.y = e.clientY - rect.top;
+  }
+
+  canvas.addEventListener("pointerdown", function (e) {
+    pointer.active = true;
+    setPointerFromEvent(e);
+  });
+  window.addEventListener("pointermove", function (e) {
+    if (pointer.active) setPointerFromEvent(e);
+  });
+  window.addEventListener("pointerup", function () { pointer.active = false; });
+
+  // ----------------------------------------------------------
+  // DEMO GAME STATE — replace this with your actual game
+  // ----------------------------------------------------------
+  var ACCEL = 900;     // px/sec^2
+  var FRICTION = 6;    // higher = stops faster
+  var MAX_SPEED = 420; // px/sec
+  var RADIUS = 16;
+
+  var entity = { x: 0, y: 0, vx: 0, vy: 0 };
+
+  function onResize(w, h) {
+    // Keep the demo entity roughly centered/on-screen across resizes.
+    entity.x = Math.min(Math.max(entity.x, RADIUS), w - RADIUS) || w / 2;
+    entity.y = Math.min(Math.max(entity.y, RADIUS), h - RADIUS) || h / 2;
+  }
+
+  // ----------------------------------------------------------
+  // UPDATE — runs at a fixed UPS regardless of display refresh
+  // rate, so gameplay speed never drifts between screens/devices.
+  // `dt` is always exactly STEP seconds here.
+  // ----------------------------------------------------------
+  function update(dt) {
+    var ax = 0, ay = 0;
+    if (keys.left) ax -= 1;
+    if (keys.right) ax += 1;
+    if (keys.up) ay -= 1;
+    if (keys.down) ay += 1;
+
+    if (pointer.active) {
+      var dx = pointer.x - entity.x;
+      var dy = pointer.y - entity.y;
+      var len = Math.hypot(dx, dy) || 1;
+      ax += dx / len;
+      ay += dy / len;
+    }
+
+    var len2 = Math.hypot(ax, ay);
+    if (len2 > 0) {
+      ax = (ax / len2) * ACCEL;
+      ay = (ay / len2) * ACCEL;
+    }
+
+    entity.vx += ax * dt;
+    entity.vy += ay * dt;
+
+    // exponential friction, framerate-independent
+    var damping = Math.exp(-FRICTION * dt);
+    entity.vx *= damping;
+    entity.vy *= damping;
+
+    var speed = Math.hypot(entity.vx, entity.vy);
+    if (speed > MAX_SPEED) {
+      entity.vx = (entity.vx / speed) * MAX_SPEED;
+      entity.vy = (entity.vy / speed) * MAX_SPEED;
+    }
+
+    entity.x += entity.vx * dt;
+    entity.y += entity.vy * dt;
+
+    // bounce off the edges of the screen
+    if (entity.x < RADIUS) { entity.x = RADIUS; entity.vx *= -0.6; }
+    if (entity.x > width - RADIUS) { entity.x = width - RADIUS; entity.vx *= -0.6; }
+    if (entity.y < RADIUS) { entity.y = RADIUS; entity.vy *= -0.6; }
+    if (entity.y > height - RADIUS) { entity.y = height - RADIUS; entity.vy *= -0.6; }
+  }
+
+  // ----------------------------------------------------------
+  // RENDER — runs once per animation frame (not tied to UPS).
+  // `alpha` (0..1) is how far between the last two fixed updates
+  // we are, for optional smoothing on fast-moving objects.
+  // ----------------------------------------------------------
+  function render(alpha) {
+    ctx.clearRect(0, 0, width, height);
+
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, width, height);
+
+    // faint grid, purely decorative — remove freely
+    ctx.strokeStyle = "rgba(255,255,255,0.05)";
+    ctx.lineWidth = 1;
+    var grid = 40;
+    for (var gx = 0; gx < width; gx += grid) {
+      ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, height); ctx.stroke();
+    }
+    for (var gy = 0; gy < height; gy += grid) {
+      ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(width, gy); ctx.stroke();
+    }
+
+    var drawX = entity.x + entity.vx * alpha * STEP;
+    var drawY = entity.y + entity.vy * alpha * STEP;
+
+    ctx.fillStyle = "#fff";
+    ctx.beginPath();
+    ctx.arc(drawX, drawY, RADIUS, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#7a7a7a";
+    ctx.font = "13px 'Roboto Mono', monospace";
+    ctx.textAlign = "center";
+    ctx.fillText("WASD / arrows to move — click or tap to steer", width / 2, height - 20);
+
+    if (SHOW_STATS) drawStats();
+  }
+
+  // ----------------------------------------------------------
+  // DEV STATS — quick way to confirm you're actually hitting
+  // 60fps/60ups. Safe to delete for a real game.
+  // ----------------------------------------------------------
+  var statsFps = 0;
+  var statsFrames = 0;
+  var statsTimer = 0;
+
+  function drawStats() {
+    ctx.fillStyle = "rgba(255,255,255,0.6)";
+    ctx.font = "11px 'Roboto Mono', monospace";
+    ctx.textAlign = "left";
+    ctx.fillText("fps " + statsFps + " / target " + UPS, 10, 18);
+  }
+
+  // ----------------------------------------------------------
+  // MAIN LOOP — fixed-timestep simulation, variable-rate render.
+  // This is the part of the template you generally shouldn't
+  // need to touch.
+  // ----------------------------------------------------------
+  var lastTime = null;
+  var accumulator = 0;
+
+  function frame(now) {
+    requestAnimationFrame(frame);
+
+    if (lastTime === null) lastTime = now;
+    var frameTime = (now - lastTime) / 1000;
+    lastTime = now;
+
+    if (frameTime > MAX_FRAME_TIME) frameTime = MAX_FRAME_TIME;
+    accumulator += frameTime;
+
+    while (accumulator >= STEP) {
+      update(STEP);
+      accumulator -= STEP;
+    }
+
+    render(accumulator / STEP);
+
+    // fps counter, averaged once per second
+    statsFrames++;
+    statsTimer += frameTime;
+    if (statsTimer >= 1) {
+      statsFps = statsFrames;
+      statsFrames = 0;
+      statsTimer = 0;
+    }
+  }
+
+  // Reset the clock when the tab regains visibility so a long
+  // background pause doesn't get treated as one giant frame.
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden) lastTime = null;
+  });
+
+  resize();
+  requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
