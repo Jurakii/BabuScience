@@ -39,11 +39,21 @@ body {
 
 /* Shelf of cartridges */
 .arcade-shelf {
-  max-width: 1080px;
+  max-width: 1280px;
   margin: 64px auto 140px;
   padding: 0 32px 40px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  /* Cap at 4 columns when there's room: each column's floor is whichever is
+     bigger, a fixed 160px or an even 1/4 share of the row (minus the 3 gaps
+     between 4 columns). On a wide screen the 1/4-share floor wins, so at
+     most 4 columns ever fit — they grow via the 1fr max to fill the row
+     evenly, not tile at a fixed small size. As the container narrows, the
+     1/4-share drops below 160px and the fixed floor takes over, so auto-fit
+     naturally drops to 3, then 2, then 1 column instead of squeezing cards
+     past 160px wide. auto-fit (not auto-fill) collapses unused trailing
+     columns, so with fewer than 4 games the existing cards still stretch to
+     fill the row evenly rather than leaving a gap on the right. */
+  grid-template-columns: repeat(auto-fit, minmax(max(220px, calc((100% - 3 * 36px) / 4)), 1fr));
   gap: 56px 36px;
   justify-items: center;
 }
@@ -78,7 +88,7 @@ body {
   align-items: center;
   gap: 16px;
   width: 100%;
-  max-width: 176px;
+  max-width: 260px;
   text-decoration: none;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -87,7 +97,7 @@ body {
 }
 
 .cart-shell {
-  --depth: 26px;
+  --depth: 38px;
   position: relative;
   display: flex;
   align-items: center;
@@ -132,19 +142,27 @@ body {
 
 /* shimmer overlay: a soft diagonal streak that sweeps across the box-art
    label while the cart lifts on hover. Lives on .cart-label (not
-   .cart-shell) so it can safely use opacity/background-position — .cart-
-   label has no 3D children of its own, so none of the preserve-3d-breaking
-   rules (filter/opacity<1/etc collapsing an element's OWN transform-style)
-   come into play here the way they would on .cart-shell. Clipped to the
-   label by its existing `overflow: hidden`. */
+   .cart-shell) so it can safely use opacity/transform — .cart-label has no
+   3D children of its own, so none of the preserve-3d-breaking rules
+   (filter/opacity<1/etc collapsing an element's OWN transform-style) come
+   into play here the way they would on .cart-shell. Clipped to the label
+   by its existing `overflow: hidden`.
+   The streak is driven by translateX (not background-position). The
+   element is the same size as its clipped container, so at every point
+   along its -120% -> 120% translate journey some part of the gradient
+   overlaps the visible box — the sweep is continuous by construction,
+   with no box-size/aspect-ratio-dependent "visible range" to calibrate
+   (background-position + background-size required knowing exactly which
+   position values put the bright stop inside the box, which shifts
+   whenever the card's aspect ratio changes and was the source of the
+   "1 frame flash" bug — a translateX sweep can't have that failure mode). */
 .cart-shine {
   position: absolute;
   inset: 0;
   background: linear-gradient(100deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
-  background-size: 200% 100%;
-  background-position: 200% 0;
   opacity: 0;
   pointer-events: none;
+  transform: translateX(-120%);
 }
 
 /* connector-edge accent along the bottom of the shell */
@@ -241,14 +259,15 @@ body {
   opacity: 0.55;
 }
 
-.cart:hover .cart-shine,
-.cart:focus-visible .cart-shine {
+/* Triggered by JS (a .is-active class toggle), not :hover directly —
+   see the pointerenter listener in arcade.html for why. */
+.cart-shine.is-active {
   animation: cart-shimmer 0.7s ease-in-out 0.05s 1;
 }
 
 @keyframes cart-shimmer {
   0% {
-    background-position: 200% 0;
+    transform: translateX(-120%);
     opacity: 0;
   }
   15% {
@@ -258,7 +277,7 @@ body {
     opacity: 0.85;
   }
   100% {
-    background-position: -200% 0;
+    transform: translateX(120%);
     opacity: 0;
   }
 }
@@ -279,7 +298,7 @@ body {
   .cart-shadow {
     transition: none;
   }
-  .cart-shine {
+  .cart-shine.is-active {
     animation: none;
   }
 }
@@ -290,5 +309,14 @@ body {
   }
   .arcade-navlink {
     font-size: 24px;
+  }
+  /* On phones, one column is all that fits anyway (see the grid-template-
+     columns comment above) — scale the card itself down a bit too so it
+     doesn't dominate a narrow screen, and tighten the gap to match. */
+  .arcade-shelf {
+    gap: 40px 20px;
+  }
+  .cart {
+    max-width: 210px;
   }
 }

@@ -29,6 +29,8 @@
   <script>
     (function () {
       var shelf = document.getElementById('arcadeShelf');
+      var prefersReducedMotion = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       function cartEl(game) {
         var isExternal = game.type === 'external';
@@ -64,6 +66,30 @@
         var shine = document.createElement('span');
         shine.className = 'cart-shine';
         label.appendChild(shine);
+
+        // Shimmer is JS-triggered (not pure CSS :hover) and guarded against
+        // re-starting mid-sweep. The cart's 3D hover tilt physically moves
+        // .cart-shell out from under a stationary cursor, which can make the
+        // browser fire mouseenter/mouseleave more than once for a single
+        // hover (especially entering near an edge) - with a plain CSS
+        // `:hover { animation }` rule each of those toggles restarts the
+        // animation from scratch, which read as the shimmer flashing
+        // multiple times per hover. Gating on "already running? ignore"
+        // collapses that chatter back down to one clean sweep.
+        if (!prefersReducedMotion) {
+          var shineRunning = false;
+          shine.addEventListener('animationend', function () {
+            shine.classList.remove('is-active');
+            shineRunning = false;
+          });
+          var triggerShine = function () {
+            if (shineRunning) return;
+            shineRunning = true;
+            shine.classList.add('is-active');
+          };
+          a.addEventListener('pointerenter', triggerShine);
+          a.addEventListener('focus', triggerShine);
+        }
 
         var foot = document.createElement('span');
         foot.className = 'cart-foot';
