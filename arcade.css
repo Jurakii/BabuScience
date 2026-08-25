@@ -262,7 +262,10 @@ body {
 /* Triggered by JS (a .is-active class toggle), not :hover directly —
    see the pointerenter listener in arcade.html for why. */
 .cart-shine.is-active {
-  animation: cart-shimmer 0.7s ease-in-out 0.05s 1;
+  /* no delay, and shorter than the .4s cart-lift transition (see
+     .cart-shell's transition rule above) so the shimmer finishes
+     sweeping before the cart settles into its tilted hover position. */
+  animation: cart-shimmer 0.35s ease-in-out 0s 1;
 }
 
 @keyframes cart-shimmer {
