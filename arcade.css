@@ -1,187 +1,252 @@
-:root {
-  --dl-color-gray-black: #000000;
-  --dl-color-gray-white: #ffffff;
-
-  --thumbnail-width: 200px;
-  --thumbnail-height: 150px;
-  --thumbnail-spacing: 20px;
-  --carousel-background: #000000;
-  --button-color: #333;
-  --button-hover-color: #007bff;
-}
-
-html {
-  line-height: 1.15;
-  scroll-behavior: smooth;
-  font-family: Inter;
-  font-size: 16px;
-}
-
 body {
+  background-color: #000;
   margin: 0;
-  font-weight: 400;
-  font-style: normal;
-  text-decoration: none;
-  text-transform: none;
-  letter-spacing: normal;
-  line-height: 1.15;
-  color: var(--dl-color-gray-black);
-  background-color: var(--dl-color-gray-white);
+  overflow-x: hidden;
+  font-family: "Roboto Mono", monospace;
 }
 
-* {
-  box-sizing: border-box;
-  border-width: 0;
-  border-style: solid;
-}
-
-p, li, ul, pre, div, h1, h2, h3, h4, h5, h6, figure, blockquote, figcaption {
-  margin: 0;
-  padding: 0;
-}
-
-button {
-  background-color: transparent;
-  font-family: inherit;
-  font-size: 100%;
-  line-height: 1.15;
-  margin: 0;
-  text-transform: none;
-  -webkit-appearance: button;
-}
-
-button::-moz-focus-inner {
-  border-style: none;
-  padding: 0;
-}
-button:-moz-focus {
-  outline: 1px dotted ButtonText;
-}
-a {
-  color: inherit;
-  text-decoration: inherit;
-}
-input {
-  font-family: inherit;
-  font-size: 100%;
-  line-height: 1.15;
-  margin: 0;
-  padding: 2px 4px;
-}
-img {
-  display: block;
-}
-
-.arcade-container {
-  width: 100%;
-  display: flex;
-  overflow: auto;
-  min-height: 100vh;
-  align-items: center;
-  flex-direction: column;
-  justify-content: flex-start;
-  background-color: #000000;
-}
-
-.arcade-text {
-  color: #ffffff;
-  font-size: 80px;
-  font-style: normal;
-  text-align: center;
-  font-family: Roboto Mono;
+/* Heading, matches index.css / explore.css */
+.arcade-title {
+  color: #fff;
   font-weight: 100;
-  padding: var(--dl-space-space-unit) var(--dl-space-space-halfunit);
+  font-size: 80px;
+  text-align: center;
+  margin: 0;
+  padding: 8px;
 }
 
-.arcade-container1 {
-  flex: 0 0 auto;
-  width: 100%;
-  height: 45px;
+.arcade-nav {
   display: flex;
-  align-items: flex-start;
   justify-content: center;
 }
 
-.arcade-navlink,
-.arcade-navlink1 {
-  color: #ffffff;
-  font-size: 32px;
-  font-style: normal;
-  transition: 0.3s;
-  font-family: Roboto Mono;
+.arcade-navlink {
+  color: #fff;
   font-weight: 100;
-  padding-left: 10px;
-  padding-right: 10px;
+  font-size: 32px;
   text-decoration: none;
+  padding: 0 10px;
+  transition: 0.3s;
 }
-.arcade-navlink:hover,
-.arcade-navlink1:hover {
+
+.arcade-navlink:hover {
   text-decoration: underline;
 }
-.arcade-navlink:active,
-.arcade-navlink1:active {
-  color: var(--dl-color-gray-black);
+
+.arcade-navlink:active {
+  color: #000;
 }
 
-.canvas-wrapper {
-  position: relative;
-  width: 800px;
-  max-width: 100%;
-  height: 250px;
-  border-radius: 8px;
-  background-color: #000000;
-  overflow: hidden;
-  margin: 1px auto;
-  display: block;
+/* Shelf of cartridges */
+.arcade-shelf {
+  max-width: 1080px;
+  margin: 64px auto 140px;
+  padding: 0 32px 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 56px 36px;
+  justify-items: center;
 }
 
-canvas {
-  background-color: #000000;
-  display: block;
-  border-radius: 8px;
+.arcade-status {
+  grid-column: 1 / -1;
+  color: #7a7a7a;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  line-height: 1.6;
+  max-width: 46ch;
+  margin: 40px auto;
 }
 
-.carousel-navigation {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 100%;
+.arcade-status code {
+  color: #b7b7b7;
+}
+
+/* ---- Cartridge ----
+   Plain square cart, no notch. Built as a real 3D box: a front face plus a
+   right-side and top face folded back with rotateY/rotateX, so the hover
+   tilt actually reveals plastic thickness instead of faking it with a flat
+   gradient. The hover tilt lifts the front edge toward the viewer (looking
+   down onto the cart), so the top face is the one that should open up.
+   -webkit- prefixes and backface-visibility are there because preserve-3d
+   support is where old-browser bugs like to hide. */
+.cart {
   display: flex;
-  justify-content: space-between;
-  pointer-events: none;
-  padding: 0 10px;
-  box-sizing: border-box;
-  z-index: 10;
-}
-
-.carousel-button {
-  background-color: rgba(0, 0, 0, 0.6);
-  color: #ffffff;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  font-size: 2em;
+  gap: 16px;
+  width: 100%;
+  max-width: 176px;
+  text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  pointer-events: auto;
-  transform-origin: center;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-perspective: 900px;
+  perspective: 900px;
 }
 
-.carousel-button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-  transform: translateY(-10%) scale(1.025);
+.cart-shell {
+  --depth: 26px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1 / 1.05;
+  box-sizing: border-box;
+  padding: 13% 9% 16%;
+  border-radius: 0;
+  background: linear-gradient(165deg, #bcb7b9 0%, #a19c9e 30%, #868183 55%, #625e60 100%);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -4px 7px rgba(0, 0, 0, 0.28),
+    0 10px 16px -10px rgba(0, 0, 0, 0.8);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform: translateY(0) rotateX(0deg) rotateY(0deg) scale(1);
+  transform: translateY(0) rotateX(0deg) rotateY(0deg) scale(1);
+  transition: transform 0.4s cubic-bezier(0.22, 0.9, 0.32, 1.2), box-shadow 0.4s ease;
 }
 
-#prevButton:disabled,
-#nextButton:disabled {
-  background-color: rgba(0, 0, 0, 0.1);
-  cursor: not-allowed;
-  box-shadow: none;
-  transform: translateX(-100%) scale(1);
-  pointer-events: none;
+/* the box-art sticker, sized to the 16:9 thumbnails so nothing gets cropped */
+.cart-label {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #0a0a0a;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 2px 6px rgba(0, 0, 0, 0.65),
+    0 1px 1px rgba(255, 255, 255, 0.15);
+  transform: translateZ(3px);
+}
+
+.cart-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* connector-edge accent along the bottom of the shell */
+.cart-foot {
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  bottom: 8%;
+  height: 5%;
+  background: repeating-linear-gradient(90deg, #514e50 0px, #514e50 2px, #6b6668 2px, #6b6668 4px);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+  opacity: 0.85;
+}
+
+/* right side face, folded backward to give the cart real thickness */
+.cart-side {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: var(--depth);
+  height: 100%;
+  transform-origin: left center;
+  -webkit-transform: rotateY(90deg);
+  transform: rotateY(90deg);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0px, rgba(255, 255, 255, 0.06) 1px, transparent 1px, transparent 4px),
+    linear-gradient(90deg, #221f21 0%, #3a3739 45%, #5c5759 100%);
+}
+
+/* top face, folded up, same idea as the side — the tilt lifts the front edge
+   toward the viewer, which puts us looking down onto the cart, so the top
+   is the surface that should open up, not the bottom */
+.cart-top {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  height: var(--depth);
+  transform-origin: center bottom;
+  -webkit-transform: rotateX(90deg);
+  transform: rotateX(90deg);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.07) 0px, rgba(255, 255, 255, 0.07) 1px, transparent 1px, transparent 4px),
+    linear-gradient(0deg, #221f21 0%, #3a3739 45%, #5c5759 100%);
+}
+
+/* grounding shadow, separate from the shell so it can stay put while the shell lifts */
+.cart-shadow {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -14px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.65), transparent 75%);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.cart-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #d8d8d8;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  text-align: center;
+  transition: color 0.2s ease;
+}
+
+.ext-icon {
+  color: inherit;
+  flex: none;
+}
+
+.cart:hover .cart-shell,
+.cart:focus-visible .cart-shell {
+  -webkit-transform: translateY(-24px) rotateX(-15deg) rotateY(-25deg) scale(1.06);
+  transform: translateY(-24px) rotateX(-15deg) rotateY(-25deg) scale(1.06);
+  background: linear-gradient(165deg, #c9c4c6 0%, #aea9ab 30%, #928d8f 55%, #6c686a 100%);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+    0 26px 20px -16px rgba(0, 0, 0, 0.6);
+}
+
+.cart:hover .cart-shadow,
+.cart:focus-visible .cart-shadow {
+  transform: scale(0.82) translateY(4px);
+  opacity: 0.55;
+}
+
+.cart:hover .cart-name,
+.cart:focus-visible .cart-name {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.cart:focus-visible .cart-shell {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-shell,
+  .cart-shadow {
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .arcade-title {
+    font-size: 52px;
+  }
+  .arcade-navlink {
+    font-size: 24px;
+  }
 }

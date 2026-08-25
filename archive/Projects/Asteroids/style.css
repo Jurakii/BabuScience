@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+    overflow: hidden; /* Prevent scrollbars if canvas is larger than viewport */
+    background-color: #000; /* Black background for space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Center canvas vertically */
+}
+
+canvas {
+    background-color: #000; /* Ensure canvas background is black */
+    display: block; /* Remove extra space below canvas */
+    border: 1px solid #0f0; /* Optional: A thin green border to easily see the canvas */
+}

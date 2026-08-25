@@ -1,0 +1,21 @@
+[
+  {
+    "id": "babu-blast",
+    "folder": "BabuBlast",
+    "name": "Babu Blast",
+    "thumbnail": "BabuBlast/thumbnail.png",
+    "type": "internal",
+    "description": "A fast, colorful blaster built in Scratch. Jump in and see how long you can last. (Placeholder blurb — edit me in arcade/games.json.)",
+    "tags": ["scratch", "arcade"]
+  },
+  {
+    "id": "wongo",
+    "folder": "Wongo",
+    "name": "Wongo",
+    "thumbnail": "Wongo/thumbnail.png",
+    "type": "external",
+    "url": "https://babuscience.itch.io/wongo",
+    "description": "A Game Boy-style platforming adventure, playable free on itch.io. (Placeholder blurb — edit me in arcade/games.json.)",
+    "tags": ["platformer", "gameboy", "itch.io"]
+  }
+]

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Arcade - Babu Science</title>
+    <meta property="og:title" content="Arcade - Babu Science" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+
+    <link
+      rel="shortcut icon"
+      href="public/favicon.ico"
+      type="icon/png"
+      sizes="32x32"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&amp;display=swap"
+      data-tag="font"
+    />
+  </head>
+  <body>
+    <link rel="stylesheet" href="./style.css" />
+    <div>
+      <link href="./arcade.css" rel="stylesheet" />
+
+      <div class="arcade-container">
+        <h1 class="arcade-text">Babu Arcade</h1>
+       
+        <div class="arcade-container1">
+          <a href="index.html" class="arcade-navlink">Home</a>
+          <a href="explore.html" class="arcade-navlink1">Explore</a>
+        </div>
+         <!-- Carousel HTML Structure -->
+<div class="canvas-wrapper" id="yourCarouselWrapper">
+  <canvas id="myCanvas" width="800" height="400"></canvas>
+  <div class="carousel-navigation">
+      <button id="prevButton" class="carousel-button">&lt;</button>
+      <button id="nextButton" class="carousel-button">&gt;</button>
+  </div>
+  </body>
+  
+<script>
+    // Ensure the script runs after the DOM content is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const canvasWrapper = document.getElementById('yourCarouselWrapper');
+
+        // Define your project items data with thumbnails and links
+        // Replace placeholder images and links with your actual project data!
+        const projects = [
+            { name: "Babu Blast", thumbnail: "https://www.babuscience.xyz/Icons/BabuBlast.png", link: "https://www.babuscience.xyz/Arcade/BabuBlast" },
+            { name: "Rocket Babu 1", thumbnail: "https://www.babuscience.xyz/Icons/RocketBabu1.png", link: "https://www.babuscience.xyz/rocket.html" },
+            { name: "Wongo", thumbnail: "https://www.babuscience.xyz/Icons/WongoTitle.png", link: "https://babuscience.itch.io/wongo" },
+            { name: "Rocket Babu Reloaded", thumbnail: "https://www.babuscience.xyz/Icons/RocketBabuReloaded.png", link: "https://www.babuscience.xyz/" }
+        ];
+
+        // Store loaded images to avoid reloading them
+        const loadedImages = {};
+
+        // Configuration for the carousel display
+        const cardWidth = 272;
+        const cardHeight = 153;
+        const cardSpacing = 20; // Space between cards
+        const cardStep = cardWidth + cardSpacing; // Pixel distance to scroll for one card
+
+        let currentOffsetPx = 0; // The actual pixel offset being drawn (animates to targetOffsetPx)
+        let targetOffsetPx = 0;  // The target pixel offset for animation
+        let animationFrameId = null; // To store the requestAnimationFrame ID
+
+        let cardCenterAlignOffset = 0; // Pixel offset needed to center a card
+        let minScrollOffset = 0;     // Minimum allowed scroll offset (first card centered)
+        let maxScrollOffset = 0;     // Maximum allowed scroll offset (last card centered)
+
+        // Function to animate the scroll
+        function animateScroll() {
+            const easingFactor = 0.1; // Controls the speed and smoothness of the animation
+            currentOffsetPx += (targetOffsetPx - currentOffsetPx) * easingFactor;
+
+            // Stop animation if currentOffsetPx is very close to targetOffsetPx
+            if (Math.abs(targetOffsetPx - currentOffsetPx) < 0.5) {
+                currentOffsetPx = targetOffsetPx; // Snap to target
+                drawCanvasContent(); // Final draw
+                cancelAnimationFrame(animationFrameId); // Stop animation
+                animationFrameId = null;
+                return;
+            }
+
+            drawCanvasContent(); // Redraw with the new interpolated offset
+            animationFrameId = requestAnimationFrame(animateScroll);
+        }
+
+        // Function to calculate scroll bounds and initial positions
+        function calculateScrollBounds() {
+            cardCenterAlignOffset = (canvas.width / 2) - (cardWidth / 2);
+            minScrollOffset = -cardCenterAlignOffset;
+
+            const lastCardVirtualX = (projects.length - 1) * cardStep;
+
+            if (projects.length <= 1) {
+                maxScrollOffset = minScrollOffset;
+            } else {
+                maxScrollOffset = lastCardVirtualX - cardCenterAlignOffset;
+            }
+
+            targetOffsetPx = Math.min(targetOffsetPx, maxScrollOffset);
+            targetOffsetPx = Math.max(targetOffsetPx, minScrollOffset);
+
+            if (currentOffsetPx === 0 && targetOffsetPx === 0) {
+                targetOffsetPx = minScrollOffset;
+                currentOffsetPx = minScrollOffset;
+            }
+        }
+
+        // Function to draw content on the canvas
+        function drawCanvasContent() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#000000'; // Light grey background for the drawing area
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < projects.length; i++) {
+                const project = projects[i];
+                const cardVirtualX = i * cardStep;
+                const x = cardVirtualX - currentOffsetPx;
+                const y = (canvas.height - cardHeight) / 2; // Center cards vertically
+
+                // Only draw if the card is at least partially visible within the canvas bounds
+                if (x + cardWidth > 0 && x < canvas.width) {
+                    // Draw card background first (optional, behind image)
+                    ctx.fillStyle = project.color; // Use project color as background if image fails/loads later
+                    drawRoundedRect(ctx, x, y, cardWidth, cardHeight, 8); // 8px border-radius
+
+                    // Check if thumbnail is provided
+                    if (project.thumbnail) {
+                        if (loadedImages[project.thumbnail]) {
+    ctx.save();
+    drawRoundedRect(ctx, x, y, cardWidth, cardHeight, 8); // Clip to rounded corners
+    ctx.clip();
+    ctx.drawImage(loadedImages[project.thumbnail], x, y, cardWidth, cardHeight);
+    ctx.restore();
+                        } else {
+                            // Image not loaded, create and load it
+                            const img = new Image();
+                            img.src = project.thumbnail;
+                            img.onerror = () => {
+                                // Fallback: if image fails to load, draw a placeholder color
+                                ctx.fillStyle = '#999'; // Grey fallback
+                                drawRoundedRect(ctx, x, y, cardWidth, cardHeight, 8);
+                                ctx.fillStyle = '#fff';
+                                ctx.font = '16px Inter';
+                                ctx.fillText('Image Fail', x + cardWidth / 2, y + cardHeight / 2 - 10);
+                                ctx.fillText(project.name, x + cardWidth / 2, y + cardHeight / 2 + 10);
+                            };
+                            img.onload = () => {
+                                loadedImages[project.thumbnail] = img;
+                                drawCanvasContent(); // Redraw canvas once image is loaded
+                            };
+                        }
+                    }
+
+                    // Draw text for the project (on top of image or background)
+                    ctx.fillStyle = '#ffffff'; // White text
+                    ctx.font = '24px Inter';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    //ctx.fillText(project.name, x + cardWidth / 2, y + cardHeight / 2);
+
+                    // Add a subtle border
+                    ctx.strokeStyle = '#000000  ';
+                    ctx.lineWidth = 0;
+                    ctx.strokeRect(x, y, cardWidth, cardHeight);
+
+                    // Store bounds for click detection (for hyperlink)
+                    project.bounds = { x: x, y: y, width: cardWidth, height: cardHeight };
+                } else {
+                    // Clear bounds if card is not visible
+                    project.bounds = {};
+                }
+            }
+
+            prevButton.disabled = currentOffsetPx <= minScrollOffset + 0.5;
+            nextButton.disabled = currentOffsetPx >= maxScrollOffset - 0.5;
+        }
+
+        // Helper function to draw a rectangle with rounded corners on canvas
+        function drawRoundedRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        // --- Event Listeners ---
+        prevButton.addEventListener('click', () => {
+            targetOffsetPx -= cardStep;
+            targetOffsetPx = Math.max(minScrollOffset, targetOffsetPx);
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            animateScroll();
+        });
+
+        nextButton.addEventListener('click', () => {
+            targetOffsetPx += cardStep;
+            targetOffsetPx = Math.min(maxScrollOffset, targetOffsetPx);
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            animateScroll();
+        });
+
+        // Click listener for the canvas to detect clicks on project cards
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect(); // Get canvas position and size
+            const scaleX = canvas.width / rect.width;    // Relationship between canvas pixels and CSS pixels
+            const scaleY = canvas.height / rect.height;
+
+            const mouseX = (event.clientX - rect.left) * scaleX; // Mouse X relative to canvas drawing
+            const mouseY = (event.clientY - rect.top) * scaleY; // Mouse Y relative to canvas drawing
+
+            for (let i = 0; i < projects.length; i++) {
+                const project = projects[i];
+                const bounds = project.bounds;
+
+                // Check if click is within the project card's stored bounds AND if it has a link
+                if (bounds.x && bounds.y && bounds.width && bounds.height && project.link &&
+                    mouseX >= bounds.x && mouseX <= bounds.x + bounds.width &&
+                    mouseY >= bounds.y && mouseY <= bounds.y + bounds.height) {
+                    
+                    window.open(project.link, '_blank'); // Open link in new tab
+                    break; // Only trigger one link
+                }
+            }
+        });
+
+
+        // Responsiveness for Canvas
+        function resizeCanvas() {
+            canvas.width = canvasWrapper.offsetWidth;
+            canvas.height = canvasWrapper.offsetHeight;
+
+            calculateScrollBounds();
+
+            currentOffsetPx = targetOffsetPx;
+            cancelAnimationFrame(animationFrameId);
+
+            drawCanvasContent();
+        }
+
+        // Initial setup - use DOMContentLoaded instead of window.onload for better integration
+        window.addEventListener('load', function() {
+            canvasWrapper.style.width = 'min(90vw, 800px)';
+            canvasWrapper.style.height = '250px';
+
+            resizeCanvas(); // Initial size calculation and draw
+        });
+
+        window.addEventListener('resize', resizeCanvas);
+    });
+</script>
+</html>
