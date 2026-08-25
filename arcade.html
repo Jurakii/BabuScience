@@ -18,8 +18,8 @@
   <h1 class="arcade-title">Babu Arcade</h1>
 
   <div class="arcade-nav">
-    <a href="index.html" class="arcade-navlink">Home</a>
-    <a href="archive/explore.html" class="arcade-navlink">Explore</a>
+    <a href="/" class="arcade-navlink">Home</a>
+    <a href="archive/explore" class="arcade-navlink">Explore</a>
   </div>
 
   <main class="arcade-shelf" id="arcadeShelf">
@@ -34,7 +34,7 @@
         var isExternal = game.type === 'external';
         var a = document.createElement('a');
         a.className = 'cart';
-        a.href = isExternal ? game.url : 'arcade/play.html?game=' + encodeURIComponent(game.id);
+        a.href = isExternal ? game.url : 'arcade/play?game=' + encodeURIComponent(game.id);
         if (isExternal) {
           a.target = '_blank';
           a.rel = 'noopener';

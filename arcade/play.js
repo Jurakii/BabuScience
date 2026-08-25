@@ -28,7 +28,7 @@
           ? '<div class="play-tags">' + game.tags.map(function (t) { return '<span class="play-tag">' + t + '</span>'; }).join('') + '</div>'
           : '') +
         '<div class="play-actions">' +
-          '<a href="' + game.folder + '/index.html" target="_blank" rel="noopener">Open in new tab</a>' +
+          '<a href="' + game.folder + '/" target="_blank" rel="noopener">Open in new tab</a>' +
         '</div>' +
       '</div>';
 
@@ -50,7 +50,7 @@
     if (others.length) {
       moreRow.innerHTML = others.map(function (g) {
         var isExt = g.type === 'external';
-        var href = isExt ? g.url : 'play.html?game=' + encodeURIComponent(g.id);
+        var href = isExt ? g.url : 'play?game=' + encodeURIComponent(g.id);
         var target = isExt ? ' target="_blank" rel="noopener"' : '';
         return (
           '<a class="play-more-card" href="' + href + '"' + target + '>' +
@@ -64,7 +64,7 @@
   }
 
   if (!gameId) {
-    showMessage('No game specified. <a href="../arcade.html" style="color:#fff">Back to the Arcade</a>.');
+    showMessage('No game specified. <a href="../arcade" style="color:#fff">Back to the Arcade</a>.');
     return;
   }
 
@@ -76,7 +76,7 @@
     .then(function (games) {
       var game = games.find(function (g) { return g.id === gameId; });
       if (!game) {
-        showMessage('Couldn&rsquo;t find that game. <a href="../arcade.html" style="color:#fff">Back to the Arcade</a>.');
+        showMessage('Couldn&rsquo;t find that game. <a href="../arcade" style="color:#fff">Back to the Arcade</a>.');
         return;
       }
       if (game.type === 'external') {
@@ -87,6 +87,6 @@
     })
     .catch(function (err) {
       console.error(err);
-      showMessage('Couldn&rsquo;t load the game list. <a href="../arcade.html" style="color:#fff">Back to the Arcade</a>.');
+      showMessage('Couldn&rsquo;t load the game list. <a href="../arcade" style="color:#fff">Back to the Arcade</a>.');
     });
 })();
