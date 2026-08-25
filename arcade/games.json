@@ -17,5 +17,15 @@
     "url": "https://babuscience.itch.io/wongo",
     "description": "Gameboy platformer",
     "tags": ["platformer", "gameboy"]
+  },
+  {
+    "id": "loot-goblin",
+    "folder": "LootGoblin",
+    "name": "Loot Goblin",
+    "thumbnail": "LootGoblin/thumbnail.png",
+    "type": "external",
+    "url": "https://babuscience.itch.io/loot-goblin",
+    "description": "Our BOSS RUSH JAM 2024 submission, You sit down after a long day of work and hop on your favorite game with your favorite friend. Fend off hoards of enemies in this retro-esque boss rush. The one catch is your friend is a chronic loot hoarder and it's gonna take more than a \"please\" to get them to share...",
+    "tags": ["FPS", "Doom-Shooter"]
   }
 ]
