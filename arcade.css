@@ -130,6 +130,23 @@ body {
   display: block;
 }
 
+/* shimmer overlay: a soft diagonal streak that sweeps across the box-art
+   label while the cart lifts on hover. Lives on .cart-label (not
+   .cart-shell) so it can safely use opacity/background-position — .cart-
+   label has no 3D children of its own, so none of the preserve-3d-breaking
+   rules (filter/opacity<1/etc collapsing an element's OWN transform-style)
+   come into play here the way they would on .cart-shell. Clipped to the
+   label by its existing `overflow: hidden`. */
+.cart-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+  background-size: 200% 100%;
+  background-position: -200% 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* connector-edge accent along the bottom of the shell */
 .cart-foot {
   position: absolute;
@@ -224,6 +241,28 @@ body {
   opacity: 0.55;
 }
 
+.cart:hover .cart-shine,
+.cart:focus-visible .cart-shine {
+  animation: cart-shimmer 0.7s ease-in-out 0.05s 1;
+}
+
+@keyframes cart-shimmer {
+  0% {
+    background-position: -200% 0;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  80% {
+    opacity: 0.85;
+  }
+  100% {
+    background-position: 200% 0;
+    opacity: 0;
+  }
+}
+
 .cart:hover .cart-name,
 .cart:focus-visible .cart-name {
   color: #fff;
@@ -239,6 +278,9 @@ body {
   .cart-shell,
   .cart-shadow {
     transition: none;
+  }
+  .cart-shine {
+    animation: none;
   }
 }
 
