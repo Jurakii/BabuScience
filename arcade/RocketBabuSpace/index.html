@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Rocket Babu Space — Babu Arcade</title>
+
+<!--
+  ============================================================
+  ROCKET BABU SPACE — V1 PROTOTYPE
+  ============================================================
+  Hold to burn the jetpack, release to fall. Fly through
+  obstacles, survive a boss every 2000 m, grab power-ups,
+  bank coins and spend them on skins.
+
+  Files:
+    index.html          this page (canvas + script tags)
+    game.js             all game logic and rendering
+    sprites/            every image, plus sprites/manifest.js
+                        which maps sprite keys to files
+    README.md           design summary and tuning notes
+
+  See README.md for how to swap sprites.
+  ============================================================
+-->
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+    touch-action: none; /* stop mobile scroll/zoom from eating touch input */
+  }
+
+  canvas {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="game" tabindex="0"></canvas>
+
+<script src="sprites/manifest.js"></script>
+<script src="game.js"></script>
+
+</body>
+</html>

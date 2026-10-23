@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#06070d"/>
+  <g fill="#fff" opacity="0.5">
+    <rect x="80" y="90" width="3" height="3"/><rect x="210" y="420" width="2" height="2"/><rect x="330" y="160" width="2" height="2"/>
+    <rect x="470" y="610" width="3" height="3"/><rect x="560" y="80" width="2" height="2"/><rect x="690" y="300" width="2" height="2"/>
+    <rect x="780" y="650" width="2" height="2"/><rect x="880" y="140" width="3" height="3"/><rect x="1010" y="520" width="2" height="2"/>
+    <rect x="1130" y="70" width="2" height="2"/><rect x="1200" y="380" width="3" height="3"/><rect x="140" y="660" width="2" height="2"/>
+    <rect x="400" y="320" width="2" height="2"/><rect x="960" y="260" width="2" height="2"/><rect x="620" y="470" width="2" height="2"/>
+  </g>
+  <!-- pipe column -->
+  <rect x="860" y="-4" width="112" height="250" fill="#2a2f3d" stroke="#5b6378" stroke-width="4"/>
+  <rect x="852" y="226" width="128" height="34" rx="4" fill="#3a4152" stroke="#7a84a0" stroke-width="4"/>
+  <rect x="860" y="500" width="112" height="224" fill="#2a2f3d" stroke="#5b6378" stroke-width="4"/>
+  <rect x="852" y="486" width="128" height="34" rx="4" fill="#3a4152" stroke="#7a84a0" stroke-width="4"/>
+  <!-- coins -->
+  <g fill="#ffd54a" stroke="#b8860b" stroke-width="4">
+    <circle cx="1060" cy="372" r="18"/><circle cx="1112" cy="372" r="18"/><circle cx="1164" cy="372" r="18"/>
+  </g>
+  <!-- Babu with jetpack and flame -->
+  <g transform="translate(330 380) rotate(-12)">
+    <path d="M-58 30 L-38 30 L-48 110 Z" fill="#ff8a00"/>
+    <path d="M-53 30 L-43 30 L-48 70 Z" fill="#ffe0a0"/>
+    <rect x="-62" y="-28" width="28" height="56" rx="8" fill="#666a73" stroke="#000" stroke-width="3"/>
+    <circle cx="0" cy="0" r="38" fill="#fff" stroke="#000" stroke-width="4"/>
+    <ellipse cx="9" cy="-7" rx="22" ry="17" fill="#1c2a44" stroke="#000" stroke-width="3"/>
+    <circle cx="2" cy="-7" r="4" fill="#fff"/><circle cx="16" cy="-7" r="4" fill="#fff"/>
+  </g>
+  <text x="640" y="150" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="96" fill="#fff">ROCKET BABU</text>
+  <text x="640" y="210" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="44" letter-spacing="24" fill="#ff8a00">SPACE</text>
+</svg>
