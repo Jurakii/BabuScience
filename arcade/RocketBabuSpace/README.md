@@ -4,7 +4,7 @@ A flappy-style run for the Babu Arcade. Hold to burn a jetpack instead of tappin
 
 Status: **v1 prototype, playable, placeholder art. Hidden from the arcade shelf.**
 
-Based on the Rocket Babu design artifact and `arcade/RocketBabu2/PLAN.md`. This folder is the game's own copy; nothing here depends on `RocketBabu2`.
+Based on the Rocket Babu Space design artifact. This folder holds the whole game.
 
 ---
 

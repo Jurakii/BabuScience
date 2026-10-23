@@ -27,14 +27,5 @@
     "url": "https://babuscience.itch.io/loot-goblin",
     "description": "Our BOSS RUSH JAM 2024 submission, You sit down after a long day of work and hop on your favorite game with your favorite friend. Fend off hoards of enemies in this retro-esque boss rush. The one catch is your friend is a chronic loot hoarder and it's gonna take more than a \"please\" to get them to share...",
     "tags": ["FPS", "Doom-Shooter"]
-  },
-  {
-    "id": "rocket-babu-2",
-    "folder": "RocketBabu2",
-    "name": "Rocket Babu Journey Through Space",
-    "thumbnail": "RocketBabu2/thumbnail.png",
-    "type": "internal",
-    "description": "Hold to burn the jetpack. Survive boss fights, grab power-ups, then spend coins on skins.",
-    "tags": ["flappy", "arcade", "prototype"]
   }
 ]
